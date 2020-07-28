@@ -329,6 +329,23 @@
             <!-- 菜单 /-->
 
 <!--            <li id="admin-documentation"><a href="documentation.html" target="_blank"><i class="fa fa-book"></i> <span>AdminLTE汉化文档</span></a></li>-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i> <span>用户管理</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+
+                                <li id="admin-login">
+                                    <a id="admin" href="/user/findAllAdmin">
+                                        <i class="fa fa-circle-o"></i> 管理员
+                                        <input type="hidden" th:value="${session.user.type}" id="admin_account">
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
         </ul>
     </section>
     <!-- /.sidebar -->

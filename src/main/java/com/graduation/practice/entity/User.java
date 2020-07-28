@@ -28,4 +28,11 @@ public class User {
     public User(String account){
         this.account = account;
     }
+
+    public User(String account, String password, int type, String role) {
+        this.account = account;
+        this.password = password;
+        this.type = type;
+        this.role = role;
+    }
 }
