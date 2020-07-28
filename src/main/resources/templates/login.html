@@ -5,7 +5,7 @@
     <title></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="../static/css/login/style.css" rel="stylesheet">
+    <link href="../css/login/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -23,7 +23,7 @@
                 <div class="icon">
                     <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/user_icon_copy.png">
                 </div>
-                <input placeholder="账户" type="text">
+                <input placeholder="账户" type="text" id="account">
                 <div class="validation">
                     <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png">
                 </div>
@@ -32,7 +32,7 @@
                 <div class="icon">
                     <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/lock_icon_copy.png">
                 </div>
-                <input placeholder="密码" type="password">
+                <input placeholder="密码" type="password" id="password">
                 <div class="validation">
                     <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png">
                 </div>
@@ -65,11 +65,13 @@
     $('input[type="submit"]').click(function() {
         // 控制点击登录后翻转
         $('.login').addClass('test')
-        // 控制点击登录后右移
+        // 控制点击登录后左移
         setTimeout(function() {
             $('.login').addClass('testtwo')
         }, 300);
         // 没什么影响
+        // 是否可以跳转
+        let ok = false
         setTimeout(function() {
             $(".authent").show().animate({
                 right: -320
@@ -84,6 +86,29 @@
                 duration: 200,
                 queue: false
             }).addClass('visible');
+
+            // 发送登录请求
+            let account = $('#account').val();
+            let password = $('#password').val();
+
+            $.ajax({
+                type : 'post',
+                url: "/user/login",
+                data:  {account, password},
+                success: function (res) {
+                    $('.success h2').text(res.message)
+                    if(res.data == null){
+                        $('.success p').html('<a href="/user/">返回登录</a>')
+                    }else{
+                        ok = true
+                    }
+                },
+                error: function (err) {
+                    $('.success h2').text('登录失败')
+                    $('.success p').html('<a href="/user/">返回登录</a>')
+                }
+            })
+
         }, 500);
         // 控制登录后翻转后的右移
         setTimeout(function() {
@@ -103,13 +128,20 @@
             $('.login').removeClass('testtwo')
         }, 2500);
         // 控制登录成功后翻转
-        setTimeout(function() {
+
+        setTimeout(() => {
             $('.login').removeClass('test')
             $('.login div').fadeOut(123);
+
         }, 2800);
         // 控制登录成功显示内容
         setTimeout(function() {
             $('.success').fadeIn();
+            setTimeout(function () {
+                if(ok){
+                    $(location).attr('href', '/home.html')
+                }
+            },400)
         }, 3200);
     });
 
