@@ -6,6 +6,8 @@ import com.graduation.practice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
@@ -20,5 +22,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByAccount(User user) {
         return userDao.findUserByAccount(user);
+    }
+
+    @Override
+    public List<User> findAllAdmin(User user) {
+        return userDao.findAllAdmin(user);
     }
 }

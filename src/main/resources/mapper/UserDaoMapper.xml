@@ -4,4 +4,7 @@
     <select id="findUserByAccount" parameterType="User" resultType="User">
         SELECT * FROM user WHERE account = #{account}
     </select>
+    <select id="findAllAdmin" parameterType="User" resultType="User">
+        SELECT * FROM user WHERE TYPE in (1, 2) AND account != #{account}
+    </select>
 </mapper>
