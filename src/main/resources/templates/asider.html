@@ -340,12 +340,28 @@
 
                                 <li id="admin-login">
                                     <a id="admin" href="/user/findAllAdmin">
-                                        <i class="fa fa-circle-o"></i> 管理员
+                                        <i class="fa fa-circle-o"></i> 管理员列表
                                         <input type="hidden" th:value="${session.user.type}" id="admin_account">
                                     </a>
                                 </li>
                             </ul>
                         </li>
+            <li class="treeview" th:if="${session.user.type == 1 || session.user.type == 2}">
+                <a href="#">
+                    <i class="fa fa-folder"></i> <span>教师管理</span>
+                    <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li >
+                        <a href="/teacher/findAllTeacher">
+                            <i class="fa fa-circle-o"></i> 教师列表
+                            <input type="hidden" th:value="${session.user.type}">
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->
