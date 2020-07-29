@@ -6,6 +6,7 @@ import com.graduation.practice.entity.Result;
 import com.graduation.practice.entity.User;
 import com.graduation.practice.service.UserService;
 import com.graduation.practice.utils.MD5Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,6 +32,7 @@ public class UserController {
 
     private final UserService userService;
 
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -207,4 +209,8 @@ public class UserController {
         return "redirect:/user/";
     }
 
+    @GetMapping("/student")
+    public String getStudent(){
+        return "teacher/list-student";
+    }
 }

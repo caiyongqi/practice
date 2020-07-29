@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduation.practice.dao.TeacherDao">
+    <select id="findTeacherByTeacherId" parameterType="Teacher" resultType="Teacher">
+        SELECT * FROM teacher WHERE teacherId = #{teacherId}
+    </select>
+    <select id="findAllTeacher" resultMap="teacherMap">
+        SELECT teacher.id,teacher.teacherId,teacher.name,teacher.gender,college.id AS college_id,college.name AS college_name FROM teacher,college WHERE teacher.collegeID = college.id ORDER BY teacher.id
+    </select>
+    <insert id="saveTeacher" parameterType="Teacher"></insert>
+    <delete id="deleteSelectedTeacher" parameterType="list">
+        DELETE FROM teacher WHERE teacherId IN
+        <foreach collection="list" item="teacherId" open="(" close=")" separator=",">
+            #{teacherId}
+        </foreach>
+    </delete>
+    <delete id="deleteTeacher" parameterType="String">
+        DELETE FROM teacher WHERE teacherId = #{teacherId}
+    </delete>
+    <update id="updateTeacher" parameterType="Teacher">
+        UPDATE teacher SET password = #{password} WHERE teacherId = #{teacherId}
+    </update>
+    <select id="searchAllTeacherByTeacherId" parameterType="String" resultType="Teacher">
+        SELECT * FROM teacher WHERE teacherId != #{teacherId}
+        <if test="teacherKeyword != null and teacherKeyword != ''">
+            AND teacherId like concat("%", #{teacherKeyword}, "%")
+        </if>
+        ORDER BY id
+    </select>
+
+    <!-- 多对一关系 -->
+    <resultMap type="Teacher" id="teacherMap">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="teacherId" property="teacherId" />
+        <result column="gender" property="gender" />
+        <association property="college" javaType="College">
+            <id column="college_id" property="id" />
+            <result column="college_name" property="name" />
+        </association>
+    </resultMap>
+</mapper>
