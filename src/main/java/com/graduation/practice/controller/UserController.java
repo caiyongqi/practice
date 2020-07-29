@@ -57,7 +57,15 @@ public class UserController {
         // 获取参数
         String account = request.getParameter("account");
         String password = MD5Utils.code(request.getParameter("password"));
-
+        /*
+        *
+        *
+        * 待完成：
+        * 如果是老师、学生、辅导员，需要继续查询得到photoUrl：session.setAttribute("photoUrl")
+        *
+        *
+        *
+        * */
         // 查询
         User user = userService.findUserByAccount(new User(account));
         // 结果对象
@@ -187,5 +195,14 @@ public class UserController {
         mv.setViewName("admin-list");
         mv.addObject("pageInfo", pageInfo);
         return mv;
+    }
+
+    // 注销
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.setAttribute("user", null);
+        session.setAttribute("photoUrl", null);
+        return "redirect:/user/";
     }
 }
