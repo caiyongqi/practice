@@ -49,5 +49,10 @@ public class UserServiceImpl implements UserService {
         return userDao.updateUser(user);
     }
 
+    @Override
+    public List<User> searchAllAdminByAccount(String keyword, String account) {
+        return userDao.searchAllAdminByAccount(keyword, account);
+    }
+
 
 }

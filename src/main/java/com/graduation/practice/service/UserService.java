@@ -1,6 +1,7 @@
 package com.graduation.practice.service;
 
 import com.graduation.practice.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ public interface UserService {
     int deleteSelectedUser(List<String> accountList);
     int deleteUser(String account);
     int updateUser(User user);
+    List<User> searchAllAdminByAccount(String keyword, String account);
 }

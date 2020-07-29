@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.graduation.practice.entity.Result;
 import com.graduation.practice.entity.User;
 import com.graduation.practice.service.UserService;
+import com.graduation.practice.utils.MD5Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,7 +39,10 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String index(){
+    public String index(HttpServletRequest request){
+        if(request.getSession().getAttribute("user") != null){
+            return "redirect:/user/home";
+        }
         return "login";
     }
 
@@ -52,7 +56,7 @@ public class UserController {
     public Result<User> login(HttpServletRequest request){
         // 获取参数
         String account = request.getParameter("account");
-        String password = request.getParameter("password");
+        String password = MD5Utils.code(request.getParameter("password"));
 
         // 查询
         User user = userService.findUserByAccount(new User(account));
@@ -97,7 +101,7 @@ public class UserController {
     public Result<User> addUser(HttpServletRequest request, HttpSession session){
         // 参数
         String account = request.getParameter("account");
-        String password = request.getParameter("password");
+        String password = MD5Utils.code(request.getParameter("password"));
         int type = Integer.parseInt(request.getParameter("type"));
         String role = roles.get(type);
         User user = new User(account, password, type, role);
@@ -153,7 +157,7 @@ public class UserController {
     public Result<User> updateUser(HttpServletRequest request, HttpSession session){
         // 参数
         String account = request.getParameter("account");
-        String password = request.getParameter("password");
+        String password = MD5Utils.code(request.getParameter("password"));
         int type = Integer.parseInt(request.getParameter("type"));
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
         String role = roles.get(type);
@@ -166,5 +170,22 @@ public class UserController {
         }
         result.setData(user);
         return result;
+    }
+
+    // 搜索用户
+    @RequestMapping("/searchUser")
+    public ModelAndView searchUser(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "") String keyword, HttpSession session){
+        session.setAttribute("keyword", keyword);
+        PageHelper.startPage(pageNum, pageSize);
+        // 获取参数
+        User user = (User) session.getAttribute("user");
+        // 查询
+        List<User> users = userService.searchAllAdminByAccount(keyword, user.getAccount());
+        PageInfo<User> pageInfo = new PageInfo<>(users);
+        // 视图
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("admin-list");
+        mv.addObject("pageInfo", pageInfo);
+        return mv;
     }
 }
