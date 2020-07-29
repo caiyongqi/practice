@@ -245,6 +245,35 @@
 <!--                </li>-->
 
 <!--            </ul>-->
+            <ul class="nav navbar-nav" th:object="${session}">
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img th:src="*{photoUrl} == null ? 'https://i.niupic.com/images/2020/07/29/8sZX.png' : *{photoUrl}" class="user-image" alt="User Image">
+                        <span class="hidden-xs" th:text="${session.user.role}"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header">
+                            <img th:src="*{photoUrl} == null ? 'https://i.niupic.com/images/2020/07/29/8sZX.png' : *{photoUrl}" class="img-circle" alt="User Image">
+
+                            <p th:text="${session.user.role}"></p>
+                            <p th:text="${session.user.account}"></p>
+                        </li>
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="#" class="btn btn-default btn-flat">修改密码</a>
+                            </div>
+                            <div class="pull-right">
+                                <a href="/user/logout" class="btn btn-default btn-flat" onclick="function logout() {
+
+                                    alert('退出成功')
+                                }
+                                logout()">注销</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
 </header>
