@@ -1,5 +1,6 @@
 package com.graduation.practice.controller;
 
+//学生的界面路由
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,12 +17,18 @@ public class UserHandler {
 
     @GetMapping("/index1")
     public String index(Model model) {
-        return "/pages/home";
+//        学生界面首页
+        return "StudentHome";
     }
 
     @GetMapping("/index2")
     public String dataShow(Model model) {
-        return "/pages/studentDataShow";
+        return "studentDataShow";
+    }
+
+    @GetMapping("/person")
+    public String personShow(Model model) {
+        return "personInfo";
     }
 
 }
