@@ -22,4 +22,6 @@ public interface UserDao {
     int deleteUser(@Param("account") String account);
     // 更新用户
     int updateUser(User user);
+    // 根据账户，模糊查询
+    List<User> searchAllAdminByAccount(@Param("keyword") String keyword, @Param("account") String account);
 }

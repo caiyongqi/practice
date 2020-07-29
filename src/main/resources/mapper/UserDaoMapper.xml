@@ -16,16 +16,17 @@
             #{account}
         </foreach>
     </delete>
-    <select id="getTotal" resultType="int">
-        select count(*) from user
-        <if test="account != null and account != ''">
-            where account like concat("%", #{account}, "%")
-        </if>
-    </select>
     <delete id="deleteUser" parameterType="String">
         DELETE FROM user WHERE account = #{account}
     </delete>
     <update id="updateUser" parameterType="User">
         UPDATE user SET password = #{password}, `type` = #{type}, role = #{role} WHERE account = #{account}
     </update>
+    <select id="searchAllAdminByAccount" parameterType="String" resultType="User">
+        SELECT * FROM user WHERE TYPE in (1, 2) AND account != #{account}
+        <if test="keyword != null and keyword != ''">
+            AND account like concat("%", #{keyword}, "%")
+        </if>
+        ORDER BY id
+    </select>
 </mapper>
