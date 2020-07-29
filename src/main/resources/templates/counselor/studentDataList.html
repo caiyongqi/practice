@@ -46,7 +46,46 @@
 
     <!-- 页面头部 -->
     <header th:replace="header :: head"  ></header>
-    <div th:replace="asider :: sider"  ></div>
+<!--    <div th:replace="asider :: counselorAsider"  ></div>-->
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <div class="user-panel">
+                <div class="pull-left image" th:object="${session}">
+                    <img th:src="*{photoUrl} == null ? 'https://i.niupic.com/images/2020/07/29/8sZX.png' : *{photoUrl}" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p th:text="${session.user.role}"></p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="header">菜单</li>
+
+                <li id="admin-index"><a href=""><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
+
+                <!--          辅导员菜单-->
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-folder"></i> <span>信息管理</span>
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li id="admin-datalist">
+                            <a href="/counselor/findAllStudent04">
+                                <i class="fa fa-circle-o"></i> 学生信息管理
+                                <input type="hidden" th:value="${session.user.account}" id="counselor_account">
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
     <!-- 导航侧栏 /-->
 
     <!-- 内容区域 -->
