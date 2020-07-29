@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduation.practice.dao.StudentDao">
+    <select id="findAllStudent" resultType="Student">
+        SELECT * FROM student
+    </select>
+    <insert id="insertStudent" parameterType="Student">
+        INSERT INTO student (studentId,name,age,gender,address,email,phoneNumber,classId,date) VALUES (#{studentId},#{name},#{age},#{gender},#{address},#{email},#{phoneNumber},#{classId},#{date})
+    </insert>
+</mapper>
