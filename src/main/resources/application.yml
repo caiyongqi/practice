@@ -37,4 +37,6 @@ pagehelper:
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
-  params: countsql
+  params: countSql
+  pageSizeZero: false #pageSize=0
+

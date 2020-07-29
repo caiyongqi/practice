@@ -5,6 +5,28 @@
         SELECT * FROM user WHERE account = #{account}
     </select>
     <select id="findAllAdmin" parameterType="User" resultType="User">
+        SELECT * FROM user WHERE TYPE in (1, 2) AND account != #{account} ORDER BY id
+    </select>
+    <insert id="saveUser" parameterType="User">
+        INSERT INTO user (account, password, `type`, role) VALUES (#{account}, #{password}, #{type}, #{role})
+    </insert>
+    <delete id="deleteSelectedUser" parameterType="list">
+        DELETE FROM user WHERE account IN
+        <foreach collection="list" item="account" open="(" close=")" separator=",">
+            #{account}
+        </foreach>
+    </delete>
+    <delete id="deleteUser" parameterType="String">
+        DELETE FROM user WHERE account = #{account}
+    </delete>
+    <update id="updateUser" parameterType="User">
+        UPDATE user SET password = #{password}, `type` = #{type}, role = #{role} WHERE account = #{account}
+    </update>
+    <select id="searchAllAdminByAccount" parameterType="String" resultType="User">
         SELECT * FROM user WHERE TYPE in (1, 2) AND account != #{account}
+        <if test="keyword != null and keyword != ''">
+            AND account like concat("%", #{keyword}, "%")
+        </if>
+        ORDER BY id
     </select>
 </mapper>

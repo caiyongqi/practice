@@ -28,4 +28,31 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllAdmin(User user) {
         return userDao.findAllAdmin(user);
     }
+
+    @Override
+    public int saveUser(User user) {
+        return userDao.saveUser(user);
+    }
+
+    @Override
+    public int deleteSelectedUser(List<String> accountList) {
+        return userDao.deleteSelectedUser(accountList);
+    }
+
+    @Override
+    public int deleteUser(String account) {
+        return userDao.deleteUser(account);
+    }
+
+    @Override
+    public int updateUser(User user) {
+        return userDao.updateUser(user);
+    }
+
+    @Override
+    public List<User> searchAllAdminByAccount(String keyword, String account) {
+        return userDao.searchAllAdminByAccount(keyword, account);
+    }
+
+
 }
