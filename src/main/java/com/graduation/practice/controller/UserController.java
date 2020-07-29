@@ -31,6 +31,7 @@ public class UserController {
     }
 
     private final UserService userService;
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
@@ -49,13 +50,13 @@ public class UserController {
     }
 
     @GetMapping("/home")
-    public String home(){
+    public String home() {
         return "home";
     }
 
     @PostMapping("/login")
     @ResponseBody
-    public Result<User> login(HttpServletRequest request){
+    public Result<User> login(HttpServletRequest request) {
         // 获取参数
         String account = request.getParameter("account");
         String password = MD5Utils.code(request.getParameter("password"));
@@ -72,21 +73,21 @@ public class UserController {
         User user = userService.findUserByAccount(new User(account));
         // 结果对象
         Result<User> result = new Result<>();
-        if(user == null){
+        if (user == null) {
             result.setMessage("用户不存在");
-        }else if(user.getPassword().equals(password)){
+        } else if (user.getPassword().equals(password)) {
             result.setMessage("登录成功");
             result.setData(user);
             // 存入session中
             request.getSession().setAttribute("user", user);
-        }else{
+        } else {
             result.setMessage("密码错误");
         }
         return result;
     }
 
     @GetMapping("/findAllAdmin")
-    public ModelAndView findAllAdmin(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, HttpSession session){
+    public ModelAndView findAllAdmin(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, HttpSession session) {
         PageHelper.startPage(pageNum, pageSize);
 
         // 获取参数
@@ -102,13 +103,13 @@ public class UserController {
     }
 
     @GetMapping("/toAddUser")
-    public String toAddUser(){
+    public String toAddUser() {
         return "add-user";
     }
 
     @PostMapping("/addUser")
     @ResponseBody
-    public Result<User> addUser(HttpServletRequest request, HttpSession session){
+    public Result<User> addUser(HttpServletRequest request, HttpSession session) {
         // 参数
         String account = request.getParameter("account");
         String password = MD5Utils.code(request.getParameter("password"));
@@ -117,11 +118,11 @@ public class UserController {
         User user = new User(account, password, type, role);
         User existedUser = userService.findUserByAccount(user);
         Result<User> result = new Result<>();
-        if(existedUser != null){
+        if (existedUser != null) {
             result.setMessage("该用户已存在");
-        }else if(userService.saveUser(user) == 1){
+        } else if (userService.saveUser(user) == 1) {
             result.setMessage("添加用户成功");
-        }else{
+        } else {
             result.setMessage("添加用户失败");
         }
         result.setData(user);
@@ -142,7 +143,7 @@ public class UserController {
 
     // 删除单个用户
     @GetMapping("/deleteUser/{pageNum}/{account}")
-    public String deleteUser(@PathVariable("pageNum") int pageNum, @PathVariable("account") String account){
+    public String deleteUser(@PathVariable("pageNum") int pageNum, @PathVariable("account") String account) {
         userService.deleteUser(account);
         return "redirect:/user/findAllAdmin?pageNum=" + pageNum;
     }
@@ -150,7 +151,7 @@ public class UserController {
     // toUpdateUser
     // 如果使用路径参数就不能返回模板，静态资源无法加载
     @GetMapping("/toUpdateUser")
-    public ModelAndView toUpdateUser( HttpServletRequest request){
+    public ModelAndView toUpdateUser(HttpServletRequest request) {
         String account = request.getParameter("account");
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
         User user = userService.findUserByAccount(new User(account));
@@ -164,7 +165,7 @@ public class UserController {
     // 更新用户
     @PostMapping("/updateUser")
     @ResponseBody
-    public Result<User> updateUser(HttpServletRequest request, HttpSession session){
+    public Result<User> updateUser(HttpServletRequest request, HttpSession session) {
         // 参数
         String account = request.getParameter("account");
         String password = MD5Utils.code(request.getParameter("password"));
@@ -173,9 +174,9 @@ public class UserController {
         String role = roles.get(type);
         User user = new User(account, password, type, role);
         Result<User> result = new Result<>();
-        if(userService.updateUser(user) == 1){
+        if (userService.updateUser(user) == 1) {
             result.setMessage("更新用户成功");
-        }else{
+        } else {
             result.setMessage("更新用户失败");
         }
         result.setData(user);
