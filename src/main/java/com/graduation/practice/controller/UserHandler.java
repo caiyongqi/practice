@@ -19,4 +19,9 @@ public class UserHandler {
         return "/pages/home";
     }
 
+    @GetMapping("/index2")
+    public String dataShow(Model model) {
+        return "/pages/studentDataShow";
+    }
+
 }
