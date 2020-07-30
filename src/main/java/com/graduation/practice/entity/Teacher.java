@@ -28,4 +28,16 @@ public class Teacher {
         this.gender = gender;
         this.collegeId = collegeId;
     }
+
+    public Teacher(String teacherId, String name, int age, int gender, String address, String email, String phoneNumber, int collegeId, String photoUrl) {
+        this.teacherId = teacherId;
+        this.name = name;
+        this.gender = gender;
+        this.collegeId = collegeId;
+        this.age = age;
+        this.address = address;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.photoUrl = photoUrl;
+    }
 }
