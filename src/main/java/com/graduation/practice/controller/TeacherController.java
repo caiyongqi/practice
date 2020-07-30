@@ -182,4 +182,9 @@ public class TeacherController {
         mv.addObject("pageInfo", pageInfo);
         return mv;
     }
+
+    @GetMapping("/profile")
+    public String toProfile(Model model){
+        return "/teacher/profile-teacher";
+    }
 }
