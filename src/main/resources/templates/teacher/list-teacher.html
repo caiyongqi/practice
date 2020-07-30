@@ -97,7 +97,7 @@
                                 <td th:text="${item.college.name}" class="text-center"></td>
                                 <td class="text-center">
                                         <a th:href="${'/teacher/toUpdateTeacher?pageNum=' + pageInfo.pageNum + '&teacherId=' + item.teacherId}" class="btn bg-olive btn-xs">编辑</a>
-                                        <a class="btn bg-olive btn-xs">详情</a>
+                                        <a class="btn bg-olive btn-xs" th:href="${'/teacher/profile?teacherId=' + item.teacherId}">详情</a>
                                         <a th:href="${'/teacher/deleteTeacher/' + pageInfo.pageNum + '/' + item.teacherId}" class="btn bg-olive btn-xs">删除</a>
                                     </td>
                             </tr>

@@ -184,7 +184,10 @@ public class TeacherController {
     }
 
     @GetMapping("/profile")
-    public String toProfile(Model model){
+    public String toProfile(HttpServletRequest request, Model model){
+        String teacherId = request.getParameter("teacherId");
+        Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(teacherId));
+        model.addAttribute("teacher", teacher);
         return "/teacher/profile-teacher";
     }
 }
