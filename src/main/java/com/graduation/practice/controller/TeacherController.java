@@ -14,13 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/teacher")
 @Controller
@@ -36,7 +40,7 @@ public class TeacherController {
     }
 
     @GetMapping("/findAllTeacher")
-    public ModelAndView findAllAdmin(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, HttpSession session){
+    public ModelAndView findAllTeacher(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, HttpSession session){
 
         PageHelper.startPage(pageNum, pageSize);
         // 查询
@@ -108,24 +112,53 @@ public class TeacherController {
         String teacherId = request.getParameter("teacherId");
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
         Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(teacherId));
+        System.out.println(teacher);
+        List<College> colleges = collegeService.findAllCollege();
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("update-teacher");
+        mv.setViewName("/teacher/update-teacher");
         mv.addObject("teacher", teacher);
         mv.addObject("pageNum", pageNum);
+        mv.addObject("colleges", colleges);
         return mv;
     }
 
     // 更新用户
     @PostMapping("/updateTeacher")
     @ResponseBody
-    public Result<Teacher> updateTeacher(HttpServletRequest request, HttpSession session){
-        // 参数
-        String teacherId = request.getParameter("teacherId");
-//        String password = MD5Utils.code(request.getParameter("password"));
-        int pageNum = Integer.parseInt(request.getParameter("pageNum"));
-//        Teacher teacher = new Teacher(teacherId, password);
-        Teacher teacher = new Teacher(teacherId);
+    public Result<Teacher> updateTeacher(@RequestParam("photo") MultipartFile file, HttpServletRequest request){
         Result<Teacher> result = new Result<>();
+        String photoUrl = null;
+        if (!file.isEmpty()) {
+            String fileName = file.getOriginalFilename();  // 文件名
+            assert fileName != null;
+            String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
+            String filePath = "F:/IDEA_projects/practice/src/main/resources/static/photo/"; // 上传后的路径
+            fileName = UUID.randomUUID() + suffixName; // 新文件名
+            File dest = new File(filePath + fileName);
+            if (!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdirs();
+            }
+            try {
+                file.transferTo(dest);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            photoUrl = "/photo/" + fileName;
+        }
+
+        // 参数
+        String name = request.getParameter("name");
+        String teacherId = request.getParameter("teacherId");
+        int age = Integer.parseInt(request.getParameter("age"));
+        int gender = Integer.parseInt(request.getParameter("gender"));
+        String address = request.getParameter("address");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("name");
+        int collegeId = Integer.parseInt(request.getParameter("collegeId"));
+        int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+
+        Teacher teacher = new Teacher(teacherId, name, age, gender, address, email, phoneNumber, collegeId, photoUrl);
+
         if(teacherService.updateTeacher(teacher) == 1){
             result.setMessage("更新用户成功");
         }else{
