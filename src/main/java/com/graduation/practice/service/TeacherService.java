@@ -11,5 +11,5 @@ public interface TeacherService {
     int deleteSelectedTeacher(List<String> teacherIdList);
     int deleteTeacher(String teacherId);
     int updateTeacher(Teacher teacher);
-    List<Teacher> searchAllTeacherByTeacherId(String teacherKeyword, String teacherId);
+    List<Teacher> searchAllTeacherByTeacherName(String teacherKeyword);
 }

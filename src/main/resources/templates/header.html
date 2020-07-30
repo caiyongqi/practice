@@ -246,7 +246,7 @@
 
 <!--            </ul>-->
             <ul class="nav navbar-nav" th:object="${session}">
-                <li class="dropdown user user-menu" style="position: fixed;right: 10px;top: -3px;">
+                <li class="dropdown user user-menu" style="position: fixed;right: 10px;top: -3px;background-color: #605ca8;">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img th:src="*{photoUrl} == null ? 'https://i.niupic.com/images/2020/07/29/8sZX.png' : *{photoUrl}" class="user-image" alt="User Image">
                         <span class="hidden-xs" th:text="${session.user.role}"></span>

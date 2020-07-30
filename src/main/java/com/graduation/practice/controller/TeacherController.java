@@ -2,13 +2,17 @@ package com.graduation.practice.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.graduation.practice.entity.College;
 import com.graduation.practice.entity.Result;
 import com.graduation.practice.entity.Teacher;
+import com.graduation.practice.entity.User;
+import com.graduation.practice.service.CollegeService;
 import com.graduation.practice.service.TeacherService;
 import com.graduation.practice.service.UserService;
 import com.graduation.practice.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,10 +27,12 @@ import java.util.List;
 public class TeacherController {
     private final TeacherService teacherService;
     private final UserService userService;
+    private final CollegeService collegeService;
     @Autowired
-    public TeacherController(TeacherService teacherService, UserService userService) {
+    public TeacherController(TeacherService teacherService, UserService userService, CollegeService collegeService) {
         this.teacherService = teacherService;
         this.userService = userService;
+        this.collegeService = collegeService;
     }
 
     @GetMapping("/findAllTeacher")
@@ -35,7 +41,6 @@ public class TeacherController {
         PageHelper.startPage(pageNum, pageSize);
         // 查询
         List<Teacher> teachers = teacherService.findAllTeacher();
-        System.out.println(teachers);
         PageInfo<Teacher> pageInfo = new PageInfo<>(teachers);
         // 视图
         ModelAndView mv = new ModelAndView();
@@ -45,7 +50,9 @@ public class TeacherController {
     }
 
     @GetMapping("/toAddTeacher")
-    public String toAddTeacher(){
+    public String toAddTeacher(Model model){
+        List<College> colleges = collegeService.findAllCollege();
+        model.addAttribute("colleges", colleges);
         return "/teacher/add-teacher";
     }
 
@@ -54,8 +61,13 @@ public class TeacherController {
     public Result<Teacher> addTeacher(HttpServletRequest request, HttpSession session){
         // 参数
         String teacherId = request.getParameter("teacherId");
-//        String password = MD5Utils.code(request.getParameter("password"));
-        Teacher teacher = new Teacher(teacherId);
+        String password = MD5Utils.code(request.getParameter("password"));
+        String name = request.getParameter("name");
+        int gender = Integer.parseInt(request.getParameter("gender"));
+        int collegeId = Integer.parseInt(request.getParameter("collegeId"));
+        User user = new User(teacherId, password, 3, "教师");
+        userService.saveUser(user);
+        Teacher teacher = new Teacher(teacherId, name, gender, collegeId);
         Teacher existedTeacher = teacherService.findTeacherByTeacherId(teacher);
         Result<Teacher> result = new Result<>();
         if(existedTeacher != null){
@@ -126,17 +138,15 @@ public class TeacherController {
     // 搜索用户
     @RequestMapping("/searchTeacher")
     public ModelAndView searchTeacher(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "") String teacherKeyword, HttpSession session){
-//        session.setAttribute("teacherKeyword", teacherKeyword);
-//        PageHelper.startPage(pageNum, pageSize);
-//        // 获取参数
-//        teacher teacher = (teacher) session.getAttribute("teacher");
-//        // 查询
-//        List<teacher> teachers = teacherService.searchAllAdminByAccount(keyword, teacher.getAccount());
-//        PageInfo<teacher> pageInfo = new PageInfo<>(teachers);
-//        // 视图
+        session.setAttribute("teacherKeyword", teacherKeyword);
+        PageHelper.startPage(pageNum, pageSize);
+
+        List<Teacher> teachers = teacherService.searchAllTeacherByTeacherName(teacherKeyword);
+        PageInfo<Teacher> pageInfo = new PageInfo<>(teachers);
+
         ModelAndView mv = new ModelAndView();
-//        mv.setViewName("admin-list");
-//        mv.addObject("pageInfo", pageInfo);
+        mv.setViewName("/teacher/list-teacher");
+        mv.addObject("pageInfo", pageInfo);
         return mv;
     }
 }

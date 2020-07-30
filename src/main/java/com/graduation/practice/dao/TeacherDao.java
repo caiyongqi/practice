@@ -22,5 +22,5 @@ public interface TeacherDao {
     // 更新用户
     int updateTeacher(Teacher teacher);
     // 根据账户，模糊查询
-    List<Teacher> searchAllTeacherByTeacherId(@Param("teacherKeyword") String teacherKeyword, @Param("teacherId") String teacherId);
+    List<Teacher> searchAllTeacherByTeacherName(@Param("teacherKeyword") String teacherKeyword);
 }

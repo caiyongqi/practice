@@ -50,7 +50,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> searchAllTeacherByTeacherId(String teacherKeyword, String teacherId) {
-        return teacherDao.searchAllTeacherByTeacherId(teacherKeyword, teacherId);
+    public List<Teacher> searchAllTeacherByTeacherName(String teacherKeyword) {
+        return teacherDao.searchAllTeacherByTeacherName(teacherKeyword);
     }
 }
