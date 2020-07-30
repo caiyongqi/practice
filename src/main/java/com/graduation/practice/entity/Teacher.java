@@ -22,4 +22,10 @@ public class Teacher {
     public Teacher(String teacherId) {
         this.teacherId = teacherId;
     }
+    public Teacher(String teacherId, String name, int gender, int collegeId){
+        this.teacherId = teacherId;
+        this.name = name;
+        this.gender = gender;
+        this.collegeId = collegeId;
+    }
 }

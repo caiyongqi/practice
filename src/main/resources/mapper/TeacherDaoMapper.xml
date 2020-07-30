@@ -7,7 +7,9 @@
     <select id="findAllTeacher" resultMap="teacherMap">
         SELECT teacher.id,teacher.teacherId,teacher.name,teacher.gender,college.id AS college_id,college.name AS college_name FROM teacher,college WHERE teacher.collegeID = college.id ORDER BY teacher.id
     </select>
-    <insert id="saveTeacher" parameterType="Teacher"></insert>
+    <insert id="saveTeacher" parameterType="Teacher">
+        INSERT INTO teacher SET teacherId = #{teacherId}, `name` = #{name}, gender = #{gender}, collegeId = #{collegeId}
+    </insert>
     <delete id="deleteSelectedTeacher" parameterType="list">
         DELETE FROM teacher WHERE teacherId IN
         <foreach collection="list" item="teacherId" open="(" close=")" separator=",">
@@ -20,12 +22,12 @@
     <update id="updateTeacher" parameterType="Teacher">
         UPDATE teacher SET password = #{password} WHERE teacherId = #{teacherId}
     </update>
-    <select id="searchAllTeacherByTeacherId" parameterType="String" resultType="Teacher">
-        SELECT * FROM teacher WHERE teacherId != #{teacherId}
+    <select id="searchAllTeacherByTeacherName" parameterType="String" resultMap="teacherMap">
+        SELECT teacher.id,teacher.teacherId,teacher.name,teacher.gender,college.id AS college_id,college.name AS college_name FROM teacher,college WHERE teacher.collegeID = college.id
         <if test="teacherKeyword != null and teacherKeyword != ''">
-            AND teacherId like concat("%", #{teacherKeyword}, "%")
+            AND teacher.name like concat("%", #{teacherKeyword}, "%")
         </if>
-        ORDER BY id
+        ORDER BY teacher.id
     </select>
 
     <!-- 多对一关系 -->
