@@ -14,4 +14,8 @@ public interface CounselorService {
 
     List<Student> searchAllStudentById(String keyword, String account);
 
+    Student findStudentByStudentId(Student student);
+
+    int updateStudent(User user);
+
 }

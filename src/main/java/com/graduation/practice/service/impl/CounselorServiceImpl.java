@@ -31,4 +31,14 @@ public class CounselorServiceImpl implements CounselorService {
     public List<Student> searchAllStudentById(String keyword, String account) {
         return counselorDao.searchAllStudentById(keyword,account);
     }
+
+    @Override
+    public Student findStudentByStudentId(Student student) {
+        return counselorDao.findStudentByStudentId(student);
+    }
+
+    @Override
+    public int updateStudent(User user) {
+        return counselorDao.updateStudent(user);
+    }
 }

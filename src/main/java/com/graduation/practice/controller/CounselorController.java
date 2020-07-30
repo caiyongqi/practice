@@ -4,13 +4,17 @@ package com.graduation.practice.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.graduation.practice.entity.Counselor;
+import com.graduation.practice.entity.Result;
 import com.graduation.practice.entity.Student;
 import com.graduation.practice.entity.User;
 import com.graduation.practice.service.CounselorService;
+import com.graduation.practice.utils.MD5Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import sun.font.ScriptRun;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -25,14 +29,13 @@ public class CounselorController {
 
     //辅导员所带学生信息展示
     @GetMapping("/findAllStudent04")
-    public ModelAndView findAllStudent04(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue= "5") int pageSize, String studentId, HttpSession session){
+    public ModelAndView findAllStudent04(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue= "10") int pageSize, HttpSession session){
+        PageHelper.startPage(pageNum, pageSize);
         // 获取参数
         User user = (User) session.getAttribute("user");
-        PageHelper.startPage(pageNum, pageSize);
         // 查询
         List<Student> students = counselorService.findAllStudent(user);
         PageInfo<Student> pageInfo = new PageInfo<>(students);
-        System.out.println(pageInfo);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("counselor/studentDataList");
         mv.addObject("pageInfo", pageInfo);
@@ -56,6 +59,39 @@ public class CounselorController {
         mv.setViewName("counselor/studentDataList");
         mv.addObject("pageInfo", pageInfo);
         return mv;
+    }
+
+    // toUpdateStudent
+    // 如果使用路径参数就不能返回模板，静态资源无法加载
+    @GetMapping("/toUpdateStudent")
+    public ModelAndView toUpdateStudent(HttpServletRequest request) {
+        String studentId = request.getParameter("studentId");
+        int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+        Student student= counselorService.findStudentByStudentId(new Student(studentId));
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("counselor/update-studentPassword");
+        mv.addObject("student", student);
+        mv.addObject("pageNum", pageNum);
+        return mv;
+    }
+
+    // 更新学生密码
+    @PostMapping("/updateStudent")
+    @ResponseBody
+    public Result<User> updateStudent(HttpServletRequest request, HttpSession session) {
+        // 参数
+        String account = request.getParameter("studentId");
+        String password = MD5Utils.code(request.getParameter("password"));
+        int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+        User user = new User(account, password);
+        Result<User> result = new Result<>();
+        if (counselorService.updateStudent(user) == 1) {
+            result.setMessage("更新用户成功");
+        } else {
+            result.setMessage("更新用户失败");
+        }
+        result.setData(user);
+        return result;
     }
 
 
