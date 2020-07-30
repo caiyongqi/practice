@@ -149,6 +149,28 @@
                             })
                         }
                     })
+
+                    function search() {
+                        var keyword = $('#search_input').val();
+                        $.ajax({
+                            type : 'post',
+                            url: "/teacher/searchTeacher#content",
+                            data:  {"teacherKeyword":keyword},
+                            success: function (res) {
+                                // console.log($(res).find('div[id="content"]').html())
+                                $("#content").html($(res).find('div[id="content"]').html());
+                            }
+                        })
+                    }
+                    $('#search_input').bind('keypress', function (event) {
+                        if(13 === event.keyCode){
+                            event.preventDefault();
+                            search();
+                        }
+                    })
+                    $('#search').bind('click', function (event) {
+                        search();
+                    })
                 }, 1000)
             </script>
         </section>
@@ -251,6 +273,7 @@
             alert("请至少选中一个进行删除");
             return;
         }
+        let pageNum = parseInt($('#pageNum').val())
         if (confirm("确定要删除这些用户吗?")) {
             var teacherList = [];
             $("input[name='ids']:checked").each(
@@ -264,8 +287,8 @@
                 url: "/teacher/deleteSelectedTeacher",
                 data: {teacherList:teacherList.toString()},
                 success: function() {
+                    $(location).attr('href', '/teacher/findAllTeacher?pageNum=' + pageNum)
                     alert("删除成功");
-                    location.reload();
                 },
                 error: function() {
                     alert("删除失败")
@@ -296,28 +319,6 @@
     //         }
     //     })
     // })
-
-    function search() {
-        var keyword = $('#search_input').val();
-        $.ajax({
-            type : 'post',
-            url: "/teacher/searchTeacher#content",
-            data:  {"keyword":keyword},
-            success: function (res) {
-                // console.log($(res).find('div[id="content"]').html())
-                $("#content").html($(res).find('div[id="content"]').html());
-            }
-        })
-    }
-    $('#search_input').bind('keypress', function (event) {
-        if(13 === event.keyCode){
-            event.preventDefault();
-            search();
-        }
-    })
-    $('#search').bind('click', function (event) {
-        search();
-    })
 
     // function enableEdit(type) {
     //     type = parseInt(type)

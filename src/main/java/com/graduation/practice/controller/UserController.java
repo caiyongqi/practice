@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -132,13 +133,13 @@ public class UserController {
     // 批量删除
     @PostMapping("/deleteSelectedUser")
     public String deleteSelectedUser(HttpServletRequest request) {
+        int pageNum = Integer.parseInt(request.getParameter("pageNum"));
         String userList = request.getParameter("userList");
         String[] users = userList.split(",");
         List<String> accounts = new ArrayList<>();
         Collections.addAll(accounts, users);
-        System.out.println(accounts);
         userService.deleteSelectedUser(accounts);
-        return "redirect:findAllAdmin";
+        return "redirect:findAllAdmin?pageNum=" + pageNum;
     }
 
     // 删除单个用户
