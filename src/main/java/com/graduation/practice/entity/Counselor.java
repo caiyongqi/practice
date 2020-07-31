@@ -3,25 +3,23 @@ package com.graduation.practice.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.sql.Date;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Student {
+@AllArgsConstructor
+public class Counselor {
     private int id;
-    private String studentId;
+    private String counselorId;
     private String name;
     private int age;
     private int gender;
     private String address;
     private String email;
     private String phoneNumber;
-    private int classId;
+    private int disciplineId;
     private String photoUrl;
-    private Date date;
 
-    public Student(String studentId) {
-        this.studentId = studentId;
+    public Counselor(String counselorId){
+        this.counselorId = counselorId;
     }
 }
