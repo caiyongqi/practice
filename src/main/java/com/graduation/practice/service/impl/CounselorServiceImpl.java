@@ -28,8 +28,8 @@ public class CounselorServiceImpl implements CounselorService {
     }
 
     @Override
-    public List<Student> searchAllStudentById(String keyword, String account) {
-        return counselorDao.searchAllStudentById(keyword,account);
+    public List<Student> searchAllStudentById(String counselorStudentKeyword, String account) {
+        return counselorDao.searchAllStudentById(counselorStudentKeyword,account);
     }
 
     @Override

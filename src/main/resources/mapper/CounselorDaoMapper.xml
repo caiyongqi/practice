@@ -16,8 +16,8 @@
 
     <select id="searchAllStudentById"  parameterType="String" resultType="Student">
         SELECT * FROM student WHERE classId in (SELECT id FROM classes WHERE disciplineId = (SELECT disciplineId FROM counselor WHERE counselorId = #{account}))
-        <if test="keyword != null and keyword != ''">
-            AND student.name like concat("%", #{keyword}, "%")
+        <if test="counselorStudentKeyword != null and counselorStudentKeyword != ''">
+            AND student.name like concat("%", #{counselorStudentKeyword}, "%")
         </if>
         ORDER BY id
     </select>

@@ -14,7 +14,7 @@ import java.util.List;
 public interface CounselorDao {
     int getTotal();
     List<Student> findAllStudent(User user);
-    List<Student> searchAllStudentById(@Param("keyword") String keyword, @Param("account") String account);
+    List<Student> searchAllStudentById(@Param("counselorStudentKeyword") String counselorStudentKeyword, @Param("account") String account);
 
     Student findStudentByStudentId(Student student);
     int updateStudent(User user);

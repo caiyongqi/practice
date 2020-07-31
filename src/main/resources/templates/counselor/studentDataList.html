@@ -65,7 +65,7 @@
                         </div>
                         <div class="box-tools pull-right">
                             <div class="has-feedback">
-                                <input type="text" class="form-control input-sm" placeholder="搜索" id="search_input" th:value="${session.keyword == null ? '' : session.keyword}">
+                                <input type="text" class="form-control input-sm" placeholder="搜索" id="search_input" th:value="${session.counselorStudentKeyword == null ? '' : session.counselorStudentKeyword}">
                                 <span class="glyphicon glyphicon-search form-control-feedback" id="search"></span>
                             </div>
                         </div>
@@ -126,12 +126,12 @@
                     <div class="box-tools pull-right">
                         <ul class="pagination">
                             <li>
-                                <a th:href="${session.keyword == null ? '/counselor/findAllStudent04?pageNum=1' : '/counselor/searchStudent?pageNum=1' + '&keyword=' + session.keyword}" aria-label="Previous">首页</a>
+                                <a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=1' : '/counselor/searchStudent?pageNum=1' + '&counselorStudentKeyword=' + session.counselorStudentKeyword}" aria-label="Previous">首页</a>
                             </li>
-                            <li><a th:href="${session.keyword == null ? '/counselor/findAllStudent04?pageNum=' + (pageInfo.pageNum - 1) : '//counselor/searchStudent?pageNum=' + (pageInfo.pageNum - 1) + '&keyword=' + session.keyword}">上一页</a></li>
-                            <li><a th:href="${session.keyword == null ? '/counselor/findAllStudent04?pageNum=' + (pageInfo.pageNum + 1) : '/counselor/searchStudent?pageNum=' + (pageInfo.pageNum + 1) + '&keyword=' + session.keyword}">下一页</a></li>
+                            <li><a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=' + (pageInfo.pageNum - 1) : '//counselor/searchStudent?pageNum=' + (pageInfo.pageNum - 1) + '&counselorStudentKeyword=' + session.counselorStudentKeyword}">上一页</a></li>
+                            <li><a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=' + (pageInfo.pageNum + 1) : '/counselor/searchStudent?pageNum=' + (pageInfo.pageNum + 1) + '&counselorStudentKeyword=' + session.counselorStudentKeyword}">下一页</a></li>
                             <li>
-                                <a th:href="${session.keyword == null ? '/counselor/findAllStudent04?pageNum=' + pageInfo.pages : '/counselor/searchStudent?pageNum=' + pageInfo.pages + '&keyword=' + session.keyword}" aria-label="Next">尾页</a>
+                                <a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=' + pageInfo.pages : '/counselor/searchStudent?pageNum=' + pageInfo.pages + '&counselorStudentKeyword=' + session.counselorStudentKeyword}" aria-label="Next">尾页</a>
                             </li>
                         </ul>
                     </div>
@@ -304,11 +304,11 @@
 
 
     function search() {
-        var keyword = $('#search_input').val();
+        var counselorStudentKeyword = $('#search_input').val();
         $.ajax({
             type : 'post',
             url: "/counselor/searchStudent#content",
-            data:  {"keyword":keyword},
+            data:  {"counselorStudentKeyword":counselorStudentKeyword},
             success: function (res) {
                 // console.log($(res).find('div[id="content"]').html())
                 $("#content").html($(res).find('div[id="content"]').html());

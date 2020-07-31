@@ -12,7 +12,7 @@ import java.util.List;
 public interface CounselorService {
     List<Student> findAllStudent(User user);
 
-    List<Student> searchAllStudentById(String keyword, String account);
+    List<Student> searchAllStudentById(String counselorStudentKeyword, String account);
 
     Student findStudentByStudentId(Student student);
 

@@ -45,13 +45,13 @@ public class CounselorController {
 
     // 搜索学生
     @RequestMapping("/searchStudent")
-    public ModelAndView searchUser(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "") String keyword, HttpSession session){
-        session.setAttribute("keyword", keyword);
+    public ModelAndView searchUser(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "") String counselorStudentKeyword, HttpSession session){
+        session.setAttribute("counselorStudentKeyword", counselorStudentKeyword);
         PageHelper.startPage(pageNum, pageSize);
         // 获取参数
         User user = (User) session.getAttribute("user");
         // 查询
-        List<Student> students = counselorService.searchAllStudentById(keyword, user.getAccount());
+        List<Student> students = counselorService.searchAllStudentById(counselorStudentKeyword, user.getAccount());
         PageInfo<Student> pageInfo = new PageInfo<>(students);
 
         // 视图
@@ -94,6 +94,12 @@ public class CounselorController {
         return result;
     }
 
+    @GetMapping("/counselorProfile")
+    public String counselorProfile(HttpSession session){
+        User user = (User) session.getAttribute("user");
+
+        return "/counselor/counselorProfile";
+    }
 
 
 }
