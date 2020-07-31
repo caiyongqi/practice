@@ -30,4 +30,11 @@
     <select id="adminFindStudentByStudentId" parameterType="String" resultType="Student">
         SELECT * FROM student WHERE studentId = #{studentId}
     </select>
+
+    <delete id="deleteSelectedStudent" parameterType="List">
+        DELETE FROM student WHERE studentId IN
+        <foreach collection="list" item="studentId" open="(" close=")" separator=",">
+            #{studentId}
+        </foreach>
+    </delete>
 </mapper>

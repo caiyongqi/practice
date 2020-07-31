@@ -59,6 +59,8 @@
                         <div class="pull-left">
                             <div class="form-group form-inline">
                                 <div class="btn-group">
+                                    <a href="/user/toAddUser" type="button" class="btn btn-default" title="新建" id="addUser"><i class="fa fa-file-o"></i> 新建</a>
+                                    <button type="button" class="btn btn-default" title="删除" onclick="deleteAll()"><i class="fa fa-trash-o"></i> 删除</button>
                                     <button type="button" class="btn btn-default" title="刷新" onclick="refresh()"><i class="fa fa-refresh"></i> 刷新</button>
                                 </div>
                             </div>
@@ -76,7 +78,6 @@
                                 <th class="" style="padding-right:0px;">
                                     <input id="selall" type="checkbox" class="icheckbox_square-blue">
                                 </th>
-                                <th class="sorting_asc">ID</th>
                                 <th class="sorting_desc">学号</th>
                                 <th class="text-center">姓名</th>
                                 <th class="text-center">年龄</th>
@@ -90,20 +91,19 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="student:${pageInfo.list}">
-                                <td><input name="ids" type="checkbox" value="${student.id}"></td>
-                                <td th:text="${student.id}"></td>
-                                <td th:text="${student.studentId}"></td>
-                                <td th:text="${student.name}"></td>
-                                <td th:text="${student.age}"></td>
-                                <td th:text="${student.gender}==1?'男':'女'"></td>
-                                <td th:text="${student.address}"></td>
-                                <td th:text="${student.email}"></td>
-                                <td th:text="${student.phoneNumber}"></td>
-                                <td th:text="${student.classes.name}"></td>
-                                <td th:text="${student.date}"></td>
+                            <tr th:each="item:${pageInfo.list}">
+                                <td><input name="ids" type="checkbox" th:value="${item.studentId}"></td>
+                                <td th:text="${item.studentId}"></td>
+                                <td th:text="${item.name}"></td>
+                                <td th:text="${item.age}"></td>
+                                <td th:text="${item.gender}==1?'男':'女'"></td>
+                                <td th:text="${item.address}"></td>
+                                <td th:text="${item.email}"></td>
+                                <td th:text="${item.phoneNumber}"></td>
+                                <td th:text="${item.classes.name}"></td>
+                                <td th:text="${item.date}"></td>
                                 <td class="text-center">
-                                    <a th:href="${'/counselor/toUpdateStudent?pageNum=' + pageInfo.pageNum + '&studentId=' + student.studentId }" class="btn bg-olive btn-xs" >修改密码</a>
+                                    <a th:href="${'/counselor/toUpdateStudent?pageNum=' + pageInfo.pageNum + '&studentId=' + item.studentId }" class="btn bg-olive btn-xs" >修改密码</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -128,7 +128,7 @@
                             <li>
                                 <a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=1' : '/counselor/searchStudent?pageNum=1' + '&counselorStudentKeyword=' + session.counselorStudentKeyword}" aria-label="Previous">首页</a>
                             </li>
-                            <li><a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=' + (pageInfo.pageNum - 1) : '//counselor/searchStudent?pageNum=' + (pageInfo.pageNum - 1) + '&counselorStudentKeyword=' + session.counselorStudentKeyword}">上一页</a></li>
+                            <li><a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=' + (pageInfo.pageNum - 1) : '/counselor/searchStudent?pageNum=' + (pageInfo.pageNum - 1) + '&counselorStudentKeyword=' + session.counselorStudentKeyword}">上一页</a></li>
                             <li><a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=' + (pageInfo.pageNum + 1) : '/counselor/searchStudent?pageNum=' + (pageInfo.pageNum + 1) + '&counselorStudentKeyword=' + session.counselorStudentKeyword}">下一页</a></li>
                             <li>
                                 <a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=' + pageInfo.pages : '/counselor/searchStudent?pageNum=' + pageInfo.pages + '&counselorStudentKeyword=' + session.counselorStudentKeyword}" aria-label="Next">尾页</a>
@@ -256,21 +256,22 @@
             alert("请至少选中一个进行删除");
             return;
         }
+        let pageNum = parseInt($('#pageNum').val())
         if (confirm("确定要删除这些用户吗?")) {
-            var userList = [];
+            var studentList = [];
             $("input[name='ids']:checked").each(
                 function () {
-                    userList.push($(this).val());
+                    studentList.push($(this).val());
                 }
             );
 
             $.ajax({
                 type: "post",
-                url: "/user/deleteSelectedUser",
-                data: {userList:userList.toString()},
+                url: "/counselor/deleteSelectedStudent",
+                data: {studentList:studentList.toString()},
                 success: function() {
+                    $(location).attr('href', '/counselor/findAllStudent04?pageNum=' + pageNum)
                     alert("删除成功");
-                    location.reload();
                 },
                 error: function() {
                     alert("删除失败")
@@ -278,6 +279,7 @@
             })
         }
     }
+
 
     // 刷新
     function refresh() {

@@ -17,4 +17,6 @@ public interface StudentDao {
     int updateStudent(Student student);
     Student adminFindStudentByStudentId(String student);
 
+    // 批量删除
+    int deleteSelectedStudent(List<String> studentIdList);
 }

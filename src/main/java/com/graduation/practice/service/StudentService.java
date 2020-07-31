@@ -12,4 +12,6 @@ public interface StudentService {
     int insertStudent(Student student);
     int updateStudent(Student student);
     Student adminFindStudentByStudentId(String studentID);
+
+    int deleteSelectedStudent(List<String> studentIdList);
 }

@@ -46,5 +46,7 @@ public class CounselorServiceImpl implements CounselorService {
     public Counselor findCounselorByCounselorId(Counselor counselor) {
         return counselorDao.findCounselorByCounselorId(counselor);
     }
+
+
 }
 

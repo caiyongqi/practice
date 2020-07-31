@@ -8,6 +8,8 @@ import com.graduation.practice.entity.Result;
 import com.graduation.practice.entity.Student;
 import com.graduation.practice.entity.User;
 import com.graduation.practice.service.CounselorService;
+import com.graduation.practice.service.StudentService;
+import com.graduation.practice.service.UserService;
 import com.graduation.practice.utils.MD5Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ import sun.font.ScriptRun;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RequestMapping("/counselor")
@@ -23,8 +27,12 @@ import java.util.List;
 public class CounselorController {
 
     private final CounselorService counselorService;
-    public CounselorController(CounselorService counselorService) {
+    private final UserService userService;
+    private final StudentService studentService;
+    public CounselorController(CounselorService counselorService,UserService userService,StudentService studentService) {
         this.counselorService = counselorService;
+        this.userService = userService;
+        this.studentService = studentService;
     }
 
     //辅导员所带学生信息展示
@@ -100,6 +108,17 @@ public class CounselorController {
 
         return "/counselor/counselorProfile";
     }
-
+    
+    // 批量删除
+    @PostMapping("/deleteSelectedStudent")
+    public String deleteSelectedstudent(HttpServletRequest request) {
+        String studentList = request.getParameter("studentList");
+        String[] students = studentList.split(",");
+        List<String> studentIds = new ArrayList<>();
+        Collections.addAll(studentIds, students);
+        studentService.deleteSelectedStudent(studentIds);
+        userService.deleteSelectedUser(studentIds);
+        return "redirect:findAllStudent04";
+    }
 
 }
