@@ -18,6 +18,8 @@ public class Counselor {
     private String phoneNumber;
     private int disciplineId;
     private String photoUrl;
-    public Counselor(String counselorId){
+
+    public Counselor(String counselorId) {
         this.counselorId = counselorId;
     }
+}
