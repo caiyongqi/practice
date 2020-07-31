@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class Result<T>{
     private String message;
     T data;
+    private int status;
 
     public String getMessage() {
         return message;

@@ -18,4 +18,5 @@ public interface CounselorService {
 
     int updateStudent(User user);
 
+    Counselor findCounselorByCounselorId(Counselor counselor);
 }

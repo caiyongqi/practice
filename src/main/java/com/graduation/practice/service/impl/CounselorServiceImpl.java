@@ -41,4 +41,10 @@ public class CounselorServiceImpl implements CounselorService {
     public int updateStudent(User user) {
         return counselorDao.updateStudent(user);
     }
+
+    @Override
+    public Counselor findCounselorByCounselorId(Counselor counselor) {
+        return counselorDao.findCounselorByCounselorId(counselor);
+    }
 }
+

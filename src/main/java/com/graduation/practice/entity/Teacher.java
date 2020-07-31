@@ -19,6 +19,9 @@ public class Teacher {
     private int collegeId;
     private String photoUrl;
     private College college;
+    private String education;
+    private String desc;
+
     public Teacher(String teacherId) {
         this.teacherId = teacherId;
     }

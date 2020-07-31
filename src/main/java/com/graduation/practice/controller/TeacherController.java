@@ -153,7 +153,7 @@ public class TeacherController {
         int gender = Integer.parseInt(request.getParameter("gender"));
         String address = request.getParameter("address");
         String email = request.getParameter("email");
-        String phoneNumber = request.getParameter("name");
+        String phoneNumber = request.getParameter("phoneNumber");
         int collegeId = Integer.parseInt(request.getParameter("collegeId"));
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 
@@ -181,5 +181,14 @@ public class TeacherController {
         mv.setViewName("/teacher/list-teacher");
         mv.addObject("pageInfo", pageInfo);
         return mv;
+    }
+
+    @GetMapping("/profile")
+    public String toProfile(HttpServletRequest request, Model model){
+        String teacherId = request.getParameter("teacherId");
+        Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(teacherId));
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("courseNum", teacherService.getCourseNumByTeacherId(teacherId));
+        return "/teacher/profile-teacher";
     }
 }

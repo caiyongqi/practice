@@ -20,7 +20,14 @@
         DELETE FROM user WHERE account = #{account}
     </delete>
     <update id="updateUser" parameterType="User">
-        UPDATE user SET password = #{password}, `type` = #{type}, role = #{role} WHERE account = #{account}
+        UPDATE user SET password = #{password}
+        <if test="type != null and type != ''">
+            , `type` = #{type}
+        </if>
+        <if test="role != null and role != ''">
+            , role = #{role}
+        </if>
+         WHERE account = #{account}
     </update>
     <select id="searchAllAdminByAccount" parameterType="String" resultType="User">
         SELECT * FROM user WHERE TYPE in (1, 2) AND account != #{account}
