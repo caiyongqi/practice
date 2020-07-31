@@ -29,6 +29,18 @@ public class User {
         this.account = account;
     }
 
+    public User(String account, String password, int type, String role) {
+        this.account = account;
+        this.password = password;
+        this.type = type;
+        this.role = role;
+    }
+
+    public User(String account, String password) {
+        this.account = account;
+        this.password = password;
+    }
+
     public User(String account, String password, String role, int type) {
         this.account = account;
         this.password = password;

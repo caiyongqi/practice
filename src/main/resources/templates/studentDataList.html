@@ -79,26 +79,29 @@
 
                     <!-- 数据表格 -->
                     <div class="table-box">
-
                         <!--工具栏-->
                         <div class="pull-left">
                             <div class="form-group form-inline">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default" title="新增" id="insert" onclick="window.location.href = '/student/toInsertStudent'"><i class="fa fa-file-o"></i>新增</button>
-                                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                                    <button type="button" class="btn btn-default" title="新增" id="insert" onclick="window.location.href = '/adminStudent/toInsertStudent'"><i class="fa fa-file-o"></i>新增</button>
+                                    <button type="button" class="btn btn-default" title="删除" onclick="deleteSelected()"><i class="fa fa-trash-o"></i> 删除</button>
                                 </div>
                             </div>
                         </div>
-
-                        <form action="" method="post">
+                        <!--  搜索  -->
+                        <form action="/adminStudent/toStudentDataList?currentPage=1" method="get">
                             <div class="col-md-3 data">
-                                <input type="text" class="form-control input-sm" placeholder="姓名" name="name">
+                                <input type="text" class="form-control input-sm" placeholder="姓名" name="studentName">
+                                <select data-placeholder="" name="classId" class="form-control input-sm">
+                                    <option th:value="0" selected>班级</option>
+                                    <option th:each="classes:${classList}" th:value="${classes.id}"  th:text="${classes.name}"></option>
+                                </select>
                             </div>
                             <button type="submit" class="btn bg-maroon">搜索</button>
                         </form>
 
-                        <!--工具栏/-->
 
+                        <!--工具栏/-->
                         <!--数据列表-->
                         <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
                             <thead>
@@ -121,7 +124,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="student:${studentList}">
-                                <td><input name="ids" type="checkbox" value="${student.id}"></td>
+                                <td><input name="ids" type="checkbox" th:value="${student.studentId}"></td>
                                 <td th:text="${student.id}"></td>
                                 <td th:text="${student.studentId}"></td>
                                 <td th:text="${student.name}"></td>
@@ -133,38 +136,81 @@
                                 <td th:text="${studentClassMap.get(student.classId)}"></td>
                                 <td th:text="${student.date}"></td>
                                 <td class="text-center">
-                                    <a href="" class="btn bg-olive btn-xs">编辑</a>
-                                    <a href="" class="btn bg-olive btn-xs">删除</a>
+                                    <a th:href="${'/adminStudent/toUpdateStudent?studentId=' + student.studentId}" class="btn bg-olive btn-xs">编辑</a>
+                                    <a th:href="${'/adminStudent/deleteStudent?studentId=' + student.studentId}" class="btn bg-olive btn-xs">删除</a>
                                 </td>
                             </tr>
                             </tbody>
-                            <!--
-                        <tfoot>
-                        <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
-                        </tr>
-                        </tfoot>-->
                         </table>
                         <!--数据列表/-->
-
                     </div>
                     <!-- 数据表格 /-->
-
-
                 </div>
                 <!-- /.box-body -->
 
                 <!-- .box-footer-->
+                <div class="box-footer">
+                    <div class="pull-left">
+                        <div class="form-group form-inline">
+                            总共<span th:text="${pageInfo.pages}"></span>页，共<span th:text="${pageInfo.total}"></span>条数据。 第
+                            <select class="form-control" id="current_page" onchange="changePage()">
+                                <th:block th:each="i,state:${#numbers.sequence(1,pageInfo.pages)}">
+                                    <option th:if="${state.count != pageInfo.pageNum}" th:text="${state.count}" th:value="${state.count}"></option>
+                                    <option selected="selected" th:if="${state.count == pageInfo.pageNum}" th:text="${state.count}" th:value="${state.count}"></option>
+                                </th:block>
+                            </select> 页
+                        </div>
+                    </div>
+                    <!--  翻页  -->
+<!--                    <div class="box-tools pull-right">-->
+<!--                        <ul class="pagination">-->
+<!--                            <li>-->
+<!--                                <a th:href="${'/adminStudent/toStudentDataList?currentPage=1'} " aria-label="Previous">首页</a>-->
+<!--                            </li>-->
+<!--                            <li><a th:href="${'/adminStudent/toStudentDataList?currentPage=' + (pageInfo.pageNum - 1)}" th:if="${pageInfo.pageNum > 1}">上一页</a></li>-->
+<!--                            <li><a th:href="${'/adminStudent/toStudentDataList?currentPage=' + (pageInfo.pageNum + 1)}" th:if="${pageInfo.pageNum < pageInfo.pages}">下一页</a></li>-->
+<!--                            <li>-->
+<!--                                <a th:href="${'/adminStudent/toStudentDataList?currentPage=' + pageInfo.pages}" aria-label="Next">尾页</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+                    <div class="box-tools pull-right">
+                        <ul class="pagination">
+                            <li>
+                                <a th:onclick="page()" aria-label="Previous">首页</a>
+                            </li>
+                            <li><a th:onclick="page()" th:if="${pageInfo.pageNum > 1}">上一页</a></li>
+                            <li><a th:onclick="page(${pageInfo.pageNum + 1})" th:if="${pageInfo.pageNum < pageInfo.pages}">下一页</a></li>
+                            <li>
+                                <a th:onclick="page(pageInfo.pages)" aria-label="Next">尾页</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
                 <!-- /.box-footer-->
+                <script>
+                    setTimeout(function () {
+                        $('#current_page').change(function () {
+                            let page = parseInt($('#current_page').find('option:selected').val())
+                            let pageNum = parseInt($('#pageNum').val())
+                            if (page !== pageNum){
+                                $.ajax({
+                                    type: "get",
+                                    url: "/adminStudent/toStudentDataList",
+                                    data: {currentPage:page},
+                                    success: function (res) {
+                                        $("#content").html($(res).find('div[id="content"]').html());
+                                    }
+                                })
+                            }
+                        })
+                    }, 1000)
+                    function page(obj) {
 
-
-
+                     }
+                </script>
             </div>
-
         </section>
         <!-- 正文区域 /-->
 
@@ -221,6 +267,43 @@
 <script src="../plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="../plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
+    //删除选中
+    function deleteSelected() {
+        // 判断是否 有单选框被选中
+        var checkedNum = $("input[name='ids']:checked").length;
+        // alert(checkedNum);
+        if(checkedNum == 0) {
+            alert("请至少选中一个进行删除!!!!!")
+            return;  // 使方法提前终止
+        }
+        if (confirm("确定要删除这些用户吗?")) {
+            var studentList = new Array();
+            $("input[name='ids']:checked").each(
+                function () {
+                    studentList.push($(this).val());
+                }
+            );
+            var studentListString = studentList.toString();
+            // alert(studentList.toString());
+            // alert(userList);
+
+            // 重点  第二种提交数据的方式   ajax
+            $.ajax({
+                type: "get",
+                url: "/adminStudent/deleteSelected",
+                data: {studentList: studentListString},
+                success: function() {
+                    alert("删除成功");
+                    // loaction.reload();
+                    location.reload();
+                },
+                error: function() {
+                    alert(studentListString);
+                    alert("删除失败")
+                }
+            })
+        }
+    }
 
 
 

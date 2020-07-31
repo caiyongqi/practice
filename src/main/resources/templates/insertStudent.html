@@ -70,11 +70,9 @@
 
         <form action="##" method="post" id="form1" name="form1">
             <section class="content"> <!--产品信息-->
-
                 <div class="panel panel-default">
                     <div class="panel-heading">填写学生信息</div>
                     <div class="row data-type">
-
                         <div class="col-md-2 title">学号</div>
                         <div class="col-md-4 data">
                             <input type="text" class="form-control" name="studentId"
@@ -225,7 +223,7 @@
 
         $.ajax({
             type: "GET",//方法类型
-            url: "/student/insertStudent" ,//url
+            url: "/adminStudent/insertStudent" ,//url
             data: $('#form1').serialize(),
             success: function (result) {
                 console.log(result);//打印服务端返回的数据(调试用)

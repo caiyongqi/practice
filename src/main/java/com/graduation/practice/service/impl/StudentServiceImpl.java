@@ -10,16 +10,37 @@ import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+
+    private final StudentDao studentDao;
     @Autowired
-    StudentDao studentDao;
+    public StudentServiceImpl(StudentDao studentDao) {
+        this.studentDao = studentDao;
+    }
 
     @Override
-    public List<Student> findAllStudent() {
-        return studentDao.findAllStudent();
+    public Student findStudentByStudentId(Student student) {
+        return studentDao.findStudentByStudentId(student);
+    }
+
+    @Override
+    public List<Student> findAllStudent(String studentName, int classId) {
+        return studentDao.findAllStudent(studentName,classId);
     }
 
     @Override
     public int insertStudent(Student student) {
         return studentDao.insertStudent(student);
     }
+
+    @Override
+    public int updateStudent(Student student) {
+        return studentDao.updateStudent(student);
+    }
+
+    @Override
+    public Student adminFindStudentByStudentId(String studentID) {
+        return studentDao.adminFindStudentByStudentId(studentID);
+    }
+
+
 }

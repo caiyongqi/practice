@@ -20,4 +20,8 @@ public class Student {
     private int classId;
     private String photoUrl;
     private Date date;
+
+    public Student(String studentId) {
+        this.studentId = studentId;
+    }
 }

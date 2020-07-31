@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduation.practice.dao.TeacherDao">
+    <select id="findTeacherByTeacherId" parameterType="Teacher" resultMap="teacherMap">
+        SELECT teacher.id,teacher.education,teacher.desc,teacher.teacherId,teacher.name,teacher.gender,teacher.address,teacher.collegeId,teacher.phoneNumber,teacher.photoUrl,teacher.age,teacher.email,college.id AS college_id,college.name AS college_name FROM teacher,college WHERE teacher.teacherId = #{teacherId} AND teacher.collegeId = college.id
+    </select>
+    <select id="findAllTeacher" resultMap="teacherMap">
+        SELECT teacher.id,teacher.teacherId,teacher.name,teacher.gender,college.id AS college_id,college.name AS college_name FROM teacher,college WHERE teacher.collegeId = college.id ORDER BY teacher.id
+    </select>
+    <insert id="saveTeacher" parameterType="Teacher">
+        INSERT INTO teacher SET teacherId = #{teacherId}, `name` = #{name}, gender = #{gender}, collegeId = #{collegeId}
+    </insert>
+    <delete id="deleteSelectedTeacher" parameterType="list">
+        DELETE FROM teacher WHERE teacherId IN
+        <foreach collection="list" item="teacherId" open="(" close=")" separator=",">
+            #{teacherId}
+        </foreach>
+    </delete>
+    <delete id="deleteTeacher" parameterType="String">
+        DELETE FROM teacher WHERE teacherId = #{teacherId}
+    </delete>
+    <update id="updateTeacher" parameterType="Teacher">
+        UPDATE teacher SET `name` = #{name}, age = #{age}, gender = #{gender}, address = #{address}, email = #{email}, phoneNumber = #{phoneNumber}, collegeId = #{collegeId}, photoUrl = #{photoUrl} WHERE teacherId = #{teacherId}
+    </update>
+    <select id="searchAllTeacherByTeacherName" parameterType="String" resultMap="teacherMap">
+        SELECT teacher.id,teacher.teacherId,teacher.name,teacher.gender,college.id AS college_id,college.name AS college_name FROM teacher,college WHERE teacher.collegeId = college.id
+        <if test="teacherKeyword != null and teacherKeyword != ''">
+            AND teacher.name like concat("%", #{teacherKeyword}, "%")
+        </if>
+        ORDER BY teacher.id
+    </select>
+
+    <!-- 多对一关系 -->
+    <resultMap type="Teacher" id="teacherMap">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="teacherId" property="teacherId" />
+        <result column="education" property="education" />
+        <result column="desc" property="desc" />
+        <result column="gender" property="gender" />
+        <result column="age" property="age" />
+        <result column="address" property="address" />
+        <result column="email" property="email" />
+        <result column="phoneNumber" property="phoneNumber" />
+        <result column="collegeId" property="collegeId" />
+        <result column="photoUrl" property="photoUrl" />
+        <association property="college" javaType="College">
+            <id column="college_id" property="id" />
+            <result column="college_name" property="name" />
+        </association>
+    </resultMap>
+</mapper>

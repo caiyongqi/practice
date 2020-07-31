@@ -17,6 +17,10 @@ spring:
     static-path-pattern: /**
   resources:
     static-locations: classpath:/static/,classpath:/templates/
+  mail:
+    username: enjoy_listening@163.com
+    password: YIYJTYNXBSQTCLBZ
+    host: smtp.163.com
 
 # 服务器端口配置
 server:
@@ -31,3 +35,12 @@ mybatis:
 logging:
   level:
     com.graduation.practice.dao: DEBUG
+
+#pagehelper 分页插件
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: countSql
+  pageSizeZero: false #pageSize=0
+
