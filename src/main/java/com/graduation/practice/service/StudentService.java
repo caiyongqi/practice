@@ -1,6 +1,7 @@
 package com.graduation.practice.service;
 
 import com.graduation.practice.entity.Student;
+import com.graduation.practice.entity.Teacher;
 
 import java.util.List;
 

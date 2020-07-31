@@ -59,7 +59,7 @@
                         <div class="pull-left">
                             <div class="form-group form-inline">
                                 <div class="btn-group">
-                                    <a href="/user/toAddUser" type="button" class="btn btn-default" title="新建" id="addUser"><i class="fa fa-file-o"></i> 新建</a>
+                                    <a href="/counselor/toAddStudent" type="button" class="btn btn-default" title="新建" id="addUser"><i class="fa fa-file-o"></i> 新建</a>
                                     <button type="button" class="btn btn-default" title="删除" onclick="deleteAll()"><i class="fa fa-trash-o"></i> 删除</button>
                                     <button type="button" class="btn btn-default" title="刷新" onclick="refresh()"><i class="fa fa-refresh"></i> 刷新</button>
                                 </div>
@@ -103,7 +103,10 @@
                                 <td th:text="${item.classes.name}"></td>
                                 <td th:text="${item.date}"></td>
                                 <td class="text-center">
-                                    <a th:href="${'/counselor/toUpdateStudent?pageNum=' + pageInfo.pageNum + '&studentId=' + item.studentId }" class="btn bg-olive btn-xs" >修改密码</a>
+                                    <a th:href="${'/counselor/toUpdateStudentPassword?pageNum=' + pageInfo.pageNum + '&studentId=' + item.studentId }" class="btn bg-olive btn-xs" >修改密码</a>
+                                    <a th:href="${'/counselor/toUpdateStudent?pageNum=' + pageInfo.pageNum + '&studentId=' + item.studentId}" class="btn bg-olive btn-xs">编辑</a>
+                                    <a class="btn bg-olive btn-xs" th:href="${'/counselor/studentProfile?studentId=' + item.studentId}">详情</a>
+                                    <a th:href="${'/counselor/deleteStudent/' + pageInfo.pageNum + '/' + item.studentId}" class="btn bg-olive btn-xs">删除</a>
                                 </td>
                             </tr>
                             </tbody>

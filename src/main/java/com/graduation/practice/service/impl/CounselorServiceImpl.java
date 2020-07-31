@@ -3,6 +3,7 @@ package com.graduation.practice.service.impl;
 import com.github.pagehelper.PageInfo;
 import com.graduation.practice.dao.CounselorDao;
 import com.graduation.practice.dao.UserDao;
+import com.graduation.practice.entity.Classes;
 import com.graduation.practice.entity.Counselor;
 import com.graduation.practice.entity.Student;
 import com.graduation.practice.entity.User;
@@ -38,8 +39,8 @@ public class CounselorServiceImpl implements CounselorService {
     }
 
     @Override
-    public int updateStudent(User user) {
-        return counselorDao.updateStudent(user);
+    public int updateStudentPassword(User user) {
+        return counselorDao.updateStudentPassword(user);
     }
 
     @Override
@@ -47,6 +48,19 @@ public class CounselorServiceImpl implements CounselorService {
         return counselorDao.findCounselorByCounselorId(counselor);
     }
 
+    @Override
+    public List<Classes> findClassByCounselorId(User user) {
+        return counselorDao.findClassByCounselorId(user);
+    }
 
+    @Override
+    public int insertStudent(Student student) {
+        return counselorDao.insertStudent(student);
+    }
+
+    @Override
+    public int updateStudent(Student student) {
+        return counselorDao.updateStudent(student);
+    }
 }
 

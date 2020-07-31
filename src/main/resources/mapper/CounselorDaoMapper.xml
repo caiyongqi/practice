@@ -22,20 +22,29 @@
         ORDER BY id
     </select>
 
-
     <select id="findCounselorByCounselorId" parameterType="Counselor" resultType="Counselor">
         SELECT * FROM counselor WHERE counselorId = #{counselorId}
     </select>
-
-
 
     <select id="findStudentByStudentId"  parameterType="Student" resultType="Student">
         SELECT * FROM student WHERE studentId = #{studentId}
         ORDER BY id
     </select>
 
-    <update id="updateStudent" parameterType="User">
+    <update id="updateStudentPassword" parameterType="User">
         UPDATE user SET password = #{password} WHERE account = #{account}
+    </update>
+
+    <select id="findClassByCounselorId" parameterType="User" resultType="Classes">
+        SELECT * FROM classes WHERE classes.disciplineId = (SELECT counselor.disciplineId FROM counselor WHERE counselor.counselorId = #{account})
+    </select>
+
+    <insert id="insertStudent" parameterType="Student">
+        INSERT INTO student SET studentId = #{studentId}, `name` = #{name}, gender = #{gender}, classId = #{classId}, student.date = #{date}
+    </insert>
+
+    <update id="updateStudent" parameterType="Student">
+         UPDATE student SET `name` = #{name}, age = #{age}, gender = #{gender}, address = #{address}, email = #{email}, phoneNumber = #{phoneNumber}, classId = #{classId}, photoUrl = #{photoUrl}, student.date = #{date} WHERE studentId = #{studentId}
     </update>
 
     <!-- 多对一关系 -->

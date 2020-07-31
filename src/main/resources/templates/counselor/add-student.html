@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>编辑学生密码</title>
+    <title>添加学生</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
@@ -32,20 +32,19 @@
 </head>
 
 <body class="hold-transition skin-purple sidebar-mini">
-<input type="hidden" th:value="${pageNum}" id="pageNum">
 <div class="wrapper">
     <header th:replace="header :: head"  ></header>
     <div th:replace="asider :: sider"  ></div>
     <div class="content-wrapper" id="content">
         <section class="content-header">
             <h1>
-                用户管理
-                <small>编辑管理员</small>
+                学生管理
+                <small>添加学生</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="#">用户管理</a></li>
-                <li class="active">编辑管理员</li>
+                <li><a href="#">学生管理</a></li>
+                <li class="active">添加学生</li>
             </ol>
         </section>
         <section class="content">
@@ -54,21 +53,43 @@
                     <div class="register-box-body">
                         <form method="post">
                             <div class="form-group has-feedback">
-                                <input type="text" th:value="${student.studentId}" class="form-control" placeholder="账户" name="studentId" id="studentId" disabled>
+                                <input type="text" class="form-control" placeholder="学号" name="studentId" id="studentId">
                                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="text" class="form-control" placeholder="密码" name="password" id="password">
+                                <input type="password" class="form-control" placeholder="密码" name="password" id="password">
                                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                             </div>
-                            <!--                            <div class="form-group has-feedback">-->
-                            <!--                                <input type="password" class="form-control" placeholder="确认密码" id="repassword">-->
-                            <!--                                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>-->
-                            <!--                            </div>-->
+                            <div class="form-group has-feedback">
+                                <input type="password" class="form-control" placeholder="确认密码" id="repassword">
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="text" class="form-control" placeholder="姓名" name="name" id="name">
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <select class="form-control" name="gender" id="gender">
+                                    <option value="1">男</option>
+                                    <option value="0">女</option>
+                                </select>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <label>
+                                    <select class="form-control" name="classesId" id="classes">
+                                        <option value="0">选择班级</option>
+                                        <option th:each="classes,state:${classes}" th:value="${classes.id}" th:text="${classes.name}"></option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="col-md-15 data">
+                                <label for="date">入学日期：</label> <input type="date" class="form-control" name="date" id="date" value="2020-09-01">
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            </div>
 
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <button  class="btn btn-primary btn-block btn-flat" id="submit">保存</button>
+                            <div class="row" align="center">
+                                <div class="col-xs-4" >
+                                    <button  class="btn btn-primary btn-block btn-flat" id="submit">添加</button>
                                 </div>
                             </div>
                         </form>
@@ -132,13 +153,13 @@
 
         let studentId = $('#studentId').val()
         if(studentId.length<6){
-            alert('账号长度最少6位')
+            alert('学工号长度最少6位')
             return
         }else if(studentId.length>20){
-            alert('账号长度最多20位')
+            alert('学工号长度最多20位')
             return
         }else if(studentId.indexOf(' ') >=0){
-            alert('账号不能包含空白符')
+            alert('学工号不能包含空白符')
             return
         }
         let password = $('#password').val()
@@ -152,18 +173,29 @@
             alert('密码不能包含空白符')
             return
         }
-
-        let pageNum = parseInt($('#pageNum').val())
+        let repassword = $('#repassword').val()
+        if(password !== repassword){
+            alert('密码不一致')
+            return
+        }
+        let classesId = parseInt($('#classes').find('option:selected').val())
+        if (classesId === 0){
+            alert('请选择学生所属班级');
+            return
+        }
+        let gender = parseInt($('#gender').find('option:selected').val())
+        let name = $('#name').val()
+        let date = $('#date').val()
         $.ajax({
             type : 'post',
-            url: "/counselor/updateStudentPassword",
-            data:  {studentId, password, pageNum},
+            url: "/counselor/addStudent",
+            data:  {studentId, password, classesId,name,gender,date},
             success: function (res) {
                 alert(res.message)
-                $(location).attr('href', '/counselor/findAllStudent04?pageNum=' + pageNum)
+                $(location).attr('href', '/counselor/findAllStudent04')
             },
             error: function (err) {
-                alert('更新用户失败')
+                alert('添加学生失败')
             }
         })
     })
