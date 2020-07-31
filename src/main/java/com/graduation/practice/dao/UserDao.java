@@ -24,4 +24,7 @@ public interface UserDao {
     int updateUser(User user);
     // 根据账户，模糊查询
     List<User> searchAllAdminByAccount(@Param("keyword") String keyword, @Param("account") String account);
+    //插入user,用于学生的添加
+    int insertUser(User user);
+
 }
