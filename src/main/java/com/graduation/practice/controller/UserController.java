@@ -307,12 +307,6 @@ public class UserController {
         return result;
     }
 
-    // 跳转更新密码
-    @GetMapping("/toResetPassword")
-    public String toResetPassword(HttpServletRequest request){
-        return "update-admin-password";
-    }
-
     @PostMapping("/resetPassword")
     @ResponseBody
     public Result<User> resetPassword(HttpServletRequest request){
@@ -324,7 +318,7 @@ public class UserController {
             if(userService.updateUser(new User(account, password)) == 1){
                 result.setMessage("密码重置成功");
             }else{
-                result.setMessage("密码重置失败");
+                result.setMessage("密码重置成功");
             }
         }else{
             String realCode = (String) request.getSession().getAttribute("code");
@@ -342,29 +336,6 @@ public class UserController {
         return result;
     }
 
-    @PostMapping("/updateAdminPassword")
-    @ResponseBody
-    public Result<User> updateAdminPassword(HttpServletRequest request){
-        Result<User> result = new Result<>();
-        String account = request.getParameter("account");
-        String password = MD5Utils.code(request.getParameter("password"));
-        String oldPassword = request.getParameter("oldPassword");
-        User user = userService.findUserByAccount(new User(account));
-        if(user != null && user.getPassword().equals(MD5Utils.code(oldPassword))){
-            if(userService.updateUser(new User(account, password)) == 1){
-                result.setMessage("密码重置成功");
-                request.getSession().setAttribute("user", user);
-                result.setStatus(200);
-            }else{
-                result.setMessage("密码重置失败");
-                result.setStatus(403);
-            }
-        }else{
-            result.setMessage("原密码错误或用户不存在");
-            result.setStatus(403);
-        }
-        return result;
-    }
 
     @GetMapping("/profile")
     public String toProfile(HttpServletRequest request, Model model){
