@@ -77,17 +77,17 @@
 
                                 <ul class="list-group list-group-unbordered">
                                     <li class="list-group-item">
-                                        <b>Followers</b> <a class="pull-right">1,322</a>
+                                        <b>课程</b> <a class="pull-right" th:text="${courseNum}"></a>
                                     </li>
-                                    <li class="list-group-item">
-                                        <b>Following</b> <a class="pull-right">543</a>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <b>Friends</b> <a class="pull-right">13,287</a>
-                                    </li>
+<!--                                    <li class="list-group-item">-->
+<!--                                        <b>Following</b> <a class="pull-right">543</a>-->
+<!--                                    </li>-->
+<!--                                    <li class="list-group-item">-->
+<!--                                        <b>Friends</b> <a class="pull-right">13,287</a>-->
+<!--                                    </li>-->
                                 </ul>
 
-                                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+<!--                                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>-->
                             </div>
                             <!-- /.box-body -->
                         </div>
@@ -102,7 +102,7 @@
                             <div class="box-body">
                                 <strong><i class="fa fa-book margin-r-5"></i> 教育</strong>
 
-                                <p class="text-muted">
+                                <p class="text-muted" th:text="${teacher.education}">
                                     清华大学计算机科学与技术博士
                                 </p>
 
@@ -136,9 +136,9 @@
 
                                 <hr>
 
-                                <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+                                <strong><i class="fa fa-file-text-o margin-r-5"></i> 介绍</strong>
 
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                                <p th:text="${teacher.desc}"></p>
                             </div>
                             <!-- /.box-body -->
                         </div>

@@ -188,6 +188,7 @@ public class TeacherController {
         String teacherId = request.getParameter("teacherId");
         Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(teacherId));
         model.addAttribute("teacher", teacher);
+        model.addAttribute("courseNum", teacherService.getCourseNumByTeacherId(teacherId));
         return "/teacher/profile-teacher";
     }
 }
