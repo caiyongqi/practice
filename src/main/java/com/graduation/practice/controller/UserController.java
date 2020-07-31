@@ -76,14 +76,14 @@ public class UserController {
         String account = request.getParameter("account");
         String password = MD5Utils.code(request.getParameter("password"));
         /*
-        *
-        *
-        * 待完成：
-        * 如果是老师、学生、辅导员，需要继续查询得到photoUrl：session.setAttribute("photoUrl")
-        *
-        *
-        *
-        * */
+         *
+         *
+         * 待完成：
+         * 如果是老师、学生、辅导员，需要继续查询得到photoUrl：session.setAttribute("photoUrl")
+         *
+         *
+         *
+         * */
         // 查询
         User user = userService.findUserByAccount(new User(account));
         // 结果对象
