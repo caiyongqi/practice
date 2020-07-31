@@ -34,7 +34,33 @@
 </head>
 
 <body class="hold-transition skin-purple sidebar-mini">
+<script>
+    function resetPassword(account) {
+        let password = prompt('请输入密码', '密码')
+        if(password.length<6){
+            alert('密码长度最少6位')
+            return
+        }else if(password.length>20){
+            alert('密码长度最多20位')
+            return
+        }else if(password.indexOf(' ') >=0){
+            alert('密码不能包含空白符')
+            return
+        }
 
+        $.ajax({
+            type : 'post',
+            url: "/user/resetPassword",
+            data:  {account, password},
+            success: function (res) {
+                alert(res.message)
+            },
+            error: function (err) {
+                alert('密码重置失败')
+            }
+        })
+    }
+</script>
 <div class="wrapper">
     <header th:replace="header :: head"  ></header>
     <div th:replace="asider :: sider"  ></div>
@@ -96,7 +122,8 @@
                                     <td th:text="${item.gender == 1 ? '男' : '女'}" class="text-center"></td>
                                 <td th:text="${item.college.name}" class="text-center"></td>
                                 <td class="text-center">
-                                        <a th:href="${'/teacher/toUpdateTeacher?pageNum=' + pageInfo.pageNum + '&teacherId=' + item.teacherId}" class="btn bg-olive btn-xs">编辑</a>
+                                    <a href="#" class="btn bg-olive btn-xs" th:onclick="resetPassword([[${item.teacherId}]]);">重置密码</a>
+                                    <a th:href="${'/teacher/toUpdateTeacher?pageNum=' + pageInfo.pageNum + '&teacherId=' + item.teacherId}" class="btn bg-olive btn-xs">编辑</a>
                                         <a class="btn bg-olive btn-xs" th:href="${'/teacher/profile?teacherId=' + item.teacherId}">详情</a>
                                         <a th:href="${'/teacher/deleteTeacher/' + pageInfo.pageNum + '/' + item.teacherId}" class="btn bg-olive btn-xs">删除</a>
                                     </td>
@@ -171,6 +198,8 @@
                     $('#search').bind('click', function (event) {
                         search();
                     })
+
+
                 }, 1000)
             </script>
         </section>

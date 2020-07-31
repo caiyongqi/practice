@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -313,17 +314,56 @@ public class UserController {
         String account = request.getParameter("account");
         String password = MD5Utils.code(request.getParameter("password"));
         String code = request.getParameter("code");
-        String realCode = (String) request.getSession().getAttribute("code");
-        if (!code.equals(realCode)){
-            result.setStatus(403);
-            result.setMessage("验证码错误");
-        }else if (userService.updateUser(new User(account, password)) == 1){
-            result.setStatus(200);
-            result.setMessage("密码重置成功");
+        if(code == null || code.equals("")){
+            if(userService.updateUser(new User(account, password)) == 1){
+                result.setMessage("密码重置成功");
+            }else{
+                result.setMessage("密码重置成功");
+            }
         }else{
-            result.setStatus(403);
-            result.setMessage("密码重置失败");
+            String realCode = (String) request.getSession().getAttribute("code");
+            if (!code.equals(realCode)){
+                result.setStatus(403);
+                result.setMessage("验证码错误");
+            }else if (userService.updateUser(new User(account, password)) == 1){
+                result.setStatus(200);
+                result.setMessage("密码重置成功");
+            }else{
+                result.setStatus(403);
+                result.setMessage("密码重置失败");
+            }
         }
         return result;
+    }
+
+
+    @GetMapping("/profile")
+    public String toProfile(HttpServletRequest request, Model model){
+        String account = request.getParameter("account");
+        User user = userService.findUserByAccount(new User(account));
+        String to = "";
+        switch (user.getType()){
+            case 1:
+            case 2:
+                model.addAttribute("admin", user);
+                to = "/toResetPassword";
+                break;
+            case 3:
+                Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(account));
+                model.addAttribute("teacher", teacher);
+                to = "/teacher/profile-teacher";
+                break;
+            case 4:
+                Counselor counselor = counselorService.findCounselorByCounselorId(new Counselor(account));
+                model.addAttribute("counselor", counselor);
+                to = "/counselor/profile-counselor";
+                break;
+            case 5:
+                Student student = studentService.findStudentByStudentId(new Student(account));
+                model.addAttribute("student", student);
+                to = "/student/profile-student";
+                break;
+        }
+        return to;
     }
 }
