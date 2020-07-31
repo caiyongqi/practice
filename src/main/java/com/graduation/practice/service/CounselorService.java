@@ -13,5 +13,6 @@ public interface CounselorService {
     List<Student> findAllStudent(User user);
 
     List<Student> searchAllStudentById(String keyword, String account);
-
+    Counselor findCounselorByCounselorId(Counselor counselor);
 }
+

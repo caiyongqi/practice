@@ -153,7 +153,7 @@ public class TeacherController {
         int gender = Integer.parseInt(request.getParameter("gender"));
         String address = request.getParameter("address");
         String email = request.getParameter("email");
-        String phoneNumber = request.getParameter("name");
+        String phoneNumber = request.getParameter("phoneNumber");
         int collegeId = Integer.parseInt(request.getParameter("collegeId"));
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 

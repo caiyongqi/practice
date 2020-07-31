@@ -22,4 +22,8 @@
         ORDER BY id
     </select>
 
+
+    <select id="findCounselorByCounselorId" parameterType="Counselor" resultType="Counselor">
+        SELECT * FROM counselor WHERE counselorId = #{counselorId}
+    </select>
 </mapper>

@@ -15,5 +15,6 @@ public interface CounselorDao {
     int getTotal();
     List<Student> findAllStudent(User user);
     List<Student> searchAllStudentById(@Param("keyword") String keyword, @Param("account") String account);
-
+    Counselor findCounselorByCounselorId(Counselor counselor);
 }
+
