@@ -379,9 +379,85 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="treeview" th:if="${session.user.type == 3}">
+                <div class="ui modal">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Modal Title
+                    </div>
+                    <div class="image content">
+                        <div class="image">
+                            An image can appear on left or an icon
+                        </div>
+                        <div class="description">
+                            A description can appear on the right
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div class="ui button">Cancel</div>
+                        <div class="ui button">OK</div>
+                    </div>
+                </div>
+
+                <a href="#">
+                    <i class="fa fa-folder"></i> <span>成绩管理</span>
+                    <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li >
+                        <a href="/teacher/course">
+                            <i class="fa fa-circle-o"></i> 已授课程
+                            <input type="hidden" th:value="${session.user.type}">
+                        </a>
+                    </li>
+                    <li >
+                        <a href="/teacher/chooseCourse" id="upload">
+                            <i class="fa fa-circle-o"></i> 上传成绩
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->
+<!--    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:0;">-->
+<!--        <div class="modal-dialog">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
+<!--                        &times;-->
+<!--                    </button>-->
+<!--                    <h4 class="modal-title" id="myModalLabel">-->
+<!--                        模态框（Modal）标题-->
+<!--                    </h4>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    在这里添加一些文本-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭-->
+<!--                    </button>-->
+<!--                    <button type="button" class="btn btn-primary">-->
+<!--                        提交更改-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+<!--        </div>&lt;!&ndash; /.modal &ndash;&gt;-->
+<!--    </div>-->
+
+<!--    <link rel="stylesheet" href="../static/plugins/bootstrap/css/bootstrap.min.css" th:href="@{/plugins/bootstrap/css/bootstrap.min.css}">-->
+<!--    <script src="../static/plugins/jQuery/jquery-2.2.3.min.js" th:src="@{/plugins/jQuery/jquery-2.2.3.min.js}"></script>-->
+<!--    <script src="../static/plugins/bootstrap/js/bootstrap.min.js" th:src="@{/plugins/bootstrap/js/bootstrap.min.js}"></script>-->
+<!--    <script>-->
+<!--        function toUploadScore(event){-->
+<!--            // event.preventDefault()-->
+<!--            $('#modal').modal(event);-->
+<!--        }-->
+
+<!--    </script>-->
 </aside>
 </th:block>
 <!--</div>-->
