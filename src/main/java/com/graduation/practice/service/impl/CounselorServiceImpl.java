@@ -62,5 +62,40 @@ public class CounselorServiceImpl implements CounselorService {
     public int updateStudent(Student student) {
         return counselorDao.updateStudent(student);
     }
+
+    @Override
+    public List<Counselor> findAllCounselor() {
+        return counselorDao.findAllCounselor();
+    }
+
+    @Override
+    public int saveCounselor(Counselor counselor) {
+        return counselorDao.saveCounselor(counselor);
+    }
+
+    @Override
+    public int deleteSelectedCounselor(List<String> counselorIdList) {
+        return counselorDao.deleteSelectedCounselor(counselorIdList);
+    }
+
+    @Override
+    public int deleteCounselor(String counselorId) {
+        return 0;
+    }
+
+    @Override
+    public int updateCounselor(Counselor counselor) {
+        return counselorDao.updateCounselor(counselor);
+    }
+
+    @Override
+    public List<Counselor> searchAllCounselorByCounselorName(String Keyword) {
+        return counselorDao.searchAllCounselorByCounselorName(Keyword);
+    }
+
+    @Override
+    public Counselor findCounselorProfileByCounselorId(Counselor counselor) {
+        return counselorDao.findCounselorProfileByCounselorId(counselor);
+    }
 }
 

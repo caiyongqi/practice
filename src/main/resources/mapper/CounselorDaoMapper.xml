@@ -51,6 +51,37 @@
          UPDATE student SET `name` = #{name}, age = #{age}, gender = #{gender}, address = #{address}, email = #{email}, phoneNumber = #{phoneNumber}, classId = #{classId}, photoUrl = #{photoUrl}, student.date = #{date} WHERE studentId = #{studentId}
     </update>
 
+    <select id="findAllCounselor" resultMap="counselorMap">
+        SELECT counselor.id,counselor.counselorId,counselor.name,counselor.gender,discipline.id AS discipline_id,discipline.name AS discipline_name FROM counselor,discipline WHERE counselor.disciplineId = discipline.id ORDER BY counselor.id
+    </select>
+
+    <insert id="saveCounselor" parameterType="Counselor">
+        INSERT INTO counselor SET counselorId = #{counselorId}, `name` = #{name}, gender = #{gender}, disciplineId = #{disciplineId}
+    </insert>
+
+    <delete id="deleteSelectedCounselor" parameterType="list">
+        DELETE FROM counselor WHERE counselorId IN
+        <foreach collection="list" item="counselorId" open="(" close=")" separator=",">
+            #{counselorId}
+        </foreach>
+    </delete>
+    
+    <select id="searchAllCounselorByCounselorName" parameterType="String" resultMap="counselorMap">
+        SELECT counselor.id,counselor.counselorId,counselor.name,counselor.gender,discipline.id AS discipline_id,discipline.name AS discipline_name FROM counselor,discipline WHERE counselor.disciplineId = discipline.id
+        <if test="Keyword != null and Keyword != ''">
+            AND counselor.name like concat("%", #{Keyword}, "%")
+        </if>
+        ORDER BY counselor.id
+    </select>
+
+    <update id="updateCounselor" parameterType="Counselor">
+        UPDATE counselor SET `name` = #{name}, age = #{age}, gender = #{gender}, address = #{address}, email = #{email}, phoneNumber = #{phoneNumber}, disciplineId = #{disciplineId}, photoUrl = #{photoUrl} WHERE counselorId = #{counselorId}
+    </update>
+    
+    <select id="findCounselorProfileByCounselorId" parameterType="Counselor" resultMap="counselorMap">
+         SELECT counselor.id,counselor.counselorId,counselor.name,counselor.gender,counselor.address,counselor.disciplineId,counselor.phoneNumber,counselor.photoUrl,counselor.age,counselor.email,discipline.id AS discipline_id,discipline.name AS discipline_name FROM counselor,discipline WHERE counselor.counselorId = #{counselorId} AND counselor.disciplineId = discipline.id
+    </select>
+
     <!-- 多对一关系 -->
     <resultMap type="Student" id="studentMap">
         <id column="id" property="id" />
@@ -68,4 +99,23 @@
             <result column="classes_name" property="name" />
         </association>
     </resultMap>
+
+    <!-- 多对一关系 -->
+    <resultMap type="Counselor" id="counselorMap">
+        <id column="id" property="id" />
+        <result column="counselorId" property="counselorId" />
+        <result column="name" property="name" />
+        <result column="age" property="age" />
+        <result column="gender" property="gender" />
+        <result column="address" property="address" />
+        <result column="email" property="email" />
+        <result column="phoneNumber" property="phoneNumber" />
+        <result column="disciplineId" property="disciplineId"/>
+        <result column="photoUrl" property="photoUrl" />
+        <association property="discipline" javaType="Discipline">
+            <id column="discipline_id" property="id" />
+            <result column="discipline_name" property="name" />
+        </association>
+    </resultMap>
+
 </mapper>

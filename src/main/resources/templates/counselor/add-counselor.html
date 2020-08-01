@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>修改辅导员信息</title>
+    <title>添加辅导员</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
@@ -29,22 +29,7 @@
     <link rel="stylesheet" href="../static/plugins/ionslider/ion.rangeSlider.skinNice.css" th:href="@{/plugins/ionslider/ion.rangeSlider.skinNice.css}">
     <link rel="stylesheet" href="../static/plugins/bootstrap-slider/slider.css" th:href="@{/plugins/bootstrap-slider/slider.css}">
     <link rel="stylesheet" href="../static/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css" th:href="@{/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css}">
-    <style>
-        .photo-block{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .photo{
-            width: 35%;
-        }
-        .photo img{
-            height: 200px;
-            width: 150px;
-        }
-    </style>
 </head>
-
 
 <body class="hold-transition skin-purple sidebar-mini">
 <div class="wrapper">
@@ -53,74 +38,53 @@
     <div class="content-wrapper" id="content">
         <section class="content-header">
             <h1>
-                辅导员信息管理
-                <small>编辑辅导员信息</small>
+                辅导员管理
+                <small>添加辅导员</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="#">辅导员信息管理</a></li>
-                <li class="active">编辑辅导员信息</li>
+                <li><a href="#">辅导员管理</a></li>
+                <li class="active">添加辅导员</li>
             </ol>
         </section>
         <section class="content">
-            <div class="box box-primary parent" style="display: flex;justify-content: center">
-                <div class="photo-block">
-                    <div class="photo">
-                        <img th:src="${counselor.photoUrl == null || counselor.photoUrl == '' ? 'https://i.niupic.com/images/2020/07/30/8tmr.png' : counselor.photoUrl}" alt="个人照片" id="img">
-                        <div>
-                            <span>更换照片:</span>
-                            <input type="file" accept="image/*" id="photo" onchange="changeImg()" placeholder="更换照片">
-                        </div>
-                    </div>
-                </div>
+            <div class="box box-primary parent">
                 <div class="register-box">
-
                     <div class="register-box-body">
-                        <input type="hidden" th:value="${pageNum}" id="pageNum">
                         <form method="post">
                             <div class="form-group has-feedback">
-                                <input type="text" class="form-control" placeholder="学工号" name="counselorId" id="counselorId" disabled th:value="${counselor.counselorId}">
+                                <input type="text" class="form-control" placeholder="学工号" name="counselorId" id="counselorId">
                                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="text" class="form-control" placeholder="姓名" name="name" id="name" th:value="${counselor.name}">
-                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                <input type="password" class="form-control" placeholder="密码" name="password" id="password">
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="text" class="form-control" placeholder="年龄" name="age" id="age" th:value="${counselor.age}">
-                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                <input type="password" class="form-control" placeholder="确认密码" id="repassword">
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="text" class="form-control" placeholder="地址" name="address" id="address" th:value="${counselor.address}">
-                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                            </div>
-                            <div class="form-group has-feedback">
-                                <input type="email" class="form-control" placeholder="邮箱" name="email" id="email" th:value="${counselor.email}">
-                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                            </div>
-                            <div class="form-group has-feedback">
-                                <input type="text" class="form-control" placeholder="电话号码" name="phoneNumber" id="phoneNumber" th:value="${counselor.phoneNumber}">
+                                <input type="text" class="form-control" placeholder="姓名" name="name" id="name">
                                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                             </div>
                             <div class="form-group has-feedback">
                                 <select class="form-control" name="gender" id="gender">
-                                    <option value="1" selected th:if="${counselor.gender == 1}">男</option>
-                                    <option value="1" th:unless="${counselor.gender == 1}">男</option>
-                                    <option value="0" selected th:if="${counselor.gender == 0}">女</option>
-                                    <option value="0" th:unless="${counselor.gender == 0}">女</option>
+                                    <option value="1">男</option>
+                                    <option value="0">女</option>
                                 </select>
                             </div>
                             <div class="form-group has-feedback">
                                 <label>
                                     <select class="form-control" name="disciplineId" id="discipline">
-                                        <option value="0" >选择专业</option>
-                                        <option th:each="discipline,state:${disciplines}" th:value="${discipline.id}" th:text="${discipline.name}" th:selected="${discipline.id == counselor.disciplineId ? 'selected' : false}"></option>
+                                        <option value="0">选择所属专业</option>
+                                        <option th:each="discipline,state:${disciplines}" th:value="${discipline.id}" th:text="${discipline.name}"></option>
                                     </select>
                                 </label>
                             </div>
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <button  class="btn btn-primary btn-block btn-flat" id="submit">保存</button>
+                                    <button  class="btn btn-primary btn-block btn-flat" id="submit">添加</button>
                                 </div>
                             </div>
                         </form>
@@ -183,56 +147,53 @@
         event.preventDefault()
 
         let counselorId = $('#counselorId').val()
+        if(counselorId.length<6){
+            alert('学工号长度最少6位')
+            return
+        }else if(counselorId.length>20){
+            alert('学工号长度最多20位')
+            return
+        }else if(counselorId.indexOf(' ') >=0){
+            alert('学工号不能包含空白符')
+            return
+        }
+        let password = $('#password').val()
+        if(password.length<6){
+            alert('密码长度最少6位')
+            return
+        }else if(password.length>20){
+            alert('密码长度最多20位')
+            return
+        }else if(password.indexOf(' ') >=0){
+            alert('密码不能包含空白符')
+            return
+        }
+        let repassword = $('#repassword').val()
+        if(password !== repassword){
+            alert('密码不一致')
+            return
+        }
         let disciplineId = parseInt($('#discipline').find('option:selected').val())
         if (disciplineId === 0){
-            alert('请选择所属专业');
+            alert('请选择辅导员所属专业');
             return
         }
         let gender = parseInt($('#gender').find('option:selected').val())
         let name = $('#name').val()
-        let age = $('#age').val()
-        if(!(!isNaN(age) && parseInt(age)>0)){
-            alert('年龄格式错误')
-            return
-        }
-        let address = $('#address').val()
-        let phoneNumber = $('#phoneNumber').val()
-        let email = $('#email').val()
-        let pageNum = $('#pageNum').val()
-        let formData = new FormData()
-        formData.append("photo",$("#photo")[0].files[0]);
-        formData.append("counselorId", counselorId)
-        formData.append("gender", '' + gender)
-        formData.append("name", name)
-        formData.append("disciplineId", '' + disciplineId)
-        formData.append("age", age)
-        formData.append("address", address)
-        formData.append("phoneNumber", phoneNumber)
-        formData.append("email", email)
-        formData.append('pageNum', pageNum)
         $.ajax({
             type : 'post',
-            url: "/adminCounselor/updateCounselor",
-            data:  formData,
-            contentType: false,
-            processData: false,
+            url: "/adminCounselor/addCounselor",
+            data:  {counselorId, password, disciplineId,name,gender},
             success: function (res) {
                 alert(res.message)
-                $(location).attr('href', '/adminCounselor/findAllCounselor?pageNum=' + pageNum)
+                $(location).attr('href', '/adminCounselor/findAllCounselor')
             },
             error: function (err) {
-                alert('更新辅导员信息失败')
+                alert('添加辅导员失败')
             }
         })
     })
 
-    // 更换照片
-    function changeImg() {
-        let file = document.getElementById("photo");
-        let imgUrl = window.URL.createObjectURL(file.files[0]);
-        let img = document.getElementById('img');
-        img.setAttribute('src', imgUrl); // 修改img标签src属性值
-    }
 </script>
 </body>
 

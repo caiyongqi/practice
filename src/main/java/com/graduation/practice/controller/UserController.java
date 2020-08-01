@@ -373,7 +373,7 @@ public class UserController {
                 to = "/teacher/profile-teacher";
                 break;
             case 4:
-                Counselor counselor = counselorService.findCounselorByCounselorId(new Counselor(account));
+                Counselor counselor = counselorService.findCounselorProfileByCounselorId(new Counselor(account));
                 model.addAttribute("counselor", counselor);
                 to = "/counselor/profile-counselor";
                 break;
