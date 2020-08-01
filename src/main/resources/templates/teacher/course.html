@@ -58,9 +58,9 @@
                                         <div class="card" >
                                             <!--                                <img class="d-block w-100" src="img/b1.jpeg" alt="First slide">-->
                                             <div class="card-body">
-                                                <h3 th:text="${item.course.name}">算法分析与设计</h3>
+                                                <h3 th:text="${item.course.name}"></h3>
                                                 <h5>选课人数：<span class="label label-success" th:text="${item.studentNum}"></span>人</h5>
-                                                <p th:text="${item.course.desc}">介绍简单算法的分析与设计介绍简单算法的分析与设计介绍简单算法的分析与设计</p>
+                                                <p th:text="${item.course.desc}"></p>
                                                 <p th:text="${item.startTime + '  至  ' + item.endTime}"></p>
                                                 <button class="btn btn-primary btn-sm label-warning" th:onclick="showStudents([[${item}]])">查看学生</button>
                                             </div>
