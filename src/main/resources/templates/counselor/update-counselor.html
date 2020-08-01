@@ -112,7 +112,7 @@
                             </div>
                             <div class="form-group has-feedback">
                                 <label>
-                                    <select class="form-control" name="collegeId" id="college">
+                                    <select class="form-control" name="disciplineId" id="discipline">
                                         <option value="0" >选择专业</option>
                                         <option th:each="discipline,state:${disciplines}" th:value="${discipline.id}" th:text="${discipline.name}" th:selected="${discipline.id == counselor.disciplineId ? 'selected' : false}"></option>
                                     </select>
@@ -212,13 +212,13 @@
         formData.append('pageNum', pageNum)
         $.ajax({
             type : 'post',
-            url: "/counselor/updateCounselor",
+            url: "/adminCounselor/updateCounselor",
             data:  formData,
             contentType: false,
             processData: false,
             success: function (res) {
                 alert(res.message)
-                $(location).attr('href', '/counselor/findAllCounselor?pageNum=' + pageNum)
+                $(location).attr('href', '/adminCounselor/findAllCounselor?pageNum=' + pageNum)
             },
             error: function (err) {
                 alert('更新辅导员信息失败')

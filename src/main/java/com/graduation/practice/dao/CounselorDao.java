@@ -24,4 +24,10 @@ public interface CounselorDao {
     List<Classes> findClassByCounselorId(User user);
     int insertStudent(Student student);
     int updateStudent(Student student);
+    List<Counselor> findAllCounselor();
+    int saveCounselor(Counselor counselor);
+    int deleteSelectedCounselor(List<String> counselorIdList);
+    List<Counselor> searchAllCounselorByCounselorName(String Keyword);
+    int updateCounselor(Counselor counselor);
+    Counselor findCounselorProfileByCounselorId(Counselor counselor);
 }
