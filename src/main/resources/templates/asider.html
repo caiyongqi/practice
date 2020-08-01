@@ -369,6 +369,7 @@
                         <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
+
                     </a>
                     <ul class="treeview-menu">
                         <li >
@@ -403,10 +404,45 @@
                         </li>
                     </ul>
                 </li>
+                              </a>
+                <ul class="treeview-menu">
+                    <li >
+                        <a href="/counselor/findAllStudent04">
+                            <i class="fa fa-circle-o"></i> 学生列表
+                            <input type="hidden" th:value="${session.user.type}">
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="treeview" th:if="${session.user.type == 3}">
+              
+                <a href="#">
+                    <i class="fa fa-folder"></i> <span>成绩管理</span>
+                    <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li >
+                        <a href="/teacher/course">
+                            <i class="fa fa-circle-o"></i> 已授课程
+                            <input type="hidden" th:value="${session.user.type}">
+                        </a>
+                    </li>
+                    <li >
+                        <a href="/teacher/chooseCourse" id="upload">
+                            <i class="fa fa-circle-o"></i> 上传成绩
+                        </a>
+                    </li>
+                </ul>
+            </li>
+  
             </ul>
         </section>
         <!-- /.sidebar -->
     </aside>
+
 </th:block>
 <!--</div>-->
 </body>

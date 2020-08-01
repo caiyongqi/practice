@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>编辑教师信息</title>
+    <title>修改个人信息</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
@@ -53,13 +53,12 @@
     <div class="content-wrapper" id="content">
         <section class="content-header">
             <h1>
-                教师管理
-                <small>编辑教师信息</small>
+                教师个人信息
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
                 <li><a href="#">教师管理</a></li>
-                <li class="active">编辑教师信息</li>
+                <li class="active">教师个人信息</li>
             </ol>
         </section>
         <section class="content">
@@ -76,7 +75,6 @@
                 <div class="register-box">
 
                     <div class="register-box-body">
-                        <input type="hidden" th:value="${pageNum}" id="pageNum">
                         <form method="post">
                             <div class="form-group has-feedback">
                                 <input type="text" class="form-control" placeholder="学工号" name="teacherId" id="teacherId" disabled th:value="${teacher.teacherId}">
@@ -112,12 +110,22 @@
                             </div>
                             <div class="form-group has-feedback">
                                 <label>
-                                    <select class="form-control" name="collegeId" id="college">
-                                        <option value="0" >选择院系</option>
-                                        <option th:each="college,state:${colleges}" th:value="${college.id}" th:text="${college.name}" th:selected="${college.id == teacher.collegeId ? 'selected' : false}"></option>
-                                    </select>
+                                    <textarea cols="100" rows="5" th:text="${teacher.education}" class="form-control" placeholder="教育经历" name="education" id="education" style="font-size: 10px;"></textarea>
                                 </label>
                             </div>
+                            <div class="form-group has-feedback">
+                                <label>
+                                    <textarea cols="100" rows="5" th:text="${teacher.desc}" class="form-control" placeholder="个人介绍" name="desc" id="desc" style="font-size: 10px;"></textarea>
+                                </label>
+                            </div>
+<!--                            <div class="form-group has-feedback">-->
+<!--                                <label>-->
+<!--                                    <select class="form-control" name="collegeId" id="college">-->
+<!--                                        <option value="0" >选择院系</option>-->
+<!--                                        <option th:each="college,state:${colleges}" th:value="${college.id}" th:text="${college.name}" th:selected="${college.id == teacher.collegeId ? 'selected' : false}"></option>-->
+<!--                                    </select>-->
+<!--                                </label>-->
+<!--                            </div>-->
                             <div class="row">
                                 <div class="col-xs-4">
                                     <button  class="btn btn-primary btn-block btn-flat" id="submit">保存</button>
@@ -183,11 +191,11 @@
         event.preventDefault()
 
         let teacherId = $('#teacherId').val()
-        let collegeId = parseInt($('#college').find('option:selected').val())
-        if (collegeId === 0){
-            alert('请选择教师所属学院');
-            return
-        }
+        // let collegeId = parseInt($('#college').find('option:selected').val())
+        // if (collegeId === 0){
+        //     alert('请选择教师所属学院');
+        //     return
+        // }
         let gender = parseInt($('#gender').find('option:selected').val())
         let name = $('#name').val()
         let age = $('#age').val()
@@ -198,7 +206,9 @@
         let address = $('#address').val()
         let phoneNumber = $('#phoneNumber').val()
         let email = $('#email').val()
-        let pageNum = $('#pageNum').val()
+        // let pageNum = $('#pageNum').val()
+        let education = $('#education').val()
+        let desc = $('#desc').val()
         let formData = new FormData()
         if(typeof($("#photo")[0].files[0]) != 'undefined'){
             formData.append("photo",$("#photo")[0].files[0]);
@@ -206,21 +216,23 @@
         formData.append("teacherId", teacherId)
         formData.append("gender", '' + gender)
         formData.append("name", name)
-        formData.append("collegeId", '' + collegeId)
+        // formData.append("collegeId", '' + collegeId)
         formData.append("age", age)
         formData.append("address", address)
         formData.append("phoneNumber", phoneNumber)
         formData.append("email", email)
-        formData.append('pageNum', pageNum)
+        // formData.append('pageNum', pageNum)
+        formData.append('education', education)
+        formData.append('desc', desc)
         $.ajax({
             type : 'post',
-            url: "/teacher/updateTeacher",
+            url: "/teacher/updateInfo",
             data:  formData,
             contentType: false,
             processData: false,
             success: function (res) {
+                $(location).attr('href', '/teacher/profile?teacherId=' + teacherId)
                 alert(res.message)
-                $(location).attr('href', '/teacher/findAllTeacher?pageNum=' + pageNum)
             },
             error: function (err) {
                 alert('更新教师失败')

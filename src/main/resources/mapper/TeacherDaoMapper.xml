@@ -20,7 +20,17 @@
         DELETE FROM teacher WHERE teacherId = #{teacherId}
     </delete>
     <update id="updateTeacher" parameterType="Teacher">
-        UPDATE teacher SET `name` = #{name}, age = #{age}, gender = #{gender}, address = #{address}, email = #{email}, phoneNumber = #{phoneNumber}, collegeId = #{collegeId}, photoUrl = #{photoUrl} WHERE teacherId = #{teacherId}
+        UPDATE teacher SET `name` = #{name}, age = #{age}, gender = #{gender}, address = #{address}, email = #{email}, phoneNumber = #{phoneNumber}, photoUrl = #{photoUrl}
+        <if test="collegeId != null and collegeId != ''">
+            , collegeId = #{collegeId}
+        </if>
+        <if test="desc != null and desc != ''">
+            , `desc` = #{desc}
+        </if>
+        <if test="education != null and education !=''">
+            , education = #{education}
+        </if>
+        WHERE teacherId = #{teacherId}
     </update>
     <select id="searchAllTeacherByTeacherName" parameterType="String" resultMap="teacherMap">
         SELECT teacher.id,teacher.teacherId,teacher.name,teacher.gender,college.id AS college_id,college.name AS college_name FROM teacher,college WHERE teacher.collegeId = college.id
