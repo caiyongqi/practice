@@ -403,6 +403,22 @@
                         </li>
                     </ul>
                 </li>
+                <li class="treeview" th:if="${session.user.type == 1}">
+                    <a href="#">
+                        <i class="fa fa-folder"></i> <span>辅导员信息管理</span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li >
+                            <a href="/adminCounselor/findAllCounselor">
+                                <i class="fa fa-circle-o"></i> 辅导员列表
+                                <input type="hidden" th:value="${session.user.type}">
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->
