@@ -40,13 +40,13 @@
     <div class="content-wrapper" id="content">
         <section class="content-header">
             <h1>
-                用户管理
-                <small>用户列表</small>
+                学生管理
+                <small>学生列表</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="#">用户管理</a></li>
-                <li class="active">用户列表</li>
+                <li><a href="#">学生管理</a></li>
+                <li class="active">学生列表</li>
             </ol>
         </section>
         <section class="content">
@@ -59,8 +59,8 @@
                         <div class="pull-left">
                             <div class="form-group form-inline">
                                 <div class="btn-group">
-                                    <a href="/counselor/toAddStudent" type="button" class="btn btn-default" title="新建" id="addUser"><i class="fa fa-file-o"></i> 新建</a>
-                                    <button type="button" class="btn btn-default" title="删除" onclick="deleteAll()"><i class="fa fa-trash-o"></i> 删除</button>
+<!--                                   <a href="/counselor/toAddStudent" type="button" class="btn btn-default" title="新建" id="addUser"><i class="fa fa-file-o"></i> 新建</a>-->
+<!--                                    <button type="button" class="btn btn-default" title="删除" onclick="deleteAll()"><i class="fa fa-trash-o"></i> 删除</button>-->
                                     <button type="button" class="btn btn-default" title="刷新" onclick="refresh()"><i class="fa fa-refresh"></i> 刷新</button>
                                 </div>
                             </div>
@@ -104,9 +104,9 @@
                                 <td th:text="${item.date}"></td>
                                 <td class="text-center">
                                     <a th:href="${'/counselor/toUpdateStudentPassword?pageNum=' + pageInfo.pageNum + '&studentId=' + item.studentId }" class="btn bg-olive btn-xs" >修改密码</a>
-                                    <a th:href="${'/counselor/toUpdateStudent?pageNum=' + pageInfo.pageNum + '&studentId=' + item.studentId}" class="btn bg-olive btn-xs">编辑</a>
+<!--                                    <a th:href="${'/counselor/toUpdateStudent?pageNum=' + pageInfo.pageNum + '&studentId=' + item.studentId}" class="btn bg-olive btn-xs">编辑</a>-->
                                     <a class="btn bg-olive btn-xs" th:href="${'/counselor/studentProfile?studentId=' + item.studentId}">详情</a>
-                                    <a th:href="${'/counselor/deleteStudent/' + pageInfo.pageNum + '/' + item.studentId}" class="btn bg-olive btn-xs">删除</a>
+<!--                                    <a th:href="${'/counselor/deleteStudent/' + pageInfo.pageNum + '/' + item.studentId}" class="btn bg-olive btn-xs">删除</a>-->
                                 </td>
                             </tr>
                             </tbody>
