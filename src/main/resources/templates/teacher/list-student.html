@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" >
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>老师</title>
+    <title>学生</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
-    <!--    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>-->
-    <!--    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
     <link rel="stylesheet" href="../../static/plugins/bootstrap/css/bootstrap.min.css" th:href="@{/plugins/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" href="../../static/plugins/font-awesome/css/font-awesome.min.css" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}">
     <link rel="stylesheet" href="../../static/plugins/ionicons/css/ionicons.min.css" th:href="@{/plugins/ionicons/css/ionicons.min.css}">
@@ -40,13 +38,13 @@
     <div class="content-wrapper" id="content">
         <section class="content-header">
             <h1>
-                用户管理
-                <small>用户列表</small>
+                成绩管理
+                <small>学生信息</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="#">用户管理</a></li>
-                <li class="active">用户列表</li>
+                <li><a href="#">成绩管理</a></li>
+                <li class="active">学生信息</li>
             </ol>
         </section>
         <section class="content">
@@ -56,184 +54,24 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="row">
-                                    <div class="col-sm-3" >
+                                    <div class="col-sm-3" th:each="item:${students}">
                                         <div class="card" >
-                                            <!--                                <img class="d-block w-100" src="img/b1.jpeg" alt="First slide">-->
+                                            <img class="d-block w-100" th:src="${item.student.photoUrl == null ? 'https://i.niupic.com/images/2020/07/29/8sZX.png' :  item.student.photoUrl == null}" alt="First slide">
                                             <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3" >
-                                        <div class="card" >
-                                            <!--                                <img class="d-block w-100" src="img/b1.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <!--                            	<img class="d-block w-100" src="img/b2.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <!--                                <img class="d-block w-100" src="img/b3.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <!--                               	<img class="d-block w-100" src="img/b4.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <!--                               	<img class="d-block w-100" src="img/b4.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <!--                               	<img class="d-block w-100" src="img/b4.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <!--                               	<img class="d-block w-100" src="img/b4.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <!--                               	<img class="d-block w-100" src="img/b4.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <!--                               	<img class="d-block w-100" src="img/b4.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <!--                               	<img class="d-block w-100" src="img/b4.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <!--                               	<img class="d-block w-100" src="img/b4.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <!--                               	<img class="d-block w-100" src="img/b4.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <!--                               	<img class="d-block w-100" src="img/b4.jpeg" alt="First slide">-->
-                                            <div class="card-body">
-                                                <h3>Levis Shirt</h3>
-                                                <h5>599</h5>
-                                                <p>Smooth and Refined cotton shirt</p>
-                                                <button class="btn btn-primary btn-sm">Buy now</button>
+                                                <h3 th:text="${item.student.name}"></h3>
+                                                <h5>最终分数：<span class="label label-danger" th:text="${item.score}"></span></h5>
+                                                <h5>班级：<span class="label label-success" th:text="${item.student.classes.name}"></span></h5><h5>学号：<span class="label label-warning" th:text="${item.student.studentId}"></span></h5>
+                                                <button class="btn btn-primary btn-sm">详情</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--上一批-->
-<!--                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">-->
-<!--                            <span>-->
-<!--                                <i class="fa fa-arrow-circle-left" style="font-size:34px;  color:dodgerblue;"></i>-->
-<!--                            </span>-->
-<!--                            <span class="sr-only">Previous</span>-->
-<!--                        </a>-->
-                        <!--下一批-->
-<!--                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">-->
-<!--                          <span>-->
-<!--                            <i class="fa fa-arrow-circle-right" style="font-size:34px; color:dodgerblue;"></i>-->
-<!--                          </span>-->
-<!--                            <span class="sr-only">Next</span>-->
-<!--                        </a>-->
                     </div>
                 </div>
             </div>
         </section>
-<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
     </div>
 </div>
 <script src="../../static/plugins/jQuery/jquery-2.2.3.min.js" th:src="@{/plugins/jQuery/jquery-2.2.3.min.js}"></script>

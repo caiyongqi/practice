@@ -17,11 +17,19 @@ public class StudentToScore {
     private Date endTime;
     private String address;
 
+
     public StudentToScore(int studentId) {
         this.studentId = studentId;
     }
 
     public int getCourseId() {
         return courseId;
+    }
+    private Student student;
+
+    public StudentToScore(int courseId, Date startTime, Date endTime) {
+        this.courseId = courseId;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 }

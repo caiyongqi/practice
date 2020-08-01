@@ -54,5 +54,8 @@ public class UserServiceImpl implements UserService {
         return userDao.searchAllAdminByAccount(keyword, account);
     }
 
-
+    @Override
+    public int insertUser(User user) {
+        return userDao.insertUser(user);
+    }
 }

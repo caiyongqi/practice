@@ -30,6 +30,7 @@ public class StudentServiceImpl implements StudentService {
         return studentDao.findStudentByStudentId(student);
     }
 
+
     //==========================================================================
     //    学生
     @Override
@@ -51,5 +52,34 @@ public class StudentServiceImpl implements StudentService {
         System.out.println(scoreShows);
 //        System.out.println(course);
         return scoreShows;
+    }
+    @Override
+    public List<Student> findAllStudent(String studentName, int classId) {
+        return studentDao.findAllStudent(studentName,classId);
+    }
+
+    @Override
+    public int insertStudent(Student student) {
+        return studentDao.insertStudent(student);
+    }
+
+    @Override
+    public int updateStudent(Student student) {
+        return studentDao.updateStudent(student);
+    }
+
+    @Override
+    public Student adminFindStudentByStudentId(String studentID) {
+        return studentDao.adminFindStudentByStudentId(studentID);
+    }
+
+    @Override
+    public int deleteSelectedStudent(List<String> studentIdList) {
+        return studentDao.deleteSelectedStudent(studentIdList);
+    }
+
+    @Override
+    public Student findStudentById(Student student) {
+        return studentDao.findStudentById(student);
     }
 }
