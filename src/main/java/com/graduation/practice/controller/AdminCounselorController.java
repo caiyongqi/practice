@@ -182,4 +182,12 @@ public class AdminCounselorController {
         return "/counselor/profile-counselor";
     }
 
+    // 删除单个用户
+    @GetMapping("/deleteCounselor/{pageNum}/{counselorId}")
+    public String deleteCounselor(@PathVariable("pageNum") int pageNum, @PathVariable("counselorId") String counselorId){
+        counselorService.deleteCounselor(counselorId);
+        userService.deleteUser(counselorId);
+        return "redirect:/adminCounselor/findAllCounselor?pageNum=" + pageNum;
+    }
+
 }
