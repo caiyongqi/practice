@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,6 +23,8 @@ public class Teacher {
     private College college;
     private String education;
     private String desc;
+    // 一个教师对应多个课程，课程可以相同但时间不同
+    private List<TeacherToCourse> teacherToCourses;
 
     public Teacher(String teacherId) {
         this.teacherId = teacherId;

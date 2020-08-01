@@ -19,4 +19,6 @@ public interface StudentDao {
 
     // 批量删除
     int deleteSelectedStudent(List<String> studentIdList);
+
+    Student findStudentById(Student student);
 }

@@ -44,4 +44,8 @@ public class Student {
         this.photoUrl = photoUrl;
         this.date = date;
     }
+
+    public Student(int id) {
+        this.id = id;
+    }
 }

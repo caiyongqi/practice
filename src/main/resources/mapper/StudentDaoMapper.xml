@@ -37,4 +37,7 @@
             #{studentId}
         </foreach>
     </delete>
+    <select id="findStudentById" parameterType="Student" resultType="Student">
+        SELECT * FROM student WHERE id = #{id}
+    </select>
 </mapper>
