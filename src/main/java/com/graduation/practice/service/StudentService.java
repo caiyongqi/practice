@@ -15,4 +15,6 @@ public interface StudentService {
     Student adminFindStudentByStudentId(String studentID);
 
     int deleteSelectedStudent(List<String> studentIdList);
+
+    Student findStudentById(Student student);
 }

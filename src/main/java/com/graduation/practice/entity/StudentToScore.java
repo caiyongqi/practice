@@ -16,4 +16,11 @@ public class StudentToScore {
     private Date startTime;
     private Date endTime;
     private String address;
+    private Student student;
+
+    public StudentToScore(int courseId, Date startTime, Date endTime) {
+        this.courseId = courseId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 }

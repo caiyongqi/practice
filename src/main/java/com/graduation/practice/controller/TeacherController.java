@@ -2,28 +2,22 @@ package com.graduation.practice.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.graduation.practice.entity.College;
-import com.graduation.practice.entity.Result;
-import com.graduation.practice.entity.Teacher;
-import com.graduation.practice.entity.User;
-import com.graduation.practice.service.CollegeService;
-import com.graduation.practice.service.TeacherService;
-import com.graduation.practice.service.UserService;
+import com.graduation.practice.entity.*;
+import com.graduation.practice.service.*;
 import com.graduation.practice.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.JsonbHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.*;
 
 @RequestMapping("/teacher")
@@ -32,11 +26,19 @@ public class TeacherController {
     private final TeacherService teacherService;
     private final UserService userService;
     private final CollegeService collegeService;
+    private final TeacherToCourseService teacherToCourseService;
+    private final StudentToScoreService studentToScoreService;
+    private final StudentService studentService;
+    private final ClassService classService;
     @Autowired
-    public TeacherController(TeacherService teacherService, UserService userService, CollegeService collegeService) {
+    public TeacherController(TeacherService teacherService, UserService userService, CollegeService collegeService, TeacherToCourseService teacherToCourseService, StudentToScoreService studentToScoreService, StudentService studentService, ClassService classService) {
         this.teacherService = teacherService;
         this.userService = userService;
         this.collegeService = collegeService;
+        this.teacherToCourseService = teacherToCourseService;
+        this.studentToScoreService = studentToScoreService;
+        this.studentService = studentService;
+        this.classService = classService;
     }
     /**
      *
@@ -207,8 +209,20 @@ public class TeacherController {
      * **/
     // 所教课程
     @GetMapping("/course")
-     public String findAllTaughtCourse(HttpServletRequest request, Model model){
-
+     public String findAllTaughtCourse(Model model, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return "redirect:/user/";
+        }else if(user.getType() != 3){
+            return "/error/404";
+        }else{
+            Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(user.getAccount()));
+            List<TeacherToCourse> teacherAndCourses = teacherToCourseService.findAllCourseByTeacher(teacher);
+            for (TeacherToCourse tc: teacherAndCourses) {
+                tc.setStudentNum(studentToScoreService.getStudentNumByCourse(tc));
+            }
+            model.addAttribute("teacherAndCourses", teacherAndCourses);
+        }
         return "/teacher/course";
     }
     // 跳转到更新老师个人信息的界面
@@ -278,10 +292,24 @@ public class TeacherController {
     }
 
     // 课程下的学生
-    @GetMapping("/student")
-    public String findAllStudentInCourse(HttpServletRequest request, Model model){
-
-        return "/teacher/list-student";
+    @PostMapping("/student")
+    public ModelAndView findAllStudentInCourse(HttpServletRequest request){
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        Date startTime = Date.valueOf(request.getParameter("startTime"));
+        Date endTime = Date.valueOf(request.getParameter("endTime"));
+        TeacherToCourse teacherToCourse = new TeacherToCourse(courseId, startTime, endTime);
+        List<StudentToScore> studentToScores = studentToScoreService.findAllStudentByCourse(teacherToCourse);
+        for (StudentToScore s: studentToScores) {
+            Student student = studentService.findStudentById(new Student(s.getStudentId()));
+            Classes classes = classService.findClassById(student.getClassId());
+            student.setClasses(classes);
+            s.setStudent(student);
+        }
+        System.out.println(studentToScores);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/teacher/list-student");
+        mv.addObject("students", studentToScores);
+        return mv;
     }
 
     @GetMapping("/score")
