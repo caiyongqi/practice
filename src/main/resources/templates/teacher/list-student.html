@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" >
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,156 +54,13 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="row">
-                                    <div class="col-sm-3" >
+                                    <div class="col-sm-3" th:each="item:${students}">
                                         <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
+                                            <img class="d-block w-100" th:src="${item.student.photoUrl == null ? 'https://i.niupic.com/images/2020/07/29/8sZX.png' :  item.student.photoUrl == null}" alt="First slide">
                                             <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3" >
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="card" >
-                                            <img class="d-block w-100" src="https://i.niupic.com/images/2020/07/29/8sZX.png" alt="First slide">
-                                            <div class="card-body">
-                                                <h3>蔡永奇</h3>
-                                                <h5>最终分数：<span class="label label-danger">100</span></h5>
-                                                <h5>班级：<span class="label label-success">软件工程1705</span></h5><h5>学号：<span class="label label-warning">0121710880513</span></h5>
+                                                <h3 th:text="${item.student.name}"></h3>
+                                                <h5>最终分数：<span class="label label-danger" th:text="${item.score}"></span></h5>
+                                                <h5>班级：<span class="label label-success" th:text="${item.student.classes.name}"></span></h5><h5>学号：<span class="label label-warning" th:text="${item.student.studentId}"></span></h5>
                                                 <button class="btn btn-primary btn-sm">详情</button>
                                             </div>
                                         </div>
@@ -211,27 +68,10 @@
                                 </div>
                             </div>
                         </div>
-                        <!--上一批-->
-<!--                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">-->
-<!--                            <span>-->
-<!--                                <i class="fa fa-arrow-circle-left" style="font-size:34px;  color:dodgerblue;"></i>-->
-<!--                            </span>-->
-<!--                            <span class="sr-only">Previous</span>-->
-<!--                        </a>-->
-                        <!--下一批-->
-<!--                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">-->
-<!--                          <span>-->
-<!--                            <i class="fa fa-arrow-circle-right" style="font-size:34px; color:dodgerblue;"></i>-->
-<!--                          </span>-->
-<!--                            <span class="sr-only">Next</span>-->
-<!--                        </a>-->
                     </div>
                 </div>
             </div>
         </section>
-<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
     </div>
 </div>
 <script src="../../static/plugins/jQuery/jquery-2.2.3.min.js" th:src="@{/plugins/jQuery/jquery-2.2.3.min.js}"></script>

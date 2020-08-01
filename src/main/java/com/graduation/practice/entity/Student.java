@@ -2,7 +2,9 @@ package com.graduation.practice.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
 import lombok.NoArgsConstructor;
+
 import java.sql.Date;
 
 @Data
@@ -20,7 +22,9 @@ public class Student {
     private int classId;
     private String photoUrl;
     private Date date;
+
     private Classes classes;
+
     public Student(String studentId){
         this.studentId = studentId;
     }
@@ -31,6 +35,7 @@ public class Student {
         this.classId = classId;
         this.date = date;
     }
+
 
     public Student(String studentId, String name, int age, int gender, String address, String email, String phoneNumber, int classId, String photoUrl, Date date) {
         this.studentId = studentId;
@@ -43,5 +48,9 @@ public class Student {
         this.classId = classId;
         this.photoUrl = photoUrl;
         this.date = date;
+    }
+
+    public Student(int id) {
+        this.id = id;
     }
 }

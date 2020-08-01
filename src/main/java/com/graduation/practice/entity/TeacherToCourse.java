@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,4 +15,15 @@ public class TeacherToCourse {
     private int courseId;
     private Date startTime;
     private Date endTime;
+    private String time;
+    private Course course;
+    private Teacher teacher;
+//    private List<Course> courses;
+    private int studentNum;
+
+    public TeacherToCourse(int courseId, Date startTime, Date endTime) {
+        this.courseId = courseId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 }

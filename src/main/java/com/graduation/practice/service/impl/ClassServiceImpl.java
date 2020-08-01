@@ -18,4 +18,9 @@ public class ClassServiceImpl implements ClassService {
         return classDao.findAllClass();
     }
 
+    @Override
+    public Classes findClassById(int id) {
+        return classDao.findClassById(id);
+    }
+
 }
