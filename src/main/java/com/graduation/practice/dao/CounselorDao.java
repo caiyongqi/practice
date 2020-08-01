@@ -1,5 +1,6 @@
 package com.graduation.practice.dao;
 
+import com.graduation.practice.entity.Classes;
 import com.graduation.practice.entity.Counselor;
 import com.graduation.practice.entity.Student;
 import com.graduation.practice.entity.User;
@@ -16,5 +17,11 @@ public interface CounselorDao {
     List<Student> findAllStudent(User user);
     List<Student> searchAllStudentById(@Param("keyword") String keyword, @Param("account") String account);
     Counselor findCounselorByCounselorId(Counselor counselor);
-}
 
+    Student findStudentByStudentId(Student student);
+    int updateStudentPassword(User user);
+
+    List<Classes> findClassByCounselorId(User user);
+    int insertStudent(Student student);
+    int updateStudent(Student student);
+}

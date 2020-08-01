@@ -4,4 +4,37 @@
     <select id="findStudentByStudentId" parameterType="Student" resultType="Student">
         SELECT * FROM student WHERE studentId = #{studentId}
     </select>
+    <select id="findAllStudent"  resultType="Student">
+        SELECT * FROM student
+        <if test="(studentName != null and studentName != '') or (classId != null and classId != 0)" >
+            where
+        </if>
+        <if test="studentName != null and studentName != ''">
+            name like concat("%", #{studentName}, "%")
+        </if>
+        <if test="classId != null and classId != 0 and studentName != null and studentName != ''">
+            and
+        </if>
+        <if test="classId != null and classId != 0">
+            classId = #{classId}
+        </if>
+    </select>
+    <insert id="insertStudent" parameterType="Student">
+        INSERT INTO student (studentId,name,age,gender,address,email,phoneNumber,classId,date) VALUES (#{studentId},#{name},#{age},#{gender},#{address},#{email},#{phoneNumber},#{classId},#{date})
+    </insert>
+
+    <update id="updateStudent" parameterType="student">
+        UPDATE student SET name = #{name}, age = #{age}, gender=#{gender}, address=#{address}, email=#{email}, phoneNumber=#{phoneNumber}, classId= #{classId},date=#{date} WHERE studentId=#{studentId}
+    </update>
+
+    <select id="adminFindStudentByStudentId" parameterType="String" resultType="Student">
+        SELECT * FROM student WHERE studentId = #{studentId}
+    </select>
+
+    <delete id="deleteSelectedStudent" parameterType="List">
+        DELETE FROM student WHERE studentId IN
+        <foreach collection="list" item="studentId" open="(" close=")" separator=",">
+            #{studentId}
+        </foreach>
+    </delete>
 </mapper>

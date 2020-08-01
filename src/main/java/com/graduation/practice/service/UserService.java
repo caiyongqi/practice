@@ -13,4 +13,6 @@ public interface UserService {
     int deleteUser(String account);
     int updateUser(User user);
     List<User> searchAllAdminByAccount(String keyword, String account);
+    int insertUser(User user);
+
 }
