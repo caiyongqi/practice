@@ -1,0 +1,36 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>错误</title>
+	<link rel="stylesheet" href="../../static/css/error/style.css" th:href="@{/css/error/style.css}">
+</head>
+<body>
+<div id="content" class="cf">
+	<div id="duobei_wrap">
+		<div class="reason">
+			<p class="not_found_tip">Not Found  :( 很抱歉，您访问的页面不存在!</p>
+			<p class="possible">可能原因：</p>
+			<ul>
+
+				<li>内部服务器错误</li>
+			</ul>
+		</div>
+	</div>
+	<div class="line"></div>
+
+	<div class="not_found">
+		<i class="ribbon"></i>
+		<div class="not_found_404 cf">
+			<span>5</span>
+			<span>0</span>
+			<span>0</span>
+		</div>
+		<div class="btn">
+			<a href="/user/" class="button button-rounded">看看首页</a>
+			<a href="javascript:history.go(-1)" class="button button-rounded cancle">返回上页</a>
+		</div>   
+	</div>
+</div>
+</body>
+</html>

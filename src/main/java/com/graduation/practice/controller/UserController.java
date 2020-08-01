@@ -95,6 +95,23 @@ public class UserController {
             result.setData(user);
             // 存入session中
             request.getSession().setAttribute("user", user);
+            switch(user.getType()){
+                case 3:
+                    Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(account));
+                    request.getSession().setAttribute("photoUrl", teacher.getPhotoUrl());
+                    break;
+                case 4:
+                    Counselor counselor = counselorService.findCounselorByCounselorId(new Counselor(account));
+                    request.getSession().setAttribute("photoUrl", counselor.getPhotoUrl());
+                    break;
+                case 5:
+                    Student student = studentService.findStudentByStudentId(new Student(account));
+                    request.getSession().setAttribute("photoUrl", student.getPhotoUrl());
+                    break;
+                default:
+                    request.getSession().setAttribute("photoUrl", null);
+                    break;
+            }
         } else {
             result.setMessage("密码错误");
         }
@@ -351,6 +368,8 @@ public class UserController {
             case 3:
                 Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(account));
                 model.addAttribute("teacher", teacher);
+                model.addAttribute("courseNum", teacherService.getCourseNumByTeacherId(account));
+                System.out.println(teacherService.getCourseNumByTeacherId(account));
                 to = "/teacher/profile-teacher";
                 break;
             case 4:
