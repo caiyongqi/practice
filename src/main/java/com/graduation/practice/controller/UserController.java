@@ -2,11 +2,18 @@ package com.graduation.practice.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.graduation.practice.entity.Result;
-import com.graduation.practice.entity.User;
+import com.graduation.practice.entity.*;
+import com.graduation.practice.service.CounselorService;
+import com.graduation.practice.service.StudentService;
+import com.graduation.practice.service.TeacherService;
 import com.graduation.practice.service.UserService;
 import com.graduation.practice.utils.MD5Utils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,6 +24,8 @@ import java.util.*;
 @RequestMapping("/user")
 @Controller
 public class UserController {
+    @Value("${spring.mail.username}")
+    private String from;
 
     private static HashMap<Integer, String> roles;
 
@@ -28,11 +37,19 @@ public class UserController {
         roles.put(4, "辅导员");
         roles.put(5, "学生");
     }
-
+    private JavaMailSender mailSender;
     private final UserService userService;
+    private final TeacherService teacherService;
+    private final CounselorService counselorService;
+    private final StudentService studentService;
 
-    public UserController(UserService userService) {
+    @Autowired
+    public UserController(JavaMailSender mailSender, UserService userService, TeacherService teacherService, CounselorService counselorService, StudentService studentService) {
+        this.mailSender = mailSender;
         this.userService = userService;
+        this.teacherService = teacherService;
+        this.counselorService = counselorService;
+        this.studentService = studentService;
     }
 
     public static void setRoles(HashMap<Integer, String> roles) {
@@ -59,14 +76,14 @@ public class UserController {
         String account = request.getParameter("account");
         String password = MD5Utils.code(request.getParameter("password"));
         /*
-        *
-        *
-        * 待完成：
-        * 如果是老师、学生、辅导员，需要继续查询得到photoUrl：session.setAttribute("photoUrl")
-        *
-        *
-        *
-        * */
+         *
+         *
+         * 待完成：
+         * 如果是老师、学生、辅导员，需要继续查询得到photoUrl：session.setAttribute("photoUrl")
+         *
+         *
+         *
+         * */
         // 查询
         User user = userService.findUserByAccount(new User(account));
         // 结果对象
@@ -130,13 +147,13 @@ public class UserController {
     // 批量删除
     @PostMapping("/deleteSelectedUser")
     public String deleteSelectedUser(HttpServletRequest request) {
+        int pageNum = Integer.parseInt(request.getParameter("pageNum"));
         String userList = request.getParameter("userList");
         String[] users = userList.split(",");
         List<String> accounts = new ArrayList<>();
         Collections.addAll(accounts, users);
-        System.out.println(accounts);
         userService.deleteSelectedUser(accounts);
-        return "redirect:findAllAdmin";
+        return "redirect:findAllAdmin?pageNum=" + pageNum;
     }
 
     // 删除单个用户
@@ -207,4 +224,146 @@ public class UserController {
         return "redirect:/user/";
     }
 
+    @GetMapping("/student")
+    public String getStudent(){
+        return "teacher/list-student";
+    }
+
+    @GetMapping("/forgetPassword")
+    public String resetPassword(){
+        return "forget-password";
+    }
+
+    private static String getRandomCode() {
+        StringBuilder str = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 6; i++) {
+            str.append(random.nextInt(10));
+        }
+        return str.toString();
+    }
+
+    @PostMapping("/code")
+    @ResponseBody
+    public Result<User> sendCode(HttpServletRequest request){
+        Result<User> result = new Result<>();
+        String account = request.getParameter("account");
+        String email = request.getParameter("email");
+        User user = userService.findUserByAccount(new User(account));
+        if(user == null){
+            result.setMessage("该用户不存在");
+        }else if(user.getType()<3){
+            result.setMessage("该用户未绑定邮箱");
+        }else{
+            boolean flag = false;
+            switch (user.getType()){
+                case 1:
+                case 2:
+                    result.setMessage("该用户未绑定邮箱");
+                    break;
+                case 3:
+                    Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(account));
+                    if (teacher.getEmail() == null){
+                        result.setMessage("该用户未绑定邮箱");
+                    }else if (!teacher.getEmail().equals(email)){
+                        result.setMessage("输入邮箱错误");
+                    }else{
+                        flag = true;
+                    }
+                    break;
+                case 4:
+                    Counselor counselor = counselorService.findCounselorByCounselorId(new Counselor(account));
+                    if (counselor.getEmail() == null){
+                        result.setMessage("该用户未绑定邮箱");
+                    }else if (!counselor.getEmail().equals(email)){
+                        result.setMessage("输入邮箱错误");
+                    }else{
+                        flag = true;
+                    }
+                    break;
+                case 5:
+                    Student student = studentService.findStudentByStudentId(new Student(account));
+                    if (student.getEmail() == null){
+                        result.setMessage("该用户未绑定邮箱");
+                    }else if (!student.getEmail().equals(email)){
+                        result.setMessage("输入邮箱错误");
+                    }else{
+                        flag = true;
+                    }
+                    break;
+            }
+            if (flag){
+                SimpleMailMessage mailMessage = new SimpleMailMessage();
+                mailMessage.setFrom(from);
+                mailMessage.setTo(email);
+                mailMessage.setSubject("教务管理系统：验证码");
+                String code = getRandomCode();
+                mailMessage.setText("你的验证码为：" + code);
+                request.getSession().setAttribute("code", code);
+                mailSender.send(mailMessage);
+                result.setMessage("验证码已发送");
+            }
+        }
+        return result;
+    }
+
+    @PostMapping("/resetPassword")
+    @ResponseBody
+    public Result<User> resetPassword(HttpServletRequest request){
+        Result<User> result = new Result<>();
+        String account = request.getParameter("account");
+        String password = MD5Utils.code(request.getParameter("password"));
+        String code = request.getParameter("code");
+        if(code == null || code.equals("")){
+            if(userService.updateUser(new User(account, password)) == 1){
+                result.setMessage("密码重置成功");
+            }else{
+                result.setMessage("密码重置成功");
+            }
+        }else{
+            String realCode = (String) request.getSession().getAttribute("code");
+            if (!code.equals(realCode)){
+                result.setStatus(403);
+                result.setMessage("验证码错误");
+            }else if (userService.updateUser(new User(account, password)) == 1){
+                result.setStatus(200);
+                result.setMessage("密码重置成功");
+            }else{
+                result.setStatus(403);
+                result.setMessage("密码重置失败");
+            }
+        }
+        return result;
+    }
+
+
+    @GetMapping("/profile")
+    public String toProfile(HttpServletRequest request, Model model){
+        String account = request.getParameter("account");
+        User user = userService.findUserByAccount(new User(account));
+        String to = "";
+        switch (user.getType()){
+            case 1:
+            case 2:
+                model.addAttribute("admin", user);
+                to = "/toResetPassword";
+                break;
+            case 3:
+                Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(account));
+                model.addAttribute("teacher", teacher);
+                to = "/teacher/profile-teacher";
+                break;
+            case 4:
+                Counselor counselor = counselorService.findCounselorByCounselorId(new Counselor(account));
+                model.addAttribute("counselor", counselor);
+                to = "/counselor/profile-counselor";
+                break;
+            case 5:
+                Student student = studentService.findStudentByStudentId(new Student(account));
+                model.addAttribute("student", student);
+                to = "/student/profile-student";
+                break;
+        }
+        return to;
+    }
 }

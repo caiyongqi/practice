@@ -1,90 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-
-    <title>武汉理工大学</title>
+    <title>编辑教师信息</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
-
-
-    <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.6 -->
-    <!-- Font Awesome -->
-    <!-- Ionicons -->
-    <!-- iCheck -->
-    <!-- Morris chart -->
-    <!-- jvectormap -->
-    <!-- Date Picker -->
-    <!-- Daterange picker -->
-    <!-- Bootstrap time Picker -->
-    <!--<link rel="stylesheet" href="../../../plugins/timepicker/bootstrap-timepicker.min.css">-->
-    <!-- bootstrap wysihtml5 - text editor -->
-    <!--数据表格-->
-    <!-- 表格树 -->
-    <!-- select2 -->
-    <!-- Bootstrap Color Picker -->
-    <!-- bootstrap wysihtml5 - text editor -->
-    <!--bootstrap-markdown-->
-    <!-- Theme style -->
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-    <!-- Ion Slider -->
-    <!-- ion slider Nice -->
-    <!-- bootstrap slider -->
-    <!-- bootstrap-datetimepicker -->
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-
-    <!-- jQuery 2.2.3 -->
-    <!-- jQuery UI 1.11.4 -->
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <!-- Bootstrap 3.3.6 -->
-    <!-- Morris.js charts -->
-    <!-- Sparkline -->
-    <!-- jvectormap -->
-    <!-- jQuery Knob Chart -->
-    <!-- daterangepicker -->
-    <!-- datepicker -->
-    <!-- Bootstrap WYSIHTML5 -->
-    <!-- Slimscroll -->
-    <!-- FastClick -->
-    <!-- iCheck -->
-    <!-- AdminLTE App -->
-    <!-- 表格树 -->
-    <!-- select2 -->
-    <!-- bootstrap color picker -->
-    <!-- bootstrap time picker -->
-    <!--<script src="../../../plugins/timepicker/bootstrap-timepicker.min.js"></script>-->
-    <!-- Bootstrap WYSIHTML5 -->
-    <!--bootstrap-markdown-->
-    <!-- CK Editor -->
-    <!-- InputMask -->
-    <!-- DataTables -->
-    <!-- ChartJS 1.0.1 -->
-    <!-- FLOT CHARTS -->
-    <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
-    <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
-    <!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
-    <!-- jQuery Knob -->
-    <!-- Sparkline -->
-    <!-- Morris.js charts -->
-    <!-- Ion Slider -->
-    <!-- Bootstrap slider -->
-    <!-- bootstrap-datetimepicker -->
-    <!-- 页面meta /-->
-
     <link rel="stylesheet" href="../../static/plugins/bootstrap/css/bootstrap.min.css" th:href="@{/plugins/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" href="../../static/plugins/font-awesome/css/font-awesome.min.css" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}">
     <link rel="stylesheet" href="../../static/plugins/ionicons/css/ionicons.min.css" th:href="@{/plugins/ionicons/css/ionicons.min.css}">
@@ -107,142 +29,109 @@
     <link rel="stylesheet" href="../../static/plugins/ionslider/ion.rangeSlider.skinNice.css" th:href="@{/plugins/ionslider/ion.rangeSlider.skinNice.css}">
     <link rel="stylesheet" href="../../static/plugins/bootstrap-slider/slider.css" th:href="@{/plugins/bootstrap-slider/slider.css}">
     <link rel="stylesheet" href="../../static/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css" th:href="@{/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <style>
+        .photo-block{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .photo{
+            width: 35%;
+        }
+        .photo img{
+            height: 200px;
+            width: 150px;
+        }
+    </style>
 </head>
 
+
 <body class="hold-transition skin-purple sidebar-mini">
-
 <div class="wrapper">
-
-    <!--     页面头部 -->
-    <header th:replace="studentPages/studentHeader :: head"></header>
-    <!--     页面头部 /-->
-
-    <!--     导航侧栏 -->
-    <div th:replace="studentPages/studentAsider :: sider"></div>
-    <!--     导航侧栏 /-->
-
-    <!-- 内容区域 -->
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
+    <header th:replace="header :: head"  ></header>
+    <div th:replace="asider :: sider"  ></div>
+    <div class="content-wrapper" id="content">
         <section class="content-header">
             <h1>
-                成绩查询
-                <small></small>
+                教师管理
+                <small>编辑教师信息</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="/student/home"><i class="fa fa-dashboard"></i> </a></li>
-                <li><a href="#">Tables</a></li>
-                <li class="active">Data tables</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li><a href="#">教师管理</a></li>
+                <li class="active">编辑教师信息</li>
             </ol>
         </section>
-
-        <!-- Main content -->
         <section class="content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Data Table With Full Features</h3>
+            <div class="box box-primary parent" style="display: flex;justify-content: center">
+                <div class="photo-block">
+                    <div class="photo">
+                        <img th:src="${teacher.photoUrl == null || teacher.photoUrl == '' ? 'https://i.niupic.com/images/2020/07/29/8sZX.png' : teacher.photoUrl}" alt="个人照片" id="img">
+                        <div>
+                            <span>更换照片:</span>
+                            <input type="file" accept="image/*" id="photo" onchange="changeImg()" placeholder="更换照片">
                         </div>
-<!--                        <div class="box-tools pull-right">-->
-<!--                            <div class="has-feedback">-->
-<!--                                <input type="text" class="form-control input-sm" placeholder="搜索">-->
-<!--                                <span class="glyphicon glyphicon-search form-control-feedback"></span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-<!--                                    <th>Rendering engine</th>-->
-                                    <th>课程编号</th>
-                                    <th>课程名称</th>
-                                    <th>分数</th>
-                                    <th>开始时间</th>
-                                    <th>结束时间</th>
-                                    <th>学分</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr  th:each="score:${score_list}">
-                                    <td th:text="${score.courseId}">Misc</td>
-                                    <td th:text="${score.name}">Dillo 0.7</td>
-                                    <td th:text="${score.score}">Embedded devices</td>
-                                    <td th:text="${score.startTime}">-</td>
-                                    <td th:text="${score.endTime}">X</td>
-                                    <td th:text="${score.credit}">X</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-<!--                        <div class="box-footer">-->
-<!--                            <div class="pull-left">-->
-<!--                                <div class="form-group form-inline">-->
-<!--                                    总共2 页，共14 条数据。 每页-->
-<!--                                    <select class="form-control">-->
-<!--                                        <option>10</option>-->
-<!--                                        <option>15</option>-->
-<!--                                        <option>20</option>-->
-<!--                                        <option>50</option>-->
-<!--                                        <option>80</option>-->
-<!--                                    </select> 条-->
-<!--                                </div>-->
-<!--                            </div>-->
-
-<!--                            <div class="box-tools pull-right">-->
-<!--                                <ul class="pagination">-->
-<!--                                    <li>-->
-<!--                                        <a href="#" aria-label="Previous">首页</a>-->
-<!--                                    </li>-->
-<!--                                    <li><a href="#">上一页</a></li>-->
-<!--                                    <li><a href="#">1</a></li>-->
-<!--                                    <li><a href="#">2</a></li>-->
-<!--                                    <li><a href="#">3</a></li>-->
-<!--                                    <li><a href="#">4</a></li>-->
-<!--                                    <li><a href="#">5</a></li>-->
-<!--                                    <li><a href="#">下一页</a></li>-->
-<!--                                    <li>-->
-<!--                                        <a href="#" aria-label="Next">尾页</a>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </div>-->
-
-<!--                        </div>-->
-                        <!-- /.box-body -->
                     </div>
-                    <!-- /.box -->
-
-                    <!--                    <div class="box">-->
-                    <!--                        <div class="box-header">-->
-                    <!--                            <h3 class="box-title">Data Table With Full Features</h3>-->
-                    <!--                        </div>-->
-                    <!-- /.box-header -->
-                    <!--                        <div class="box-body">-->
-                    <!--                        </div>-->
-                    <!-- /.box-body -->
-                    <!--                    </div>-->
-                    <!-- /.box -->
                 </div>
-                <!-- /.col -->
+                <div class="register-box">
+
+                    <div class="register-box-body">
+                        <input type="hidden" th:value="${pageNum}" id="pageNum">
+                        <form method="post">
+                            <div class="form-group has-feedback">
+                                <input type="text" class="form-control" placeholder="学工号" name="teacherId" id="teacherId" disabled th:value="${teacher.teacherId}">
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="text" class="form-control" placeholder="姓名" name="name" id="name" th:value="${teacher.name}">
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="text" class="form-control" placeholder="年龄" name="age" id="age" th:value="${teacher.age}">
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="text" class="form-control" placeholder="地址" name="address" id="address" th:value="${teacher.address}">
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="email" class="form-control" placeholder="邮箱" name="email" id="email" th:value="${teacher.email}">
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="text" class="form-control" placeholder="电话号码" name="phoneNumber" id="phoneNumber" th:value="${teacher.phoneNumber}">
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <select class="form-control" name="gender" id="gender">
+                                    <option value="1" selected th:if="${teacher.gender == 1}">男</option>
+                                    <option value="1" th:unless="${teacher.gender == 1}">男</option>
+                                    <option value="0" selected th:if="${teacher.gender == 0}">女</option>
+                                    <option value="0" th:unless="${teacher.gender == 0}">女</option>
+                                </select>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <label>
+                                    <select class="form-control" name="collegeId" id="college">
+                                        <option value="0" >选择院系</option>
+                                        <option th:each="college,state:${colleges}" th:value="${college.id}" th:text="${college.name}" th:selected="${college.id == teacher.collegeId ? 'selected' : false}"></option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <button  class="btn btn-primary btn-block btn-flat" id="submit">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <!-- /.row -->
+
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
-
-
-    <!-- page script -->
-
-    <!-- 内容区域 /-->
-
-
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script src="../../static/plugins/jQuery/jquery-2.2.3.min.js" th:src="@{/plugins/jQuery/jquery-2.2.3.min.js}"></script>
 <script src="../../static/plugins/jQueryUI/jquery-ui.min.js" th:src="@{/plugins/jQueryUI/jquery-ui.min.js}"></script>
 <script>
@@ -289,42 +178,61 @@
 <script src="../../static/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js" th:src="@{/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js}"></script>
 <script src="../../static/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js" th:src="@{/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
 <script>
-    $(document).ready(function () {
-        // 选择框
-        $(".select2").select2();
 
-        // WYSIHTML5编辑器
-        $(".textarea").wysihtml5({
-            locale: 'zh-CN'
-        });
-    });
+    $('#submit').bind('click', function (event) {
+        event.preventDefault()
 
-
-    // 设置激活菜单
-    function setSidebarActive(tagUri) {
-        var liObj = $("#" + tagUri);
-        if (liObj.length > 0) {
-            liObj.parent().parent().addClass("active");
-            liObj.addClass("active");
+        let teacherId = $('#teacherId').val()
+        let collegeId = parseInt($('#college').find('option:selected').val())
+        if (collegeId === 0){
+            alert('请选择教师所属学院');
+            return
         }
+        let gender = parseInt($('#gender').find('option:selected').val())
+        let name = $('#name').val()
+        let age = $('#age').val()
+        if(!(!isNaN(age) && parseInt(age)>0)){
+            alert('年龄格式错误')
+            return
+        }
+        let address = $('#address').val()
+        let phoneNumber = $('#phoneNumber').val()
+        let email = $('#email').val()
+        let pageNum = $('#pageNum').val()
+        let formData = new FormData()
+        formData.append("photo",$("#photo")[0].files[0]);
+        formData.append("teacherId", teacherId)
+        formData.append("gender", '' + gender)
+        formData.append("name", name)
+        formData.append("collegeId", '' + collegeId)
+        formData.append("age", age)
+        formData.append("address", address)
+        formData.append("phoneNumber", phoneNumber)
+        formData.append("email", email)
+        formData.append('pageNum', pageNum)
+        $.ajax({
+            type : 'post',
+            url: "/teacher/updateTeacher",
+            data:  formData,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                alert(res.message)
+                $(location).attr('href', '/teacher/findAllTeacher?pageNum=' + pageNum)
+            },
+            error: function (err) {
+                alert('更新教师失败')
+            }
+        })
+    })
+
+    // 更换照片
+    function changeImg() {
+        let file = document.getElementById("photo");
+        let imgUrl = window.URL.createObjectURL(file.files[0]);
+        let img = document.getElementById('img');
+        img.setAttribute('src', imgUrl); // 修改img标签src属性值
     }
-
-
-    $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false
-        });
-    });
-
-
-    // 激活导航位置
-    setSidebarActive("tables-data");
 </script>
 </body>
 

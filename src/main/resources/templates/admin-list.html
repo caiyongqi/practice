@@ -80,18 +80,18 @@
                                 <th class="" style="padding-right:0px;">
                                     <input id="selall" type="checkbox" class="icheckbox_square-blue">
                                 </th>
-                                <th class="sorting_asc">账号</th>
+                                <th class="text-center">账号</th>
 <!--                                <th class="sorting_desc">密码</th>-->
-                                <th class="sorting_asc">角色</th>
+                                <th class="text-center">角色</th>
                                 <th class="text-center">操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="item:${pageInfo.list}">
                                 <td><input name="ids" type="checkbox" th:value="${item.account}"></td>
-                                    <td th:text="${item.account}"></td>
+                                    <td th:text="${item.account}" class="text-center"></td>
 <!--                                    <td th:text="${user.password}"></td>-->
-                                    <td th:text="${item.role}"></td>
+                                    <td th:text="${item.role}" class="text-center"></td>
                                     <td class="text-center">
                                         <a th:href="${item.type != 1 ? '/user/toUpdateUser?pageNum=' + pageInfo.pageNum + '&account=' + item.account : '#'}" class="btn bg-olive btn-xs" th:onclick="|enableEdit('${item.type}');|">编辑</a>
 <!--                                        <a class="btn bg-olive btn-xs">详情</a>-->
@@ -106,7 +106,7 @@
                     <div class="pull-left">
                         <div class="form-group form-inline">
                             总共<span th:text="${pageInfo.pages}"></span>页，共<span th:text="${pageInfo.total}"></span>条数据。 第
-                            <select class="form-control" id="current_page">
+                            <select class="form-control" id="current_page" onchange="changePage()">
                                 <th:block th:each="i,state:${#numbers.sequence(1,pageInfo.pages)}">
                                     <option th:if="${state.count != pageInfo.pageNum}" th:text="${state.count}" th:value="${state.count}"></option>
                                     <option selected="selected" th:if="${state.count == pageInfo.pageNum}" th:text="${state.count}" th:value="${state.count}"></option>
@@ -130,6 +130,46 @@
 
                 </div>
             </div>
+            <script>
+                setTimeout(function () {
+                    $('#current_page').change(function () {
+                        let page = parseInt($('#current_page').find('option:selected').val())
+                        let pageNum = parseInt($('#pageNum').val())
+                        if (page !== pageNum){
+                            $.ajax({
+                                type: "get",
+                                url: "/user/findAllAdmin",
+                                data: {pageNum:page},
+                                success: function (res) {
+                                    $("#content").html($(res).find('div[id="content"]').html());
+                                }
+                            })
+                        }
+                    })
+
+                    function search() {
+                        var keyword = $('#search_input').val();
+                        $.ajax({
+                            type : 'post',
+                            url: "/user/searchUser#content",
+                            data:  {"keyword":keyword},
+                            success: function (res) {
+                                // console.log($(res).find('div[id="content"]').html())
+                                $("#content").html($(res).find('div[id="content"]').html());
+                            }
+                        })
+                    }
+                    $('#search_input').bind('keypress', function (event) {
+                        if(13 === event.keyCode){
+                            event.preventDefault();
+                            search();
+                        }
+                    })
+                    $('#search').bind('click', function (event) {
+                        search();
+                    })
+                }, 1000)
+            </script>
         </section>
     </div>
 </div>
@@ -230,6 +270,7 @@
             alert("请至少选中一个进行删除");
             return;
         }
+        let pageNum = parseInt($('#pageNum').val())
         if (confirm("确定要删除这些用户吗?")) {
             var userList = [];
             $("input[name='ids']:checked").each(
@@ -241,10 +282,10 @@
             $.ajax({
                 type: "post",
                 url: "/user/deleteSelectedUser",
-                data: {userList:userList.toString()},
+                data: {userList:userList.toString(), pageNum:pageNum},
                 success: function() {
+                    $(location).attr('href', '/user/findAllAdmin?pageNum=' + pageNum)
                     alert("删除成功");
-                    location.reload();
                 },
                 error: function() {
                     alert("删除失败")
@@ -259,45 +300,22 @@
     }
 
     // 选择页面下拉框改变,页面加载完毕就添加监听才有用
-    $(function () {
-        $('#current_page').change(function () {
-            let page = parseInt($('#current_page').find('option:selected').val())
-            let pageNum = parseInt($('#pageNum').val())
-            if (page !== pageNum){
-                $.ajax({
-                    type: "get",
-                    url: "/user/findAllAdmin",
-                    data: {pageNum:page},
-                    success: function (res) {
-                        $("#content").html($(res).find('div[id="content"]').html());
-                    }
-                })
-            }
-        })
-    })
-
-
-    function search() {
-        var keyword = $('#search_input').val();
-        $.ajax({
-            type : 'post',
-            url: "/user/searchUser#content",
-            data:  {"keyword":keyword},
-            success: function (res) {
-                // console.log($(res).find('div[id="content"]').html())
-                $("#content").html($(res).find('div[id="content"]').html());
-            }
-        })
-    }
-    $('#search_input').bind('keypress', function (event) {
-        if(13 === event.keyCode){
-            event.preventDefault();
-            search();
-        }
-    })
-    $('#search').bind('click', function (event) {
-        search();
-    })
+    // $(function () {
+    //     $('#current_page').change(function () {
+    //         let page = parseInt($('#current_page').find('option:selected').val())
+    //         let pageNum = parseInt($('#pageNum').val())
+    //         if (page !== pageNum){
+    //             $.ajax({
+    //                 type: "get",
+    //                 url: "/user/findAllAdmin",
+    //                 data: {pageNum:page},
+    //                 success: function (res) {
+    //                     $("#content").html($(res).find('div[id="content"]').html());
+    //                 }
+    //             })
+    //         }
+    //     })
+    // })
 
     function enableEdit(type) {
         type = parseInt(type)

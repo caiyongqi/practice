@@ -74,7 +74,7 @@
 <!--                    </li>-->
 
 <!--                    <li id="admin-profile">-->
-<!--                        <a href="all-admin-profile.html">-->
+<!--                        <a href="all-admin-profile-teacher.html">-->
 <!--                            <i class="fa fa-circle-o"></i> 个人中心-->
 <!--                        </a>-->
 <!--                    </li>-->
@@ -340,12 +340,45 @@
 
                                 <li id="admin-login">
                                     <a id="admin" href="/user/findAllAdmin">
-                                        <i class="fa fa-circle-o"></i> 管理员
+                                        <i class="fa fa-circle-o"></i> 管理员列表
                                         <input type="hidden" th:value="${session.user.type}" id="admin_account">
                                     </a>
                                 </li>
                             </ul>
                         </li>
+            <li class="treeview" th:if="${session.user.type == 1 || session.user.type == 2}">
+                <a href="#">
+                    <i class="fa fa-folder"></i> <span>教师管理</span>
+                    <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li >
+                        <a href="/teacher/findAllTeacher">
+                            <i class="fa fa-circle-o"></i> 教师列表
+                            <input type="hidden" th:value="${session.user.type}">
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="treeview" th:if="${session.user.type == 4}">
+                <a href="#">
+                    <i class="fa fa-folder"></i> <span>学生信息管理</span>
+                    <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li >
+                        <a href="/counselor/findAllStudent04">
+                            <i class="fa fa-circle-o"></i> 学生列表
+                            <input type="hidden" th:value="${session.user.type}">
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Classy Login form Widget Flat Responsive Widget Template :: w3layouts</title>
+    <title>学生登录系统</title>
     <!-- Custom Theme files -->
     <link href="../../static/studentStyle/css/style.css" th:href="@{/studentStyle/css/style.css}" rel="stylesheet" type="text/css" media="all"/>
     <!-- for-mobile-apps -->
@@ -22,15 +22,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!--header start here-->
 <div class="header">
     <div class="header-main">
-        <h1>Classy Login Form</h1>
+        <h1>学生教务系统</h1>
         <div class="header-bottom">
             <div class="header-right w3agile">
 
                 <div class="header-left-bottom agileinfo">
 
-                    <form action="#" method="post">
+                    <form action="/student/loginJudge" method="get">
                         <input type="text" value="" placeholder="用户名" name="name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'User name';}"/>
-                        <input type="password" value="Password" placeholder="密码" name="password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'password';}"/>
+                        <input type="password" value="" placeholder="密码" name="password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'password';}"/>
                         <div class="remember">
 			             <span class="checkbox1">
 							   <label class="checkbox"><input type="checkbox" name="" checked=""><i> </i>记住我 </label>

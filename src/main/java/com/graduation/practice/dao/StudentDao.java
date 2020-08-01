@@ -1,11 +1,24 @@
 package com.graduation.practice.dao;
 
-import com.graduation.practice.entity.Student;
+import com.graduation.practice.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Mapper
 @Component
 public interface StudentDao {
-    Student findStudentByAccount(Student student);
+//    Student findStudentByAccount(Student student);
+    Student findStudentByStudentId(Student student);
+
+    // 学生登录
+    User findUserByAccount(User user);
+    // 获取学生的登录信息
+    Student findStudentInfo(User user);
+
+    // 获取学生分数信息
+    List<ScoreShow> findStudentScore(StudentToScore studentToScore);
+    // 获取课程信息
+//    List<Course> findCourseInfo(List<Integer> list);
 }
