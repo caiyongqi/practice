@@ -69,7 +69,10 @@ public class StudentController {
 
     //    课表
     @GetMapping("/datalist")
-    public String dataShow(Model model) {
+    public String dataShow(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Object scoreShow = studentService.findCourseByTeacher();
+        model.addAttribute("course_list", scoreShow);
         return "studentPages/studentDataShow";
     }
 
@@ -81,12 +84,15 @@ public class StudentController {
 
     //    成绩查询
     @GetMapping("/score")
-    public String scoreShow(Model model, HttpServletRequest request) {
-        System.out.println(request.getSession());
-        System.out.println(request.getParameter("value"));
+    public String scoreShow(Model model, HttpSession session) {
+//        System.out.println(request.getSession());
+//        System.out.println(request.getParameter("value"));
 //        int studentId = Integer.parseInt(request.getParameter("value"));
-        int studentId = 18;
-        Object scoreShow = studentService.findScoreByStudent(new StudentToScore(studentId));
+        User user = (User) session.getAttribute("user");
+//        System.out.println(user);
+//        System.out.println(session.getAttribute("user"));
+//        String account = "123003";
+        Object scoreShow = studentService.findScoreByStudent(user);
         model.addAttribute("score_list", scoreShow);
         System.out.println(scoreShow);
 //        scoreShow.getName();
@@ -104,8 +110,11 @@ public class StudentController {
 
     // 选课
     @GetMapping("/chooseClass")
-    public String chooseClass(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public String chooseClass(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Object scoreShow = studentService.findCourseByTeacher();
+        System.out.println(scoreShow);
+        model.addAttribute("chooseCourse", scoreShow);
         return "studentPages/chooseClass";
     }
 

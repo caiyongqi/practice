@@ -150,155 +150,29 @@
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th>时间</th>
-                                    <th>周一</th>
-                                    <th>周二</th>
-                                    <th>周三</th>
-                                    <th>周四</th>
-                                    <th>周五</th>
-                                    <th>周六</th>
-                                    <th>周天</th>
+                                    <th>上课老师</th>
+                                    <th>课程名</th>
+                                    <th>开始时间</th>
+                                    <th>截止时间</th>
+                                    <th>上课周次</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
+                                <tr th:each="course:${course_list}">
+                                    <td th:text="${course.teacherName}">数学</td>
+                                    <td th:text="${course.courseName}">数学</td>
+                                    <td th:text="${course.startTime}">数学</td>
+                                    <td th:text="${course.endTime}">英语</td>
+                                    <td th:text="${course.time}">英语</td>
                                 </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <!--                                <tr>-->
-                                <!--                                    <td>Gecko</td>-->
-                                <!--                                    <td>Mozilla 1.0</td>-->
-                                <!--                                    <td>Win 95+ / OSX.1+</td>-->
-                                <!--                                    <td>1</td>-->
-                                <!--                                    <td>A</td>-->
-                                <!--                                </tr>-->
-                                <!--                                <tr>-->
+<!--                                                                <tr>-->
+<!--                                                                    <td>Gecko</td>-->
+<!--                                                                    <td>Mozilla 1.0</td>-->
+<!--                                                                    <td>Win 95+ / OSX.1+</td>-->
+<!--                                                                    <td>1</td>-->
+<!--                                                                    <td>A</td>-->
+<!--                                                                </tr>-->
+<!--                                                                <tr>-->
                                 <!--                                    <td>Gecko</td>-->
                                 <!--                                    <td>Mozilla 1.1</td>-->
                                 <!--                                    <td>Win 95+ / OSX.1+</td>-->

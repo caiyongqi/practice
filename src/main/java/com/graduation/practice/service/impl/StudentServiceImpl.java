@@ -45,10 +45,10 @@ public class StudentServiceImpl implements StudentService {
 
     //    成绩查询
     @Override
-    public List<ScoreShow> findScoreByStudent(StudentToScore studentToScore) {
-        System.out.println(studentToScore);
+    public List<ScoreShow> findScoreByStudent(User user) {
+        System.out.println(user);
         // 获取学生分数信息
-        List<ScoreShow> scoreShows = studentDao.findStudentScore(studentToScore);
+        List<ScoreShow> scoreShows = studentDao.findStudentScore(user);
         System.out.println(scoreShows);
 //        System.out.println(course);
         return scoreShows;
@@ -81,5 +81,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student findStudentById(Student student) {
         return studentDao.findStudentById(student);
+    }
+
+    // 课程
+    @Override
+    public List<courseTeacher> findCourseByTeacher() {
+        return studentDao.findCourseByTeacher();
     }
 }

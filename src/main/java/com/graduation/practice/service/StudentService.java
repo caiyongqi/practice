@@ -15,7 +15,7 @@ public interface StudentService {
     //    学生界面
     User findUserByAccount(User user);
     // 成绩查询
-    List<ScoreShow> findScoreByStudent(StudentToScore studentToScore);
+    List<ScoreShow> findScoreByStudent(User user);
     // 课表查询
 
     List<Student> findAllStudent(String studentName, int classId);
@@ -27,4 +27,5 @@ public interface StudentService {
 
     Student findStudentById(Student student);
 
+    List<courseTeacher> findCourseByTeacher();
 }

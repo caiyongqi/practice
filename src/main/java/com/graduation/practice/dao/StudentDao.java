@@ -20,7 +20,7 @@ public interface StudentDao {
     Student findStudentInfo(User user);
 
     // 获取学生分数信息
-    List<ScoreShow> findStudentScore(StudentToScore studentToScore);
+    List<ScoreShow> findStudentScore(User user);
     // 获取课程信息
 //    List<Course> findCourseInfo(List<Integer> list);
 
@@ -35,4 +35,5 @@ public interface StudentDao {
 
     Student findStudentById(Student student);
 
+    List<courseTeacher> findCourseByTeacher();
 }
