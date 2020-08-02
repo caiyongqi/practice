@@ -26,5 +26,4 @@ public interface UserDao {
     List<User> searchAllAdminByAccount(@Param("keyword") String keyword, @Param("account") String account);
     //插入user,用于学生的添加
     int insertUser(User user);
-
 }

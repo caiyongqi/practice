@@ -27,4 +27,9 @@ public class TeacherToCourseServiceImpl implements TeacherToCourseService {
     public int updateHaveScore(TeacherToCourse teacherToCourse) {
         return teacherToCourseDao.updateHaveScore(teacherToCourse);
     }
+
+    @Override
+    public int getCourseNum(TeacherToCourse teacherToCourse) {
+        return teacherToCourseDao.getCourseNum(teacherToCourse);
+    }
 }
