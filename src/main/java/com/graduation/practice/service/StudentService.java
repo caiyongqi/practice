@@ -28,4 +28,7 @@ public interface StudentService {
     Student findStudentById(Student student);
 
     List<courseTeacher> findCourseByTeacher();
+
+    //===辅导员查询学生成绩
+    List<ScoreShow> findScoreByStudent04(Student student);
 }

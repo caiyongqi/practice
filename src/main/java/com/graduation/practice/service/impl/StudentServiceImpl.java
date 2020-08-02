@@ -88,4 +88,15 @@ public class StudentServiceImpl implements StudentService {
     public List<courseTeacher> findCourseByTeacher() {
         return studentDao.findCourseByTeacher();
     }
+
+    //======辅导员查询学生成绩
+
+    @Override
+    public List<ScoreShow> findScoreByStudent04(Student student) {
+        // 获取学生分数信息
+        List<ScoreShow> scoreShows = studentDao.findStudentScore04(student);
+        System.out.println(scoreShows);
+//        System.out.println(course);
+        return scoreShows;
+    }
 }
