@@ -27,4 +27,9 @@ public class StudentToScoreServiceImpl implements StudentToScoreService {
     public List<StudentToScore> findAllStudentByCourse(TeacherToCourse teacherToCourse) {
         return studentToScoreDao.findAllStudentByCourse(teacherToCourse);
     }
+
+    @Override
+    public int updateScore(List<StudentToScore> studentToScores) {
+        return studentToScoreDao.updateScore(studentToScores);
+    }
 }

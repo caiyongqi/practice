@@ -65,7 +65,16 @@ public class UserController {
     }
 
     @GetMapping("/home")
-    public String home() {
+    public String home(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return "redirect:/user/";
+        }else{
+            switch(user.getType()){
+                case 3:
+                    return "/teacher/teacher-home";
+            }
+        }
         return "home";
     }
 
@@ -129,14 +138,14 @@ public class UserController {
         PageInfo<User> pageInfo = new PageInfo<>(users);
         // 视图
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("admin-list");
+        mv.setViewName("/admin/admin-list");
         mv.addObject("pageInfo", pageInfo);
         return mv;
     }
 
     @GetMapping("/toAddUser")
     public String toAddUser() {
-        return "add-user";
+        return "/admin/add-user";
     }
 
     @PostMapping("/addUser")
@@ -188,7 +197,7 @@ public class UserController {
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
         User user = userService.findUserByAccount(new User(account));
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("update-user");
+        mv.setViewName("/admin/update-user");
         mv.addObject("user", user);
         mv.addObject("pageNum", pageNum);
         return mv;
@@ -227,7 +236,7 @@ public class UserController {
         PageInfo<User> pageInfo = new PageInfo<>(users);
         // 视图
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("admin-list");
+        mv.setViewName("/admin/admin-list");
         mv.addObject("pageInfo", pageInfo);
         return mv;
     }

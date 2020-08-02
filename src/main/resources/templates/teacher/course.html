@@ -30,6 +30,14 @@
     <link rel="stylesheet" href="../../static/plugins/bootstrap-slider/slider.css" th:href="@{/plugins/bootstrap-slider/slider.css}">
     <link rel="stylesheet" href="../../static/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css" th:href="@{/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        @media (min-width: 576px){
+            .col-sm-3 {
+                max-width: 100%;
+            }
+        }
+
+    </style>
 </head>
 <body class="hold-transition skin-purple sidebar-mini" style="font-size: 14px">
 <div class="wrapper">
@@ -56,11 +64,10 @@
                                 <div class="row">
                                     <div class="col-sm-3" th:each="item:${teacherAndCourses}">
                                         <div class="card" >
-                                            <!--                                <img class="d-block w-100" src="img/b1.jpeg" alt="First slide">-->
                                             <div class="card-body">
-                                                <h3 th:text="${item.course.name}">算法分析与设计</h3>
+                                                <h3 th:text="${item.course.name}"></h3>
                                                 <h5>选课人数：<span class="label label-success" th:text="${item.studentNum}"></span>人</h5>
-                                                <p th:text="${item.course.desc}">介绍简单算法的分析与设计介绍简单算法的分析与设计介绍简单算法的分析与设计</p>
+                                                <p th:text="${item.course.desc}"></p>
                                                 <p th:text="${item.startTime + '  至  ' + item.endTime}"></p>
                                                 <button class="btn btn-primary btn-sm label-warning" th:onclick="showStudents([[${item}]])">查看学生</button>
                                             </div>
@@ -161,20 +168,11 @@
     });
 
     function showStudents(item) {
-        console.log(item);
-        $.ajax({
-            type : 'post',
-            url: "/teacher/student",
-            data: {courseId:item.courseId, startTime:item.startTime, endTime:item.endTime},
-            success: function (res) {
-                console.log(res)
-                alert('成功')
-            },
-            error: function (err) {
-                console.log(err)
-                alert('失败')
-            }
-        })
+        if (parseInt(item.studentNum) === 0){
+            alert("还没有人选你的课")
+            return
+        }
+        $(location).attr('href', "/teacher/student?courseId=" + item.courseId + "&startTime=" + item.startTime + "&endTime=" + item.endTime)
     }
 </script>
 </body>

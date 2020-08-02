@@ -32,4 +32,9 @@ public class StudentToScore {
         this.startTime = startTime;
         this.endTime = endTime;
     }
+
+    public StudentToScore(Integer studentId, Float score) {
+        this.studentId = studentId;
+        this.score = score;
+    }
 }
