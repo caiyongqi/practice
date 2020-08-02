@@ -4,6 +4,10 @@
     <select id="findTeacherByTeacherId" parameterType="Teacher" resultMap="teacherMap">
         SELECT teacher.id,teacher.education,teacher.desc,teacher.teacherId,teacher.name,teacher.gender,teacher.address,teacher.collegeId,teacher.phoneNumber,teacher.photoUrl,teacher.age,teacher.email,college.id AS college_id,college.name AS college_name FROM teacher,college WHERE teacher.teacherId = #{teacherId} AND teacher.collegeId = college.id
     </select>
+    <select id="findTeacherByName" parameterType="String" resultType="Teacher">
+        SELECT * FROM teacher WHERE name like concat("%", #{name}, "%") limit 1
+    </select>
+
     <select id="findAllTeacher" resultMap="teacherMap">
         SELECT teacher.id,teacher.teacherId,teacher.name,teacher.gender,college.id AS college_id,college.name AS college_name FROM teacher,college WHERE teacher.collegeId = college.id ORDER BY teacher.id
     </select>
@@ -29,6 +33,7 @@
         </if>
         ORDER BY teacher.id
     </select>
+
 
     <!-- 多对一关系 -->
     <resultMap type="Teacher" id="teacherMap">

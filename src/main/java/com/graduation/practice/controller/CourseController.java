@@ -31,13 +31,15 @@ public class CourseController {
         PageInfo<Course> coursePageInfo = new PageInfo<Course>(coureseList,5);
         model.addAttribute("courseList",coureseList);
         model.addAttribute("pageInfo",coursePageInfo);
-        return "courseDataList";
+        model.addAttribute("courseName",courseName);
+        return "course/courseDataList";
     }
+
 
     //跳转到新增课程页面
     @GetMapping("/toInsertCourse")
     public String toInsertCourse(Model model){
-        return "insertCourse";
+        return "course/insertCourse";
     }
 
     //
@@ -86,7 +88,7 @@ public class CourseController {
     public String toUpdateCourse(Model model,String courseId){
         Course course = courseService.findCourse(courseId);
         model.addAttribute("course",course);
-        return "courseUpdate";
+        return "course/courseUpdate";
     }
 
     //

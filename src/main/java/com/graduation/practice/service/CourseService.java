@@ -14,6 +14,6 @@ public interface CourseService {
     Course findCourse(String courseId);
 
     int updateCourse(Course course);
-
+    //courseName为空则选取所有
     List<Course> findAllCourse(String courseName);
 }

@@ -83,22 +83,26 @@
                         <div class="pull-left">
                             <div class="form-group form-inline">
                                 <div class="btn-group">
+                                    <input type="hidden" name="page">
                                     <button type="button" class="btn btn-default" title="新增" id="insert" onclick="window.location.href = '/course/toInsertCourse'"><i class="fa fa-file-o"></i>新增</button>
                                     <button type="button" class="btn btn-default" title="删除" onclick="deleteSelected()"><i class="fa fa-trash-o"></i> 删除</button>
                                 </div>
                             </div>
                         </div>
                         <!--  搜索  -->
-                        <form action="/course/toCourseDataList?currentPage=1" method="get">
+<!--                        <form action="/course/toCourseDataList?currentPage=1" method="get">-->
+                        <form>
                             <div class="col-md-3 data">
-                                <input type="text" class="form-control input-sm" placeholder="课程名" name="courseName">
+                                <input type="text" th:value="${courseName}" id="courseNameText" class="form-control input-sm" placeholder="课程名" name="courseName">
                             </div>
-                            <button type="submit" class="btn bg-maroon">搜索</button>
+                            <button id="searchBtn" type="submit" class="btn bg-maroon">搜索</button>
                         </form>
+                        <input type="hidden" th:value="${pageInfo.pageNum}" id="pageNum">
 
 
                         <!--工具栏/-->
                         <!--数据列表-->
+                        <div id="table-container">
                         <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
                             <thead>
                             <tr>
@@ -125,6 +129,31 @@
                             </tr>
                             </tbody>
                         </table>
+                        </div>
+                        <script>
+                            setTimeout(function () {
+                                $('#searchBtn').onclick(function () {
+                                    let page = parseInt($('#current_page').find('option:selected').val())
+                                    let pageNum = parseInt($('#pageNum').val())
+                                    var courseName = document.getElementById("courseNameText").value;
+                                    $.ajax({
+                                        type: "get",
+                                        url: "/course/toCourseDataList",
+                                        data: {currentPage:page,courseName:courseName,searchName:searchN},
+                                        success: function (res) {
+                                            $("#table-container").html($(res).find('div[id="table-container"]').html());
+                                        },
+                                        error: function(){
+                                            alert("错误");
+                                        }
+                                    })
+
+
+                                })
+                            }, 1000)
+                            function page(obj) {
+                            }
+                        </script>
                         <!--数据列表/-->
                     </div>
                     <!-- 数据表格 /-->
@@ -147,14 +176,9 @@
 
                     <div class="box-tools pull-right">
                         <ul class="pagination">
-                            <li>
-                                <a th:onclick="page()" aria-label="Previous">首页</a>
-                            </li>
-                            <li><a th:onclick="page()" th:if="${pageInfo.pageNum > 1}">上一页</a></li>
-                            <li><a th:onclick="page(${pageInfo.pageNum + 1})" th:if="${pageInfo.pageNum < pageInfo.pages}">下一页</a></li>
-                            <li>
-                                <a th:onclick="page(pageInfo.pages)" aria-label="Next">尾页</a>
-                            </li>
+                            <li><a id="nextPage" th:href="'/course/toCourseDataList?currentPage=' + (${pageInfo.pageNum} - 1)" th:if="${pageInfo.pageNum > 1}">上一页</a></li>
+                            <li><a id="forwardPage" th:href="'/course/toCourseDataList?currentPage=' + (${pageInfo.pageNum} + 1)" th:if="${pageInfo.pageNum < pageInfo.pages}">下一页</a></li>
+
                         </ul>
                     </div>
 
@@ -165,21 +189,23 @@
                         $('#current_page').change(function () {
                             let page = parseInt($('#current_page').find('option:selected').val())
                             let pageNum = parseInt($('#pageNum').val())
-                            if (page !== pageNum){
-                                $.ajax({
-                                    type: "get",
-                                    url: "/course/toCourseDataList",
-                                    data: {currentPage:page},
-                                    success: function (res) {
-                                        $("#content").html($(res).find('div[id="content"]').html());
-                                    }
-                                })
-                            }
+                            var courseName = document.getElementById("courseNameText").value;
+                            //alert(courseName);
+                            //alert(page);
+                            //alert(pageNum);
+                            $.ajax({
+                                type: "get",
+                                url: "/course/toCourseDataList",
+                                data: {currentPage:page,courseName:courseName},
+                                success: function (res) {
+                                    $("#table-container").html($(res).find('div[id="table-container"]').html());
+                                },
+                                error: function(){
+                                    alert("错误");
+                                }
+                            })
                         })
                     }, 1000)
-                    function page(obj) {
-
-                    }
                 </script>
             </div>
         </section>
@@ -238,7 +264,6 @@
 <script src="../plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="../plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
-    //删除选中
     function deleteSelected() {
         // 判断是否 有单选框被选中
         var checkedNum = $("input[name='ids']:checked").length;

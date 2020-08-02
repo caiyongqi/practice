@@ -23,4 +23,6 @@ public interface TeacherDao {
     int updateTeacher(Teacher teacher);
     // 根据账户，模糊查询
     List<Teacher> searchAllTeacherByTeacherName(@Param("teacherKeyword") String teacherKeyword);
+    //
+    Teacher findTeacherByName(String name);
 }

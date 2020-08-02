@@ -61,4 +61,9 @@ public class TeacherServiceImpl implements TeacherService {
     public int getCourseNumByTeacherId(String teacherId) {
         return teacherToCourseDao.getCourseNumByTeacherId(teacherId);
     }
+
+    @Override
+    public Teacher findTeacherByName(String name) {
+        return teacherDao.findTeacherByName(name);
+    }
 }
