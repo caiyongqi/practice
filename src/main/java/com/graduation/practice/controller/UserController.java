@@ -65,7 +65,16 @@ public class UserController {
     }
 
     @GetMapping("/home")
-    public String home() {
+    public String home(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return "redirect:/user/";
+        }else{
+            switch(user.getType()){
+                case 3:
+                    return "/teacher/teacher-home";
+            }
+        }
         return "home";
     }
 

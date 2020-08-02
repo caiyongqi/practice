@@ -20,6 +20,7 @@ public class TeacherToCourse {
     private Teacher teacher;
 //    private List<Course> courses;
     private int studentNum;
+    private int haveScore;
 
     public TeacherToCourse(int courseId, Date startTime, Date endTime) {
         this.courseId = courseId;

@@ -5,7 +5,7 @@
         SELECT COUNT(DISTINCT courseId) FROM teacher_to_course WHERE teacherId = #{teacherId}
     </select>
     <select id="findAllCourseByTeacher" parameterType="Teacher" resultMap="teacherAndCourse">
-        SELECT teacher_to_course.teacherId,teacher_to_course.courseId,teacher_to_course.startTime,teacher_to_course.endTime,teacher_to_course.time,course.id AS course_id,course.credit AS course_credit,course.desc AS course_desc,course.name AS course_name FROM teacher_to_course,course WHERE teacher_to_course.teacherId = #{teacherId} AND teacher_to_course.courseId = course.id
+        SELECT teacher_to_course.haveScore,teacher_to_course.teacherId,teacher_to_course.courseId,teacher_to_course.startTime,teacher_to_course.endTime,teacher_to_course.time,course.id AS course_id,course.credit AS course_credit,course.desc AS course_desc,course.name AS course_name FROM teacher_to_course,course WHERE teacher_to_course.teacherId = #{teacherId} AND teacher_to_course.courseId = course.id
     </select>
     
     <resultMap id="teacherAndCourse" type="TeacherToCourse">
@@ -14,6 +14,7 @@
         <result column="startTime" property="startTime" />
         <result column="endTime" property="endTime" />
         <result column="time" property="time" />
+        <result column="haveScore" property="haveScore" />
         <association property="course" javaType="Course">
             <id column="course_id" property="id" />
             <result column="course_name" property="name" />
@@ -21,4 +22,7 @@
             <result column="course_credit" property="credit" />
         </association>
     </resultMap>
+    <update id="updateHaveScore" parameterType="TeacherToCourse">
+        UPDATE teacher_to_course SET haveScore = 1 WHERE courseId = #{courseId} AND courseId = #{courseId} AND startTime = #{startTime} AND endTime = #{endTime}
+    </update>
 </mapper>

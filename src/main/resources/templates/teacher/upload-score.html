@@ -71,6 +71,9 @@
 <!--                            </div>-->
 <!--                        </div>-->
 <!--                        <input type="hidden" th:value="${pageInfo.pageNum}" id="pageNum">-->
+                        <input type="hidden" id="startTime" th:value="${startTime}">
+                        <input type="hidden" id="endTime" th:value="${endTime}">
+                        <input type="hidden" id="courseId" th:value="${courseId}">
                         <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
                             <thead>
                             <tr>
@@ -95,37 +98,14 @@
 <!--                                    <input type="text" name="score" placeholder="输入成绩">-->
 <!--                                </td>-->
 <!--                            </tr>-->
-                                <tr>
-                                    <input type="hidden" name="studentId" value="11111">
-<!--                                    <td><input name="ids" type="checkbox"></td>-->
-                                    <td class="text-center">11111</td>
-                                    <!--                                    <td th:text="${user.password}"></td>-->
-                                    <td class="text-center">11111111111</td>
-                                    <td class="text-center">11111111111111</td>
+
+                                <tr th:each="item:${students}">
+                                    <input type="hidden" name="studentId" th:value="${item.student.studentId}">
+                                    <td class="text-center" th:text="${item.student.studentId}"></td>
+                                    <td class="text-center" th:text="${item.student.name}"></td>
+                                    <td class="text-center" th:text="${item.student.classes.name}"></td>
                                     <td class="text-center">
-                                        <input type="number" name="score" max="100" min="0" value="0">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <input type="hidden" name="studentId" value="11111">
-<!--                                    <td><input name="ids" type="checkbox"></td>-->
-                                    <td class="text-center">11111</td>
-                                    <!--                                    <td th:text="${user.password}"></td>-->
-                                    <td class="text-center">11111111111</td>
-                                    <td class="text-center">11111111111111</td>
-                                    <td class="text-center">
-                                        <input type="number" name="score" max="100" min="0" value="0">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <input type="hidden" name="studentId" value="11111">
-<!--                                    <td><input name="ids" type="checkbox"></td>-->
-                                    <td class="text-center">11111</td>
-                                    <!--                                    <td th:text="${user.password}"></td>-->
-                                    <td class="text-center">11111111111</td>
-                                    <td class="text-center">11111111111111</td>
-                                    <td class="text-center">
-                                        <input type="number" name="score" max="100" min="0" value="0">
+                                        <input type="number" name="score" max="100" min="0" th:value="${item.score}">
                                     </td>
                                 </tr>
                             </tbody>
@@ -258,27 +238,37 @@
     }
 
     function uploadScore() {
-        let studentIds = []
-        $("input[name='studentId']").each(function () {
-            studentIds.push($(this).val())
-        })
-        studentIds = studentIds.join(',')
-        let scores = []
-        $("input[name='score']").each(function () {
-            scores.push($(this).val())
-        })
-        scores = scores.join(',')
-        $.ajax({
-            type: "post",
-            url: "/teacher/uploadScore",
-            data: {studentIds:studentIds, scores: scores},
-            success: function (res) {
-                alert(res.message)
-            },
-            error: function (err) {
-                alert("成绩上传失败")
-            }
-        })
+        if(confirm('上传后不可修改，确认上传吗?')){
+            let studentIds = []
+            $("input[name='studentId']").each(function () {
+                studentIds.push($(this).val())
+            })
+            studentIds = studentIds.join(',')
+            let scores = []
+            $("input[name='score']").each(function () {
+                scores.push($(this).val())
+            })
+            scores = scores.join(',')
+
+            let startTime = $('#startTime').val()
+            let endTime = $('#endTime').val()
+            let courseId = $('#courseId').val()
+
+            $.ajax({
+                type: "post",
+                url: "/teacher/uploadScore",
+                data: {studentIds:studentIds, scores: scores, startTime:startTime, endTime:endTime, courseId:courseId},
+                success: function (res) {
+                    if (res.status === 200){
+                        $(location).attr('href', "/teacher/chooseCourse")
+                    }
+                    alert(res.message)
+                },
+                error: function (err) {
+                    alert("成绩上传失败")
+                }
+            })
+        }
     }
 </script>
 </body>

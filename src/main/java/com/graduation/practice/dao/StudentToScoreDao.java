@@ -12,4 +12,5 @@ import java.util.List;
 public interface StudentToScoreDao {
     int getStudentNumByCourse(TeacherToCourse teacherToCourse);
     List<StudentToScore> findAllStudentByCourse(TeacherToCourse teacherToCourse);
+    int updateScore(List<StudentToScore> studentToScores);
 }

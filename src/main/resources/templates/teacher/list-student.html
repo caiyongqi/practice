@@ -30,6 +30,14 @@
     <link rel="stylesheet" href="../../static/plugins/bootstrap-slider/slider.css" th:href="@{/plugins/bootstrap-slider/slider.css}">
     <link rel="stylesheet" href="../../static/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css" th:href="@{/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        @media (min-width: 576px){
+            .col-sm-3 {
+                max-width: 100%;
+            }
+        }
+
+    </style>
 </head>
 <body class="hold-transition skin-purple sidebar-mini" style="font-size: 14px">
 <div class="wrapper">
@@ -56,12 +64,12 @@
                                 <div class="row">
                                     <div class="col-sm-3" th:each="item:${students}">
                                         <div class="card" >
-                                            <img class="d-block w-100" th:src="${item.student.photoUrl == null ? 'https://i.niupic.com/images/2020/07/29/8sZX.png' :  item.student.photoUrl == null}" alt="First slide">
+                                            <img class="d-block w-100" th:src="${item.student.photoUrl == null ? 'https://i.niupic.com/images/2020/07/29/8sZX.png' :  item.student.photoUrl}" alt="First slide">
                                             <div class="card-body">
                                                 <h3 th:text="${item.student.name}"></h3>
-                                                <h5>最终分数：<span class="label label-danger" th:text="${item.score}"></span></h5>
+                                                <h5>最终分数：<span class="label label-danger" th:text="${item.score == null ? '暂无' : item.score}"></span></h5>
                                                 <h5>班级：<span class="label label-success" th:text="${item.student.classes.name}"></span></h5><h5>学号：<span class="label label-warning" th:text="${item.student.studentId}"></span></h5>
-                                                <button class="btn btn-primary btn-sm">详情</button>
+                                                <button class="btn btn-primary btn-sm" th:onclick="showStudent([[${item}]])">详情</button>
                                             </div>
                                         </div>
                                     </div>
@@ -162,6 +170,10 @@
             $(this).data("clicks", !clicks);
         });
     });
+
+    function showStudent(item) {
+        $(location).attr('href', "/counselor/studentProfile?studentId=" + item.student.studentId)
+    }
 </script>
 </body>
 </html>
