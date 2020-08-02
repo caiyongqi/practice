@@ -4,4 +4,7 @@
     <select id="findAllClass" resultType="Classes">
         SELECT * FROM classes
     </select>
+    <select id="findClassById" resultType="Classes" parameterType="Integer">
+        SELECT * FROM classes WHERE id = #{id}
+    </select>
 </mapper>

@@ -21,7 +21,7 @@
             <ul class="sidebar-menu">
                 <li class="header">菜单</li>
 
-                <li id="admin-index"><a href=""><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
+                <li id="admin-index"><a href="/student/home"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
 <!--                <li class="treeview">-->
 <!--                    <a href="#">-->
 <!--                        <i class="fa fa-folder"></i> <span>课表查询</span>-->
@@ -105,13 +105,13 @@
                     <ul class="treeview-menu">
 
                         <li id="charts-chartjs">
-                            <a href="#">
+                            <a th:href="@{/student/score}" id="requestScore" th:value="${session.user.account}">
                                 <i class="fa fa-circle-o"></i> 成绩查询
                             </a>
                         </li>
 
                         <li id="charts-morris">
-                            <a href="#">
+                            <a href="/student/datalist">
                                 <i class="fa fa-circle-o"></i> 课表查询
                             </a>
                         </li>
@@ -132,26 +132,26 @@
                 </li>
 
 
-                <!--            <li class="treeview">-->
-                <!--                <a href="#">-->
-                <!--                    <i class="fa fa-laptop"></i> <span>UI界面元素</span>-->
-                <!--                    <span class="pull-right-container">-->
-                <!--                        <i class="fa fa-angle-left pull-right"></i>-->
-                <!--                    </span>-->
-                <!--                </a>-->
-                <!--                <ul class="treeview-menu">-->
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-laptop"></i> <span>选课系统</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
 
-                <!--                    <li id="elements-general">-->
-                <!--                        <a href="all-elements-general.html">-->
-                <!--                            <i class="fa fa-circle-o"></i> 标准 General-->
-                <!--                        </a>-->
-                <!--                    </li>-->
+                                    <li id="elements-general">
+                                        <a href="/student/chooseClass">
+                                            <i class="fa fa-circle-o"></i>专业选课
+                                        </a>
+                                    </li>
 
-                <!--                    <li id="elements-icons">-->
-                <!--                        <a href="all-elements-icons.html">-->
-                <!--                            <i class="fa fa-circle-o"></i> 图标 Icons-->
-                <!--                        </a>-->
-                <!--                    </li>-->
+<!--                                    <li id="elements-icons">-->
+<!--                                        <a href="all-elements-icons.html">-->
+<!--                                            <i class="fa fa-circle-o"></i>通识必修-->
+<!--                                        </a>-->
+<!--                                    </li>-->
 
                 <!--                    <li id="elements-buttons">-->
                 <!--                        <a href="all-elements-buttons.html">-->
@@ -183,8 +183,8 @@
                 <!--                        </a>-->
                 <!--                    </li>-->
 
-                <!--                </ul>-->
-                <!--            </li>-->
+                                </ul>
+                            </li>
 
 
                 <!--            <li class="treeview">-->
@@ -321,26 +321,26 @@
                 <!-- 菜单 /-->
 
                 <!--            <li id="admin-documentation"><a href="documentation.html" target="_blank"><i class="fa fa-book"></i> <span>AdminLTE汉化文档</span></a></li>-->
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-book"></i> <span>个人中心</span>
-                        <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                    </a>
-                    <ul class="treeview-menu">
+<!--                <li class="treeview">-->
+<!--                    <a href="#">-->
+<!--                        <i class="fa fa-book"></i> <span>个人中心</span>-->
+<!--                        <span class="pull-right-container">-->
+<!--                        <i class="fa fa-angle-left pull-right"></i>-->
+<!--                    </span>-->
+<!--                    </a>-->
+<!--                    <ul class="treeview-menu">-->
 
-                        <li id="travellog-manage">
-                            <a href="#">
-                                <i class="fa fa-circle-o"></i> 个人信息查看
-                            </a>
-                        </li>
+<!--                        <li id="travellog-manage">-->
+<!--                            <a href="#">-->
+<!--                                <i class="fa fa-circle-o"></i> 个人信息查看-->
+<!--                            </a>-->
+<!--                        </li>-->
 
-                        <li id="travellog-review">
-                            <a href="#">
-                                <i class="fa fa-circle-o"></i> 修改密码
-                            </a>
-                        </li>
+<!--                        <li id="travellog-review">-->
+<!--                            <a href="#">-->
+<!--                                <i class="fa fa-circle-o"></i> 修改密码-->
+<!--                            </a>-->
+<!--                        </li>-->
 
                         <!--                        <li id="travellog-setting">-->
                         <!--                            <a href="#">-->
@@ -356,6 +356,11 @@
     </aside>
 </th:block>
 <!--</div>-->
+<script>
+    // $("#requestScore").onclick()=function () {
+    //
+    // }
+</script>
 </body>
 
 </html>

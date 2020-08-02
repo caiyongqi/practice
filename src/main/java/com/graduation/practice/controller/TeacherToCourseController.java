@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -109,8 +110,9 @@ public class TeacherToCourseController {
     }
 
     @GetMapping("/deleteTeacherToCourse")
-    public String deleteTTC(TeacherToCourse ttc){
-        //System.out.println(ttc.toString());
+    public String deleteTTC(String teacherId, int courseId, Date startTime, Date endTime, String time){
+        TeacherToCourse ttc = new TeacherToCourse(teacherId,courseId,startTime,endTime,time);
+        System.out.println(ttc.toString());
         try{
             TTCService.deleteTTC(ttc);
         }

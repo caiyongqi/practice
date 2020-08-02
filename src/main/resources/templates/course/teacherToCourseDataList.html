@@ -274,14 +274,18 @@
 <script src="../plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
     function singleDelete(ttc) {
-        //alert(ttc.teacherId + ttc.courseId + ttc.startTime + ttc.endTime + ttc.time);
 
+        var teacherId = ttc.teacherId;
+        var courseId = ttc.courseId;
+        var startTime = ttc.startTime;
+        var endTime = ttc.endTime;
+        var time = ttc.time;
         $.ajax({
             type: "get",
             url: "/teacherToCourse/deleteTeacherToCourse",
-            data: ttc,
+            data: {teacherId,courseId,startTime,endTime,time},
             success: function(){
-                alert("删除成功");
+                //alert("删除成功");
                 location.reload();
             },
             error: function(){

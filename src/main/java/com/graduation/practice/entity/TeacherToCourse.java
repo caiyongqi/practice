@@ -1,12 +1,11 @@
 package com.graduation.practice.entity;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.IOException;
 import java.sql.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,13 +16,22 @@ public class TeacherToCourse {
     private Date startTime;
     private Date endTime;
     private String time;
+    private Course course;
+    private Teacher teacher;
+//    private List<Course> courses;
+    private int studentNum;
 
-    public TeacherToCourse(String teacherId, int courseId, Date startTime, Date endTime) {
-        this.teacherId = teacherId;
+    public TeacherToCourse(int courseId, Date startTime, Date endTime) {
         this.courseId = courseId;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-
+    public TeacherToCourse(String teacherId, int courseId, Date startTime, Date endTime, String time) {
+        this.teacherId = teacherId;
+        this.courseId = courseId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.time = time;
+    }
 }

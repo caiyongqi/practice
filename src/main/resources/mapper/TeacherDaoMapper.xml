@@ -4,10 +4,6 @@
     <select id="findTeacherByTeacherId" parameterType="Teacher" resultMap="teacherMap">
         SELECT teacher.id,teacher.education,teacher.desc,teacher.teacherId,teacher.name,teacher.gender,teacher.address,teacher.collegeId,teacher.phoneNumber,teacher.photoUrl,teacher.age,teacher.email,college.id AS college_id,college.name AS college_name FROM teacher,college WHERE teacher.teacherId = #{teacherId} AND teacher.collegeId = college.id
     </select>
-    <select id="findTeacherByName" parameterType="String" resultType="Teacher">
-        SELECT * FROM teacher WHERE name like concat("%", #{name}, "%") limit 1
-    </select>
-
     <select id="findAllTeacher" resultMap="teacherMap">
         SELECT teacher.id,teacher.teacherId,teacher.name,teacher.gender,college.id AS college_id,college.name AS college_name FROM teacher,college WHERE teacher.collegeId = college.id ORDER BY teacher.id
     </select>
@@ -24,7 +20,17 @@
         DELETE FROM teacher WHERE teacherId = #{teacherId}
     </delete>
     <update id="updateTeacher" parameterType="Teacher">
-        UPDATE teacher SET `name` = #{name}, age = #{age}, gender = #{gender}, address = #{address}, email = #{email}, phoneNumber = #{phoneNumber}, collegeId = #{collegeId}, photoUrl = #{photoUrl} WHERE teacherId = #{teacherId}
+        UPDATE teacher SET `name` = #{name}, age = #{age}, gender = #{gender}, address = #{address}, email = #{email}, phoneNumber = #{phoneNumber}, photoUrl = #{photoUrl}
+        <if test="collegeId != null and collegeId != ''">
+            , collegeId = #{collegeId}
+        </if>
+        <if test="desc != null and desc != ''">
+            , `desc` = #{desc}
+        </if>
+        <if test="education != null and education !=''">
+            , education = #{education}
+        </if>
+        WHERE teacherId = #{teacherId}
     </update>
     <select id="searchAllTeacherByTeacherName" parameterType="String" resultMap="teacherMap">
         SELECT teacher.id,teacher.teacherId,teacher.name,teacher.gender,college.id AS college_id,college.name AS college_name FROM teacher,college WHERE teacher.collegeId = college.id
@@ -33,8 +39,9 @@
         </if>
         ORDER BY teacher.id
     </select>
-
-
+    <select id="findTeacherByName" parameterType="String" resultType="Teacher">
+        SELECT * FROM teacher WHERE name like concat("%", #{name}, "%") limit 1
+    </select>
     <!-- 多对一关系 -->
     <resultMap type="Teacher" id="teacherMap">
         <id column="id" property="id" />

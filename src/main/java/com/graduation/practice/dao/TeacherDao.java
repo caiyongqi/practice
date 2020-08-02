@@ -25,4 +25,5 @@ public interface TeacherDao {
     List<Teacher> searchAllTeacherByTeacherName(@Param("teacherKeyword") String teacherKeyword);
     //
     Teacher findTeacherByName(String name);
+
 }
