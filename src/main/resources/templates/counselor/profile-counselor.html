@@ -77,14 +77,21 @@
 
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-<!--                                    <b>课程</b> <a class="pull-right" th:text="${courseNum}"></a>-->
+                                    <b>学工号</b> <a class="pull-right" th:text="${counselor.counselorId}"></a>
                                 </li>
-                                <!--                                    <li class="list-group-item">-->
-                                <!--                                        <b>Following</b> <a class="pull-right">543</a>-->
-                                <!--                                    </li>-->
-                                <!--                                    <li class="list-group-item">-->
-                                <!--                                        <b>Friends</b> <a class="pull-right">13,287</a>-->
-                                <!--                                    </li>-->
+                                <li class="list-group-item">
+                                    <b>所在专业</b> <a class="pull-right" th:text="${counselor.discipline.name}"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>所在学院</b> <a class="pull-right" th:text="${counselor.college.name}"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>性别</b> <a class="pull-right" th:text="${counselor.gender == 1 ? '男' : '女'}"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>年龄</b> <a class="pull-right" th:text="${counselor.age}"></a>
+                                </li>
+
                             </ul>
 
                             <!--                                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>-->
@@ -100,13 +107,6 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-<!--                            <strong><i class="fa fa-book margin-r-5"></i> 教育</strong>-->
-
-<!--                            <p class="text-muted" th:text="${counselor.education}">-->
-<!--                                清华大学计算机科学与技术博士-->
-<!--                            </p>-->
-
-<!--                            <hr>-->
 
                             <strong><i class="fa fa-map-marker margin-r-5"></i> 地址</strong>
 
@@ -124,15 +124,6 @@
 
                             <p class="text-muted" th:text="${counselor.phoneNumber}"></p>
 
-                            <strong><i class="fa fa-pencil margin-r-5"></i> 技能</strong>
-
-                            <p>
-                                <span class="label label-danger">UI Design</span>
-                                <span class="label label-success">Coding</span>
-                                <span class="label label-info">Javascript</span>
-                                <span class="label label-warning">PHP</span>
-                                <span class="label label-primary">Node.js</span>
-                            </p>
 
                             <hr>
 
