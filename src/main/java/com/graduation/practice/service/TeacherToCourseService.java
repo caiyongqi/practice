@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TeacherToCourseService {
     List<TeacherToCourse> findAllCourseByTeacher(Teacher teacher);
+    int updateHaveScore(TeacherToCourse teacherToCourse);
+    int getCourseNum(TeacherToCourse teacherToCourse);
 }

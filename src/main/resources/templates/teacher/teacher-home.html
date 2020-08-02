@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
+    <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>上传成绩</title>
+    <title>首页</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
@@ -32,90 +34,148 @@
 </head>
 
 <body class="hold-transition skin-purple sidebar-mini">
+
 <div class="wrapper">
+
+    <!-- 页面头部 -->
     <header th:replace="header :: head"  ></header>
+    <!--    <header class="main-header">-->
+    <!--    </header>-->
+    <!-- 页面头部 /-->
+
+    <!-- 导航侧栏 -->
     <div th:replace="asider :: sider"  ></div>
-    <div class="content-wrapper" id="content">
+    <!-- 导航侧栏 /-->
+
+    <!-- 内容区域 -->
+    <div class="content-wrapper">
+
+        <!-- 内容头部 -->
         <section class="content-header">
             <h1>
-                成绩管理
-                <small>上传成绩</small>
+                控制面板
+                <small>首页</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="#">成绩管理</a></li>
-                <li class="active">上传成绩</li>
+                <li><a href=""><i class="fa fa-dashboard"></i> 首页</a></li>
             </ol>
         </section>
+        <!-- 内容头部 /-->
+
+        <!-- 正文区域 -->
         <section class="content">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">学生列表</h3>
-                </div>
-                <div class="box-body">
-                    <div class="table-box">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default label-danger" title="上传" onclick="uploadScore()"> 上传 </button>
-                                    <!--                                    <a href="/user/toAddUser" type="button" class="btn btn-default" title="新建" id="addUser"><i class="fa fa-file-o"></i> 新建</a>-->
-<!--                                    <button type="button" class="btn btn-default" title="删除" onclick="deleteAll()"><i class="fa fa-trash-o"></i> 删除</button>-->
-<!--                                    <button type="button" class="btn btn-default" title="刷新" onclick="refresh()"><i class="fa fa-refresh"></i> 刷新</button>-->
-                                </div>
-                            </div>
-                        </div>
-<!--                        <div class="box-tools pull-right">-->
-<!--                            <div class="has-feedback">-->
-<!--                                <input type="text" class="form-control input-sm" placeholder="搜索" id="search_input" th:value="${session.keyword == null ? '' : session.keyword}">-->
-<!--                                <span class="glyphicon glyphicon-search form-control-feedback" id="search"></span>-->
-<!--                            </div>-->
+
+
+            <!-- 统计数值 -->
+            <div class="row">
+<!--                <div class="col-lg-3 col-xs-6">-->
+<!--                    &lt;!&ndash; small box &ndash;&gt;-->
+<!--                    <div class="small-box bg-aqua">-->
+<!--                        <div class="inner">-->
+<!--                            <h3>150</h3>-->
+
+<!--                            <p>新订单</p>-->
 <!--                        </div>-->
-<!--                        <input type="hidden" th:value="${pageInfo.pageNum}" id="pageNum">-->
-                        <input type="hidden" id="startTime" th:value="${startTime}">
-                        <input type="hidden" id="endTime" th:value="${endTime}">
-                        <input type="hidden" id="courseId" th:value="${courseId}">
-                        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+<!--                        <div class="icon">-->
+<!--                            <i class="ion ion-bag"></i>-->
+<!--                        </div>-->
+<!--                        <a href="all-order-manage-list.html" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3 th:text="${courseNum}"></h3>
+
+                            <p>课程</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="/teacher/course" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3 th:text="${courseTaughtNum}"></h3>
+
+                            <p>待上传成绩</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="/teacher/chooseCourse" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+            </div>
+            <!-- /.row -->
+
+            <!-- 待处理游记 -->
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <i class="fa fa-book"></i>
+                    <h3 class="box-title">待上传成绩</h3>
+                </div>
+
+                <div class="box-body">
+
+                    <!-- 数据表格 -->
+                    <div class="table-box">
+
+                        <!--数据列表-->
+                        <table id="dataList1" class="table table-bordered table-striped table-hover dataTable">
                             <thead>
                             <tr>
-<!--                                <th class="" style="padding-right:0px;">-->
-<!--                                    <input id="selall" type="checkbox" class="icheckbox_square-blue">-->
-<!--                                </th>-->
-                                <th class="text-center">学号</th>
-                                <!--                                <th class="sorting_desc">密码</th>-->
-                                <th class="text-center">姓名</th>
-                                <th class="text-center">班级</th>
-                                <th class="text-center">分数</th>
+                                <th class="text-center">课程</th>
+                                <th class="text-center">起始时间</th>
+                                <th class="text-center">结束时间</th>
+                                <th class="text-center">选课人数</th>
+                                <th class="text-center">操作</th>
                             </tr>
                             </thead>
                             <tbody>
-<!--                            <tr th:each="item:${studentIds}">-->
-<!--                                <td><input name="ids" type="checkbox" th:value="${item.studentIdId}"></td>-->
-<!--                                <td th:text="${item.studentIdId}" class="text-center"></td>-->
-<!--                                &lt;!&ndash;                                    <td th:text="${user.password}"></td>&ndash;&gt;-->
-<!--                                <td th:text="${item.name}" class="text-center"></td>-->
-<!--                                <td th:text="${item.class_.name}" class="text-center"></td>-->
-<!--                                <td class="text-center">-->
-<!--                                    <input type="text" name="score" placeholder="输入成绩">-->
-<!--                                </td>-->
-<!--                            </tr>-->
-
-                                <tr th:each="item:${students}">
-                                    <input type="hidden" name="studentId" th:value="${item.student.studentId}">
-                                    <td class="text-center" th:text="${item.student.studentId}"></td>
-                                    <td class="text-center" th:text="${item.student.name}"></td>
-                                    <td class="text-center" th:text="${item.student.classes.name}"></td>
+                            <th:block th:each="item:${teacherAndCourses}">
+                                <tr th:if="${item.haveScore == 0 && item.studentNum !=0}">
+                                    <td class="text-center" th:text="${item.course.name}"></td>
+                                    <td class="text-center" th:text="${item.startTime}"></td>
+                                    <td class="text-center" th:text="${item.endTime}"></td>
+                                    <td class="text-center" th:text="${item.studentNum}"></td>
                                     <td class="text-center">
-                                        <input type="number" name="score" max="100" min="0" th:value="${item.score}">
+                                        <button type="button" class="btn bg-olive btn-xs" th:onclick="showStudents([[${item}]])">上传成绩</button>
                                     </td>
                                 </tr>
+
+                            </th:block>
+
                             </tbody>
                         </table>
+                        <!--数据列表/-->
+
                     </div>
+                    <!-- 数据表格 /-->
+
                 </div>
+                <!-- /.box-body -->
+
             </div>
+            <!-- 待处理游记 /-->
+
         </section>
+        <!-- 正文区域 /-->
+
     </div>
+    <!-- 内容区域 /-->
+
+
 </div>
+
+
 <script src="../../static/plugins/jQuery/jquery-2.2.3.min.js" th:src="@{/plugins/jQuery/jquery-2.2.3.min.js}"></script>
 <script src="../../static/plugins/jQueryUI/jquery-ui.min.js" th:src="@{/plugins/jQueryUI/jquery-ui.min.js}"></script>
 <script>
@@ -162,7 +222,7 @@
 <script src="../../static/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js" th:src="@{/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js}"></script>
 <script src="../../static/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js" th:src="@{/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // 选择框
         $(".select2").select2();
 
@@ -183,94 +243,28 @@
     }
 
 
-    $(document).ready(function() {
-
+    $(document).ready(function () {
         // 激活导航位置
-        setSidebarActive("admin-datalist");
-
-        // 列表按钮
-        $("#dataList td input[type='checkbox']").iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            increaseArea: '20%'
-        });
-        // 全选操作
-        $("#selall").click(function() {
-            var clicks = $(this).is(':checked');
-            if (!clicks) {
-                $("#dataList td input[type='checkbox']").iCheck("uncheck");
-            } else {
-                $("#dataList td input[type='checkbox']").iCheck("check");
-            }
-            $(this).data("clicks", !clicks);
-        });
+        setSidebarActive("admin-index");
     });
 
-    function deleteAll() {
-        // 判断是否 有单选框被选中
-        var checkedNum = $("input[name='ids']:checked").length;
-        // alert(checkedNum);
-        if(checkedNum === 0) {
-            alert("请至少选中一个进行删除");
-            return;
+    // 管理员的权限控制
+    $('#admin').bind('click', function (event) {
+        event.preventDefault()
+        // href="/user/findAllAdmin"
+        let type = $('#admin_account').val()
+        if(type === "1"){
+            $(location).attr('href', '/user/findAllAdmin')
+        }else{
+            alert('你没有此权限')
         }
-        let pageNum = parseInt($('#pageNum').val())
-        if (confirm("确定要删除这些用户吗?")) {
-            var userList = [];
-            $("input[name='ids']:checked").each(
-                function () {
-                    userList.push($(this).val());
-                }
-            );
+    })
 
-            $.ajax({
-                type: "post",
-                url: "/user/deleteSelectedUser",
-                data: {userList:userList.toString(), pageNum:pageNum},
-                success: function() {
-                    $(location).attr('href', '/user/findAllAdmin?pageNum=' + pageNum)
-                    alert("删除成功");
-                },
-                error: function() {
-                    alert("删除失败")
-                }
-            })
-        }
-    }
-
-    function uploadScore() {
-        if(confirm('上传后不可修改，确认上传吗?')){
-            let studentIds = []
-            $("input[name='studentId']").each(function () {
-                studentIds.push($(this).val())
-            })
-            studentIds = studentIds.join(',')
-            let scores = []
-            $("input[name='score']").each(function () {
-                scores.push($(this).val())
-            })
-            scores = scores.join(',')
-
-            let startTime = $('#startTime').val()
-            let endTime = $('#endTime').val()
-            let courseId = $('#courseId').val()
-
-            $.ajax({
-                type: "post",
-                url: "/teacher/uploadScore",
-                data: {studentIds:studentIds, scores: scores, startTime:startTime, endTime:endTime, courseId:courseId},
-                success: function (res) {
-                    if (res.status === 200){
-                        $(location).attr('href', "/teacher/chooseCourse")
-                    }
-                    alert(res.message)
-                },
-                error: function (err) {
-                    alert("成绩上传失败")
-                }
-            })
-        }
+    function showStudents(item) {
+        $(location).attr('href', "/teacher/score?courseId=" + item.courseId + "&startTime=" + item.startTime + "&endTime=" + item.endTime)
     }
 </script>
 </body>
 
 </html>
+<!---->

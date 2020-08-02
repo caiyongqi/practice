@@ -7,4 +7,15 @@
     <select id="findAllStudentByCourse" parameterType="TeacherToCourse" resultType="StudentToScore">
         SELECT * FROM student_to_score WHERE courseId = #{courseId} AND startTime = #{startTime} AND endTime = #{endTime}
     </select>
+    <update id="updateScore" parameterType="List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            UPDATE student_to_score
+            <set>
+                <if test="item.score != null">
+                    score = #{item.score}
+                </if>
+            </set>
+            WHERE studentId = #{item.studentId}
+        </foreach>
+    </update>
 </mapper>

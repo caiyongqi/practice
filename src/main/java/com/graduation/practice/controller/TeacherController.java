@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.util.*;
 
 @RequestMapping("/teacher")
@@ -292,7 +293,7 @@ public class TeacherController {
     }
 
     // 课程下的学生
-    @PostMapping("/student")
+    @GetMapping("/student")
     public ModelAndView findAllStudentInCourse(HttpServletRequest request){
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         Date startTime = Date.valueOf(request.getParameter("startTime"));
@@ -305,7 +306,6 @@ public class TeacherController {
             student.setClasses(classes);
             s.setStudent(student);
         }
-        System.out.println(studentToScores);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/teacher/list-student");
         mv.addObject("students", studentToScores);
@@ -313,30 +313,122 @@ public class TeacherController {
     }
 
     @GetMapping("/score")
-    public String toUploadScore(){
-        return "/teacher/upload-score";
+    public ModelAndView toUploadScore(HttpServletRequest request){
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        Date startTime = Date.valueOf(request.getParameter("startTime"));
+        Date endTime = Date.valueOf(request.getParameter("endTime"));
+        TeacherToCourse teacherToCourse = new TeacherToCourse(courseId, startTime, endTime);
+        List<StudentToScore> studentToScores = studentToScoreService.findAllStudentByCourse(teacherToCourse);
+        for (StudentToScore s: studentToScores) {
+            Student student = studentService.findStudentById(new Student(s.getStudentId()));
+            Classes classes = classService.findClassById(student.getClassId());
+            student.setClasses(classes);
+            s.setStudent(student);
+        }
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/teacher/upload-score");
+        mv.addObject("students", studentToScores);
+        mv.addObject("startTime", request.getParameter("startTime"));
+        mv.addObject("endTime", request.getParameter("endTime"));
+        mv.addObject("courseId", request.getParameter("courseId"));
+        return mv;
     }
 
     // 上传成绩
     @PostMapping("/uploadScore")
     @ResponseBody
     public Result uploadScore(HttpServletRequest request){
-        String[] studentIds = request.getParameter("studentIds").split(",");
+        // 而得到学生学号列表
+        String[] ids = request.getParameter("studentIds").split(",");
+
+        // 得到id列表
+        List<Integer> studentIds = new ArrayList<>();
+        for (String id: ids) {
+            Student student = studentService.findStudentByStudentId(new Student(id));
+            studentIds.add(student.getId());
+        }
+
+        // 得到分数列表
         String[] studentScores = request.getParameter("scores").split(",");
         List<Float> scores = new ArrayList<>();
         for (String score: studentScores) {
-            scores.add(Float.parseFloat(score));
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            scores.add(Float.parseFloat(decimalFormat.format(Float.parseFloat(score))));
         }
 
-        System.out.println(Arrays.toString(studentIds));
-        System.out.println(Arrays.toString(studentScores));
+        // 得到StudentToScore对象集合
+        List<StudentToScore> studentToScores = new ArrayList<>();
+        for (int i=0; i<scores.size();i++){
+            studentToScores.add(new StudentToScore(studentIds.get(i), scores.get(i)));
+        }
+        // 参数
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        Date startTime = Date.valueOf(request.getParameter("startTime"));
+        Date endTime = Date.valueOf(request.getParameter("endTime"));
+
         Result result = new Result();
-        result.setMessage("成绩上传成功");
+        if (studentToScoreService.updateScore(studentToScores) != 0){
+            if(teacherToCourseService.updateHaveScore(new TeacherToCourse(courseId, startTime, endTime)) == 1){
+                result.setMessage("成绩上传成功");
+                result.setStatus(200);
+            }else{
+                result.setMessage("成绩上传失败");
+                result.setStatus(500);
+            }
+        }else{
+            result.setMessage("成绩上传失败");
+            result.setStatus(500);
+        }
+
         return result;
     }
-
+    /**
+     * 卡片布局数据量较少界面会错乱
+     * 注意要补充足够的数据
+     * **/
     @GetMapping("/chooseCourse")
-    public String chooseCourse(){
+    public String chooseCourse(Model model, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return "redirect:/user/";
+        }else if(user.getType() != 3){
+            return "/error/404";
+        }else{
+            Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(user.getAccount()));
+            List<TeacherToCourse> teacherAndCourses = teacherToCourseService.findAllCourseByTeacher(teacher);
+            for (TeacherToCourse tc: teacherAndCourses) {
+                tc.setStudentNum(studentToScoreService.getStudentNumByCourse(tc));
+            }
+            model.addAttribute("teacherAndCourses", teacherAndCourses);
+        }
         return "/teacher/choose-course";
     }
+
+    @GetMapping("/home")
+    public String home(Model model, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return "redirect:/user/";
+        }else if(user.getType() != 3){
+            return "/error/404";
+        }else{
+            int courseNum = teacherToCourseService.getCourseNum(new TeacherToCourse(user.getAccount()));
+//            int courseTaughtNum = teacherToCourseService.getCourseNum(new TeacherToCourse(user.getAccount(), 0));
+
+            model.addAttribute("courseNum", courseNum);
+
+            Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(user.getAccount()));
+            List<TeacherToCourse> teacherAndCourses = teacherToCourseService.findAllCourseByTeacher(teacher);
+            int courseTaughtNum = 0;
+            for (TeacherToCourse tc: teacherAndCourses) {
+                tc.setStudentNum(studentToScoreService.getStudentNumByCourse(tc));
+                if (tc.getStudentNum() != 0 &&tc.getHaveScore() == 0) courseTaughtNum++;
+            }
+            model.addAttribute("courseTaughtNum", courseTaughtNum);
+            model.addAttribute("teacherAndCourses", teacherAndCourses);
+
+        }
+        return "/teacher/teacher-home";
+    }
+
 }

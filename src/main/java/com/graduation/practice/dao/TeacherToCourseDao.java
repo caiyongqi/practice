@@ -14,4 +14,8 @@ public interface TeacherToCourseDao {
     int getCourseNumByTeacherId(@Param("teacherId") String teacherId);
     // 根据老师信息查询出所授课程信息
     List<TeacherToCourse> findAllCourseByTeacher(Teacher teacher);
+    // 设置为已上传分数
+    int updateHaveScore(TeacherToCourse teacherToCourse);
+    // 获取老师所授课程数
+    int getCourseNum(TeacherToCourse teacherToCourse);
 }

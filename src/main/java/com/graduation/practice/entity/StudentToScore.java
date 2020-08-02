@@ -25,6 +25,7 @@ public class StudentToScore {
     public int getCourseId() {
         return courseId;
     }
+
     private Student student;
 
     public StudentToScore(int courseId, Date startTime, Date endTime) {
@@ -33,10 +34,16 @@ public class StudentToScore {
         this.endTime = endTime;
     }
 
+    // 用于选课插入
     public StudentToScore(int studentId, int courseId, Date startTime, Date endTime) {
         this.studentId = studentId;
         this.courseId = courseId;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public StudentToScore(Integer studentId, Float score) {
+        this.studentId = studentId;
+        this.score = score;
     }
 }

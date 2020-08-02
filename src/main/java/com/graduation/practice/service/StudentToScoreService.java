@@ -8,4 +8,5 @@ import java.util.List;
 public interface StudentToScoreService {
     int getStudentNumByCourse(TeacherToCourse teacherToCourse);
     List<StudentToScore> findAllStudentByCourse(TeacherToCourse teacherToCourse);
+    int updateScore(List<StudentToScore> studentToScores);
 }

@@ -22,4 +22,14 @@ public class TeacherToCourseServiceImpl implements TeacherToCourseService {
     public List<TeacherToCourse> findAllCourseByTeacher(Teacher teacher) {
         return teacherToCourseDao.findAllCourseByTeacher(teacher);
     }
+
+    @Override
+    public int updateHaveScore(TeacherToCourse teacherToCourse) {
+        return teacherToCourseDao.updateHaveScore(teacherToCourse);
+    }
+
+    @Override
+    public int getCourseNum(TeacherToCourse teacherToCourse) {
+        return teacherToCourseDao.getCourseNum(teacherToCourse);
+    }
 }
