@@ -362,7 +362,6 @@
                     </ul>
                 </li>
 
-                <li th:if="${session.user.type == 4}" id="counselor-index"><a href="/counselor/home"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
                 <li class="treeview" th:if="${session.user.type == 4}">
                     <a href="#">
                         <i class="fa fa-folder"></i> <span>学生信息管理</span>

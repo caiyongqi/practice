@@ -73,6 +73,8 @@ public class UserController {
             switch(user.getType()){
                 case 3:
                     return "redirect:/teacher/home";
+                case 4:
+                    return "redirect:/counselor/home";
             }
         }
         return "home";
