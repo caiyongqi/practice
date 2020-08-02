@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeacherToCourse {
-    private int teacherId;
+    private String teacherId;
     private int courseId;
     private Date startTime;
     private Date endTime;
@@ -26,5 +26,14 @@ public class TeacherToCourse {
         this.courseId = courseId;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public TeacherToCourse(String teacherId, int haveScore) {
+        this.teacherId = teacherId;
+        this.haveScore = haveScore;
+    }
+
+    public TeacherToCourse(String teacherId) {
+        this.teacherId = teacherId;
     }
 }

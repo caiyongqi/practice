@@ -74,10 +74,26 @@
         SELECT * FROM student WHERE id = #{id}
     </select>
 
-    <!--    查询所有的教师课程信息 -->
-    <select id="findCourseByTeacher" resultType="courseTeacher">
-        SELECT teacher.name as teacherName,course.name as courseName,teacher_to_course.startTime, teacher_to_course.endTime,teacher_to_course.time from teacher,teacher_to_course,course WHERE teacher_to_course.teacherId=teacher.teacherId and teacher_to_course.courseId=course.id
+    <!--    查询个人的课程信息 -->
+<!--    SELECT teacher.name as teacherName,course.name as courseName,teacher_to_course.startTime, teacher_to_course.endTime,teacher_to_course.time from teacher,teacher_to_course,course WHERE teacher_to_course.teacherId=teacher.teacherId and teacher_to_course.courseId=course.id-->
+    <select id="findCourseByTeacher" parameterType="User" resultType="courseTeacher">
+       SELECT teacher.name as teacherName,course.name as courseName, ttc.startTime, ttc.endTime, ttc.time FROM student_to_score as sts, teacher_to_course as ttc, teacher, course, student,user WHERE sts.courseId = ttc.courseId and sts.startTime=ttc.startTime and sts.endTime=ttc.endTime and ttc.teacherId = teacher.teacherId and course.id=ttc.courseId and sts.studentId=student.id and student.studentId=user.account and user.account=#{account}
     </select>
+
+    <select id="findStudentInfoByUser" parameterType="User" resultType="Student">
+        SELECT * FROM student where studentId = (SELECT account FROM user WHERE account=#{account})
+    </select>
+
+<!--    选课查询-->
+    <select id="findCourseByAllTeacher" parameterType="User" resultType="courseTeacher">
+        SELECT teacher.name as teacherName, course.name as courseName, student.id as studentId, teacher_to_course.courseId, teacher_to_course.startTime, teacher_to_course.endTime,teacher_to_course.time from teacher,teacher_to_course,course,student,user WHERE teacher_to_course.teacherId=teacher.teacherId and teacher_to_course.courseId=course.id and student.studentId = user.account and user.account=#{account} and teacher_to_course.courseId NOT IN (SELECT courseId FROM student_to_score)
+    </select>
+<!--    选课逻辑实现-->
+    <insert id="insertCourseToStudent" parameterType="StudentToScore">
+        insert into student_to_score (studentId,courseId,startTime,endTime,address) values (#{studentId},#{courseId},#{startTime},#{endTime},"")
+    </insert>
+
+
 
 <!--    辅导员查询学生成绩-->
     <select id="findStudentScore04" parameterType="Student" resultType="ScoreShow">
