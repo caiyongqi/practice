@@ -27,5 +27,13 @@ public interface StudentService {
 
     Student findStudentById(Student student);
 
-    List<courseTeacher> findCourseByTeacher();
+    // 课表查询
+    List<courseTeacher> findCourseByTeacher(User user);
+
+    Student findInfoByStudent(User user);
+
+    // 选课查询
+    List<courseTeacher> findCourseByAllTeacher(User user);
+
+    int AddCourseToStudent(StudentToScore studentToScore);
 }

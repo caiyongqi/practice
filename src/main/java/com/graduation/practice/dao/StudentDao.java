@@ -35,5 +35,14 @@ public interface StudentDao {
 
     Student findStudentById(Student student);
 
-    List<courseTeacher> findCourseByTeacher();
+    // 课表查询
+    List<courseTeacher> findCourseByTeacher(User user);
+
+    Student findStudentInfoByUser(User user);
+
+    // 课程查询
+    List<courseTeacher> findCourseByAllTeacher(User user);
+
+    // 添加课程逻辑处理
+    int insertCourseToStudent(StudentToScore studentToScore);
 }
