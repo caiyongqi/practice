@@ -80,7 +80,7 @@ public class CounselorServiceImpl implements CounselorService {
 
     @Override
     public int deleteCounselor(String counselorId) {
-        return 0;
+        return counselorDao.deleteCounselor(counselorId);
     }
 
     @Override
@@ -97,5 +97,7 @@ public class CounselorServiceImpl implements CounselorService {
     public Counselor findCounselorProfileByCounselorId(Counselor counselor) {
         return counselorDao.findCounselorProfileByCounselorId(counselor);
     }
+
+
 }
 

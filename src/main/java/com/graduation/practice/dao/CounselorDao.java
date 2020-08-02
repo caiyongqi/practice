@@ -30,4 +30,5 @@ public interface CounselorDao {
     List<Counselor> searchAllCounselorByCounselorName(String Keyword);
     int updateCounselor(Counselor counselor);
     Counselor findCounselorProfileByCounselorId(Counselor counselor);
+    int deleteCounselor(String counselorId);
 }
