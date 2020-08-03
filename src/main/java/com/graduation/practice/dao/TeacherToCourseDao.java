@@ -14,8 +14,17 @@ public interface TeacherToCourseDao {
     int getCourseNumByTeacherId(@Param("teacherId") String teacherId);
     // 根据老师信息查询出所授课程信息
     List<TeacherToCourse> findAllCourseByTeacher(Teacher teacher);
+
     // 设置为已上传分数
     int updateHaveScore(TeacherToCourse teacherToCourse);
-    // 获取老师所授课程数
-    int getCourseNum(TeacherToCourse teacherToCourse);
+
+
+    //开课管理by ckl
+    //得到所有已开课程，teacherId与courseId不传表示无其限制
+    List<TeacherToCourse> getAllTTC(@Param("teacherId") String teacherId,@Param("courseId") int courseId);
+    //删除课程
+    int deleteTTC(TeacherToCourse ttc);
+    //添加课程
+    int insertTTC(TeacherToCourse ttc);
+
 }

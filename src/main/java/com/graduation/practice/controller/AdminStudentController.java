@@ -57,7 +57,9 @@ public class AdminStudentController {
         model.addAttribute("studentList",studentList);
         model.addAttribute("studentClassMap",map);
         model.addAttribute("pageInfo",studentPageInfo);
-        return "studentDataList";
+        model.addAttribute("studentName",studentName);
+        model.addAttribute("classId",classId);
+        return "/adminStudent/studentDataList";
     }
 
     //跳转到新增学生页面
@@ -67,7 +69,7 @@ public class AdminStudentController {
        List<Classes> classList = classService.findAllClass();
        System.out.println(classList.toString());
        model.addAttribute("classList",classList);
-       return "insertStudent";
+       return "/adminStudent/insertStudent";
     }
 
     //新增学生
@@ -124,7 +126,7 @@ public class AdminStudentController {
         List<Classes> classList = classService.findAllClass();
         model.addAttribute("classList",classList);
         model.addAttribute("student",student);
-        return "studentUpdate";
+        return "adminStudent/studentUpdate";
     }
     //更新学生
     @GetMapping("/updateStudent")

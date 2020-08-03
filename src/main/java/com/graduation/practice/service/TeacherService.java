@@ -14,4 +14,7 @@ public interface TeacherService {
     int updateTeacher(Teacher teacher);
     List<Teacher> searchAllTeacherByTeacherName(String teacherKeyword);
     int getCourseNumByTeacherId(String teacherId);
+
+    //根据名字得到ID
+    Teacher findTeacherByName(String name);
 }

@@ -172,12 +172,10 @@ public class CounselorController {
     }
 
     @GetMapping("/studentProfile")
-    public String toProfile(HttpServletRequest request, Model model,HttpSession session){
+    public String toProfile(HttpServletRequest request, Model model){
         String studentId = request.getParameter("studentId");
         Student student = studentService.findStudentByStudentId(new Student(studentId));
         model.addAttribute("student", student);
-        Object scoreShow = studentService.findScoreByStudent04(student);
-        model.addAttribute("score_list", scoreShow);
         //model.addAttribute("courseNum", studentService.getCourseNumBystudentId(studentId));
         return "/counselor/profile-student";
     }
@@ -247,10 +245,6 @@ public class CounselorController {
         return result;
     }
 
-    @GetMapping("/home")
-    public String home(){
-        return "counselor/counselor-home";
-    }
 
 
 }

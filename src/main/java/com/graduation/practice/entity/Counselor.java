@@ -19,7 +19,6 @@ public class Counselor {
     private int disciplineId;
     private String photoUrl;
     private Discipline discipline;
-    private College college;
 
     public Counselor(String counselorId) {
         this.counselorId = counselorId;
