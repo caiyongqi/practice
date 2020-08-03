@@ -47,4 +47,10 @@
     <update id="updateHaveScore" parameterType="TeacherToCourse">
         UPDATE teacher_to_course SET haveScore = 1 WHERE courseId = #{courseId} AND courseId = #{courseId} AND startTime = #{startTime} AND endTime = #{endTime}
     </update>
+    <select id="getCourseNum" parameterType="TeacherToCourse" resultType="Integer">
+        SELECT COUNT(*) FROM teacher_to_course WHERE teacherId = #{teacherId}
+        <if test="haveScore != null">
+            AND haveScore = #{haveScore}
+        </if>
+    </select>
 </mapper>

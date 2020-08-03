@@ -26,5 +26,6 @@ public interface TeacherToCourseDao {
     int deleteTTC(TeacherToCourse ttc);
     //添加课程
     int insertTTC(TeacherToCourse ttc);
-
+    // 获取老师所授课程数
+    int getCourseNum(TeacherToCourse teacherToCourse);
 }
