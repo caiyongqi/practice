@@ -90,7 +90,7 @@
                         </div>
                         <!--  搜索  -->
                         <form>
-                            <div class="col-md-3 data">
+                            <div class="col-md-3 data" style="display: flex;">
                                 <input type="text" th:value="${teacherName}" id="teacherName" class="form-control input-sm" placeholder="教师姓名" name="teacherName">
                                 <select data-placeholder="" id="courseId" name="courseId" class="form-control input-sm">
                                     <option th:value="0" th:selected="${courseId == 0}">课程名</option>

@@ -67,6 +67,7 @@ public class UserController {
     @GetMapping("/home")
     public String home(HttpSession session) {
         User user = (User) session.getAttribute("user");
+        System.out.println(user);
         if(user == null){
             return "redirect:/user/";
         }else{
@@ -77,10 +78,13 @@ public class UserController {
                     return "/courseAdmin-home";
                 case 3:
                     return "/teacher/teacher-home";
-
+                case 4:
+                    return "/counselor/counselor-home";
+                case 5:
+                    return "/studentPages/studentHome";
             }
         }
-        return "home";
+        return "/error/500";
     }
 
     @PostMapping("/login")
