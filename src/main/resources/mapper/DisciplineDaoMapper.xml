@@ -4,4 +4,39 @@
     <select id="findAllDiscipline" resultType="Discipline">
         SELECT * FROM discipline;
     </select>
+    <select id="findAllDisciplineByCollege" parameterType="College" resultMap="disciplineMap">
+    <!--查询中必须写出resultMap中定义的字段-->
+        SELECT discipline.id,discipline.collegeId,discipline.name,discipline.desc,college.id AS college_id,college.name AS college_name,college.address AS college_name,college.desc AS college_desc FROM discipline,college WHERE discipline.collegeId = #{id} AND discipline.collegeId = college.id
+    </select>
+    <select id="findAllDisciplineAndCollege" resultMap="disciplineMap">
+        SELECT discipline.id,discipline.collegeId,discipline.name,discipline.desc,college.id AS college_id,college.name AS college_name,college.address AS college_name,college.desc AS college_desc FROM discipline,college WHERE discipline.collegeId = college.id
+    </select>
+    <resultMap type="Discipline" id="disciplineMap">
+        <id column="id" property="id" />
+        <result column="collegeId" property="collegeId" />
+        <result column="name" property="name" />
+        <result column="desc" property="desc" />
+        <association property="college" javaType="College">
+            <id column="college_id" property="id" />
+            <result column="college_name" property="name" />
+            <result column="college_address" property="address" />
+            <result column="college_desc" property="desc" />
+        </association>
+    </resultMap>
+
+    <select id="findDisciplineByName" resultType="Discipline" parameterType="Discipline">
+        SELECT * FROM discipline WHERE `name` = #{name}
+    </select>
+    <insert id="saveDiscipline" parameterType="Discipline">
+        INSERT INTO discipline(`name`,`desc`,collegeId) VALUES (#{name}, #{desc}, #{collegeId})
+    </insert>
+    <delete id="deleteDisciplineById" parameterType="Discipline">
+        DELETE FROM discipline WHERE id = #{id}
+    </delete>
+    <select id="findDisciplineById" parameterType="Discipline" resultType="Discipline">
+        SELECT * FROM discipline WHERE id = #{id}
+    </select>
+    <update id="updateDiscipline" parameterType="Discipline">
+        UPDATE discipline SET `name` = #{name} , `desc` = #{desc} ,collegeId = #{collegeId} WHERE id = #{id}
+    </update>
 </mapper>
