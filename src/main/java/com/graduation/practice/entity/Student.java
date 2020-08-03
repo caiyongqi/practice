@@ -24,6 +24,8 @@ public class Student {
     private Date date;
 
     private Classes classes;
+    private Discipline discipline;
+    private College college;
 
     public Student(String studentId){
         this.studentId = studentId;

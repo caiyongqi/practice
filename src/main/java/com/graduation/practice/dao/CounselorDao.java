@@ -1,9 +1,6 @@
 package com.graduation.practice.dao;
 
-import com.graduation.practice.entity.Classes;
-import com.graduation.practice.entity.Counselor;
-import com.graduation.practice.entity.Student;
-import com.graduation.practice.entity.User;
+import com.graduation.practice.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -31,4 +28,6 @@ public interface CounselorDao {
     int updateCounselor(Counselor counselor);
     Counselor findCounselorProfileByCounselorId(Counselor counselor);
     int deleteCounselor(String counselorId);
+    //======辅导员查询学生成绩
+    List<ScoreShow> findStudentScore04(Student student);
 }

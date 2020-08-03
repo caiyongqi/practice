@@ -32,4 +32,7 @@ public interface CounselorService {
     //int getCourseNumByTeacherId(String teacherId);
     List<Counselor> searchAllCounselorByCounselorName(String Keyword);
     Counselor findCounselorProfileByCounselorId(Counselor counselor);
+    //===辅导员查询学生成绩
+    List<ScoreShow> findScoreByStudent04(Student student);
+
 }

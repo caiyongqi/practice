@@ -114,7 +114,7 @@ public class CounselorController {
 
         return "/counselor/counselorProfile";
     }
-    
+
     // 批量删除
     @PostMapping("/deleteSelectedStudent")
     public String deleteSelectedstudent(HttpServletRequest request) {
@@ -166,16 +166,18 @@ public class CounselorController {
     // 删除单个用户
     @GetMapping("/deleteStudent/{pageNum}/{studentId}")
     public String deleteStudent(@PathVariable("pageNum") int pageNum, @PathVariable("studentId") String studentId){
-       // studentService.deleteStudent(studentId);
+        // studentService.deleteStudent(studentId);
         userService.deleteUser(studentId);
         return "redirect:/counselor/findAllStudent04?pageNum=" + pageNum;
     }
 
     @GetMapping("/studentProfile")
-    public String toProfile(HttpServletRequest request, Model model){
+    public String toProfile(HttpServletRequest request, Model model,HttpSession session){
         String studentId = request.getParameter("studentId");
         Student student = studentService.findStudentByStudentId(new Student(studentId));
         model.addAttribute("student", student);
+        Object scoreShow = counselorService.findScoreByStudent04(student);
+        model.addAttribute("score_list", scoreShow);
         //model.addAttribute("courseNum", studentService.getCourseNumBystudentId(studentId));
         return "/counselor/profile-student";
     }
@@ -245,6 +247,10 @@ public class CounselorController {
         return result;
     }
 
+    @GetMapping("/home")
+    public String home(){
+        return "counselor/counselor-home";
+    }
 
 
 }
