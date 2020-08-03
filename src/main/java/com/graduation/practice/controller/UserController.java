@@ -77,7 +77,7 @@ public class UserController {
                 case 2:
                     return "/courseAdmin-home";
                 case 3:
-                    return "/teacher/teacher-home";
+                    return "redirect:/teacher/home";
                 case 4:
                     return "/counselor/counselor-home";
                 case 5:
@@ -403,4 +403,31 @@ public class UserController {
         }
         return to;
     }
+
+    @GetMapping("/toUpdatePersonPassword")
+    public String updatePersonPassword(){
+        return "/admin/update-admin-password";
+    }
+
+    @PostMapping("/updatePersonPassword")
+    @ResponseBody
+    public Result<User> updatePersonPassword(HttpServletRequest request){
+        Result<User> result = new Result<>();
+        String account = request.getParameter("account");
+        String password = MD5Utils.code(request.getParameter("password"));
+        String oldPassword = MD5Utils.code(request.getParameter("oldPassword"));
+        User user = userService.findUserByAccount(new User(account));
+        if(!user.getPassword().equals(oldPassword)){
+            result.setStatus(403);
+            result.setMessage("原密码错误");
+        }else if (userService.updateUser(new User(account, password)) == 1){
+            result.setStatus(200);
+            result.setMessage("密码重置成功");
+        }else{
+            result.setStatus(403);
+            result.setMessage("密码重置失败");
+        }
+        return result;
+    }
+
 }

@@ -405,7 +405,29 @@ public class TeacherController {
     }
 
     @GetMapping("/home")
-    public String home(){
+    public String home(Model model, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return "redirect:/user/";
+        }else if(user.getType() != 3){
+            return "/error/404";
+        }else{
+            int courseNum = teacherToCourseService.getCourseNum(new TeacherToCourse(user.getAccount()));
+//            int courseTaughtNum = teacherToCourseService.getCourseNum(new TeacherToCourse(user.getAccount(), 0));
+
+            model.addAttribute("courseNum", courseNum);
+
+            Teacher teacher = teacherService.findTeacherByTeacherId(new Teacher(user.getAccount()));
+            List<TeacherToCourse> teacherAndCourses = teacherToCourseService.findAllCourseByTeacher(teacher);
+            int courseTaughtNum = 0;
+            for (TeacherToCourse tc: teacherAndCourses) {
+                tc.setStudentNum(studentToScoreService.getStudentNumByCourse(tc));
+                if (tc.getStudentNum() != 0 &&tc.getHaveScore() == 0) courseTaughtNum++;
+            }
+            model.addAttribute("courseTaughtNum", courseTaughtNum);
+            model.addAttribute("teacherAndCourses", teacherAndCourses);
+
+        }
         return "/teacher/teacher-home";
     }
 }

@@ -17,5 +17,5 @@ public interface TeacherToCourseService {
     int deleteTTC(TeacherToCourse ttc);
     //添加课
     int insert(TeacherToCourse ttc);
-
+    int getCourseNum(TeacherToCourse teacherToCourse);
 }

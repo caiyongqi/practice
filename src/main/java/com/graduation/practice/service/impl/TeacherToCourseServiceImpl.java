@@ -42,4 +42,8 @@ public class TeacherToCourseServiceImpl implements TeacherToCourseService {
     public int insert(TeacherToCourse ttc) {
         return teacherToCourseDao.insertTTC(ttc);
     }
+    @Override
+    public int getCourseNum(TeacherToCourse teacherToCourse) {
+        return teacherToCourseDao.getCourseNum(teacherToCourse);
+    }
 }
