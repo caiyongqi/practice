@@ -5,7 +5,7 @@
     <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>学生信息管理</title>
+    <title>开课信息管理</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
@@ -56,12 +56,12 @@
         <!-- 内容头部 -->
         <section class="content-header">
             <h1>
-                学生信息管理
-                <small>学生信息列表</small>
+                课程管理
+                <small>已开设课程列表</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="#">学生信息管理</a></li>
+                <li><a href="#">开课管理</a></li>
             </ol>
         </section>
         <!-- 内容头部 /-->
@@ -83,65 +83,75 @@
                         <div class="pull-left">
                             <div class="form-group form-inline">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default" title="新增" id="insert" onclick="window.location.href = '/adminStudent/toInsertStudent'"><i class="fa fa-file-o"></i>新增</button>
+                                    <button type="button" class="btn btn-default" title="新增" id="insert" onclick="window.location.href = '/teacherToCourse/toInsertTeacherToCourse'"><i class="fa fa-file-o"></i>新增</button>
                                     <button type="button" class="btn btn-default" title="删除" onclick="deleteSelected()"><i class="fa fa-trash-o"></i> 删除</button>
                                 </div>
                             </div>
                         </div>
                         <!--  搜索  -->
-                        <form action="/adminStudent/toStudentDataList?currentPage=1" method="get">
-                            <div class="col-md-3 data">
-                                <input type="text" class="form-control input-sm" placeholder="姓名" name="studentName">
-                                <select data-placeholder="" name="classId" class="form-control input-sm">
-                                    <option th:value="0" selected>班级</option>
-                                    <option th:each="classes:${classList}" th:value="${classes.id}"  th:text="${classes.name}"></option>
+                        <form>
+                            <div class="col-md-3 data" style="display: flex;">
+                                <input type="text" th:value="${teacherName}" id="teacherName" class="form-control input-sm" placeholder="教师姓名" name="teacherName">
+                                <select data-placeholder="" id="courseId" name="courseId" class="form-control input-sm">
+                                    <option th:value="0" th:selected="${courseId == 0}">课程名</option>
+                                    <option th:each="course:${courseList}" th:value="${course.id}" th:text="${course.name}" th:selected="${courseId == course.id}"></option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn bg-maroon">搜索</button>
+                            <button id="searchBtn" type="submit" class="btn bg-maroon">搜索</button>
                         </form>
-
+                        <input type="hidden" th:value="${pageInfo.pageNum}" id="pageNum">
+                        <script>
+                            setTimeout(function () {
+                                $('#searchBtn').onclick(function () {
+                                    let page = parseInt($('#current_page').find('option:selected').val())
+                                    var teacherName = document.getElementById("teacherName").value;
+                                    var courseId = document.getElementById("courseId").value;
+                                    $.ajax({
+                                        type: "get",
+                                        url: "/teacherToCourse/toTeacherToCourseDataList",
+                                        data: {currentPage:page,teacherName:teacherName,courseId:courseId},
+                                        success: function (res) {
+                                            $("#table-container").html($(res).find('div[id="table-container"]').html());
+                                        },
+                                        error: function(){
+                                            alert("错误");
+                                        }
+                                    })
+                                })
+                            }, 1000)
+                        </script>
 
                         <!--工具栏/-->
                         <!--数据列表-->
+                        <div id="table-container">
                         <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
                             <thead>
                             <tr>
                                 <th class="" style="padding-right:0px;">
                                     <input id="selall" type="checkbox" class="icheckbox_square-blue">
                                 </th>
-                                <th class="text-center">ID</th>
-                                <th class="text-center">学号</th>
-                                <th class="text-center">姓名</th>
-                                <th class="text-center">年龄</th>
-                                <th class="text-center">性别</th>
-                                <th class="text-center">家庭住址</th>
-                                <th class="text-center">邮箱</th>
-                                <th class="text-center">手机号</th>
-                                <th class="text-center">班级</th>
-                                <th class="text-center">入学日期</th>
-                                <th class="text-center">操作</th>
+                                <th class="text-center">教师</th>
+                                <th class="text-center">课程</th>
+                                <th class="text-center">开始时间</th>
+                                <th class="text-center">结束时间</th>
+                                <th class="text-center">时间</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="student:${studentList}">
-                                <td><input name="ids" type="checkbox" th:value="${student.studentId}"></td>
-                                <td th:text="${student.id}"></td>
-                                <td th:text="${student.studentId}"></td>
-                                <td th:text="${student.name}"></td>
-                                <td th:text="${student.age}"></td>
-                                <td th:text="${student.gender}==1?'男':'女'"></td>
-                                <td th:text="${student.address}"></td>
-                                <td th:text="${student.email}"></td>
-                                <td th:text="${student.phoneNumber}"></td>
-                                <td th:text="${studentClassMap.get(student.classId)}"></td>
-                                <td th:text="${student.date}"></td>
+                            <tr th:each="ttc:${TTCList}">
+                                <td><input name="ids" type="checkbox" th:value="${ttc}"></td>
+                                <td th:text="${TTCToTeacherMap.get(ttc.getTeacherId())}"></td>
+                                <td th:text="${TTCToCourseMap.get(ttc.getCourseId())}"></td>
+                                <td th:text="${ttc.startTime}"></td>
+                                <td th:text="${ttc.endTime}"></td>
+                                <td th:text="${ttc.time}"></td>
                                 <td class="text-center">
-                                    <a th:href="${'/adminStudent/toUpdateStudent?studentId=' + student.studentId}" class="btn bg-olive btn-xs">编辑</a>
-                                    <a th:href="${'/adminStudent/deleteStudent?studentId=' + student.studentId}" class="btn bg-olive btn-xs">删除</a>
+                                    <button th:onclick="singleDelete([[${ttc}]]);"  class="btn bg-olive btn-xs">删除</button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+                        </div>
                         <!--数据列表/-->
                     </div>
                     <!-- 数据表格 /-->
@@ -162,28 +172,25 @@
                         </div>
                     </div>
                     <!--  翻页  -->
-<!--                    <div class="box-tools pull-right">-->
-<!--                        <ul class="pagination">-->
-<!--                            <li>-->
-<!--                                <a th:href="${'/adminStudent/toStudentDataList?currentPage=1'} " aria-label="Previous">首页</a>-->
-<!--                            </li>-->
-<!--                            <li><a th:href="${'/adminStudent/toStudentDataList?currentPage=' + (pageInfo.pageNum - 1)}" th:if="${pageInfo.pageNum > 1}">上一页</a></li>-->
-<!--                            <li><a th:href="${'/adminStudent/toStudentDataList?currentPage=' + (pageInfo.pageNum + 1)}" th:if="${pageInfo.pageNum < pageInfo.pages}">下一页</a></li>-->
-<!--                            <li>-->
-<!--                                <a th:href="${'/adminStudent/toStudentDataList?currentPage=' + pageInfo.pages}" aria-label="Next">尾页</a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
+                    <!--                    <div class="box-tools pull-right">-->
+                    <!--                        <ul class="pagination">-->
+                    <!--                            <li>-->
+                    <!--                                <a th:href="${'/adminStudent/toStudentDataList?currentPage=1'} " aria-label="Previous">首页</a>-->
+                    <!--                            </li>-->
+                    <!--                            <li><a th:href="${'/adminStudent/toStudentDataList?currentPage=' + (pageInfo.pageNum - 1)}" th:if="${pageInfo.pageNum > 1}">上一页</a></li>-->
+                    <!--                            <li><a th:href="${'/adminStudent/toStudentDataList?currentPage=' + (pageInfo.pageNum + 1)}" th:if="${pageInfo.pageNum < pageInfo.pages}">下一页</a></li>-->
+                    <!--                            <li>-->
+                    <!--                                <a th:href="${'/adminStudent/toStudentDataList?currentPage=' + pageInfo.pages}" aria-label="Next">尾页</a>-->
+                    <!--                            </li>-->
+                    <!--                        </ul>-->
+                    <!--                    </div>-->
                     <div class="box-tools pull-right">
                         <ul class="pagination">
-                            <li>
-                                <a th:onclick="page()" aria-label="Previous">首页</a>
-                            </li>
-                            <li><a th:onclick="page()" th:if="${pageInfo.pageNum > 1}">上一页</a></li>
-                            <li><a th:onclick="page(${pageInfo.pageNum + 1})" th:if="${pageInfo.pageNum < pageInfo.pages}">下一页</a></li>
-                            <li>
-                                <a th:onclick="page(pageInfo.pages)" aria-label="Next">尾页</a>
-                            </li>
+
+                            <li><a id="nextPage" th:href="'/teacherToCourse/toTeacherToCourseDataList?currentPage=' + (${pageInfo.pageNum} - 1)" th:if="${pageInfo.pageNum > 1}">上一页</a></li>
+                            <li><a id="forwardPage" th:href="'/teacherToCourse/toTeacherToCourseDataList?currentPage=' + (${pageInfo.pageNum} + 1)" th:if="${pageInfo.pageNum < pageInfo.pages}">下一页</a></li>
+
+
                         </ul>
                     </div>
 
@@ -193,22 +200,21 @@
                     setTimeout(function () {
                         $('#current_page').change(function () {
                             let page = parseInt($('#current_page').find('option:selected').val())
-                            let pageNum = parseInt($('#pageNum').val())
-                            if (page !== pageNum){
-                                $.ajax({
-                                    type: "get",
-                                    url: "/adminStudent/toStudentDataList",
-                                    data: {currentPage:page},
-                                    success: function (res) {
-                                        $("#content").html($(res).find('div[id="content"]').html());
-                                    }
-                                })
-                            }
+                            var teacherName = document.getElementById("teacherName").value;
+                            var courseId = document.getElementById("courseId").value;
+                            $.ajax({
+                                type: "get",
+                                url: "/teacherToCourse/toTeacherToCourseDataList",
+                                data: {currentPage:page,teacherName:teacherName,courseId:courseId},
+                                success: function (res) {
+                                    $("#table-container").html($(res).find('div[id="table-container"]').html());
+                                },
+                                error: function(){
+                                    alert("错误");
+                                }
+                            })
                         })
                     }, 1000)
-                    function page(obj) {
-
-                     }
                 </script>
             </div>
         </section>
@@ -267,6 +273,27 @@
 <script src="../plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="../plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
+    function singleDelete(ttc) {
+
+        var teacherId = ttc.teacherId;
+        var courseId = ttc.courseId;
+        var startTime = ttc.startTime;
+        var endTime = ttc.endTime;
+        var time = ttc.time;
+        $.ajax({
+            type: "get",
+            url: "/teacherToCourse/deleteTeacherToCourse",
+            data: {teacherId,courseId,startTime,endTime,time},
+            success: function(){
+                //alert("删除成功");
+                location.reload();
+            },
+            error: function(){
+                alert("删除失败");
+            }
+        })
+    }
+
     //删除选中
     function deleteSelected() {
         // 判断是否 有单选框被选中
@@ -276,29 +303,30 @@
             alert("请至少选中一个进行删除!!!!!")
             return;  // 使方法提前终止
         }
-        if (confirm("确定要删除这些用户吗?")) {
-            var studentList = new Array();
+        if (confirm("确定要删除这些课程吗?")) {
+            var TTCList = [];
             $("input[name='ids']:checked").each(
                 function () {
-                    studentList.push($(this).val());
+                    //alert($(this).val());
+                    TTCList.push($(this).val());
                 }
             );
-            var studentListString = studentList.toString();
             // alert(studentList.toString());
             // alert(userList);
-
+            //alert("test");
+            //alert(TTClist);
             // 重点  第二种提交数据的方式   ajax
+            //alert(TTCList.toString());
             $.ajax({
-                type: "get",
-                url: "/adminStudent/deleteSelected",
-                data: {studentList: studentListString},
+                type: "post",
+                url: "/teacherToCourse/deleteSelectedCourse?TTCList=",
+                data: JSON.stringify(TTCList),
                 success: function() {
                     alert("删除成功");
                     // loaction.reload();
                     location.reload();
                 },
                 error: function() {
-                    alert(studentListString);
                     alert("删除失败")
                 }
             })

@@ -83,37 +83,9 @@ public class StudentServiceImpl implements StudentService {
         return studentDao.findStudentById(student);
     }
 
-    // 个人课程查询
+    // 课程
     @Override
-    public List<courseTeacher> findCourseByTeacher(User user) {
-        return studentDao.findCourseByTeacher(user);
-    }
-
-    @Override
-    public Student findInfoByStudent(User user) {
-        return studentDao.findStudentInfoByUser(user);
-    }
-
-    // 可选课程查看
-    @Override
-    public List<courseTeacher> findCourseByAllTeacher(User user) {
-        return studentDao.findCourseByAllTeacher(user);
-    }
-
-    // 选课逻辑处理
-    @Override
-    public int AddCourseToStudent(StudentToScore studentToScore) {
-        return studentDao.insertCourseToStudent(studentToScore);
-    }
-
-    //======辅导员查询学生成绩
-
-    @Override
-    public List<ScoreShow> findScoreByStudent04(Student student) {
-        // 获取学生分数信息
-        List<ScoreShow> scoreShows = studentDao.findStudentScore04(student);
-        System.out.println(scoreShows);
-//        System.out.println(course);
-        return scoreShows;
+    public List<courseTeacher> findCourseByTeacher() {
+        return studentDao.findCourseByTeacher();
     }
 }

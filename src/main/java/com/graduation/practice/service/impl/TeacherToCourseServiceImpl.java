@@ -23,13 +23,23 @@ public class TeacherToCourseServiceImpl implements TeacherToCourseService {
         return teacherToCourseDao.findAllCourseByTeacher(teacher);
     }
 
+
     @Override
     public int updateHaveScore(TeacherToCourse teacherToCourse) {
         return teacherToCourseDao.updateHaveScore(teacherToCourse);
     }
+    @Override
+    public List<TeacherToCourse> getAllTTC(String teacherId, int courseId) {
+        return teacherToCourseDao.getAllTTC(teacherId,courseId);
+    }
 
     @Override
-    public int getCourseNum(TeacherToCourse teacherToCourse) {
-        return teacherToCourseDao.getCourseNum(teacherToCourse);
+    public int deleteTTC(TeacherToCourse ttc) {
+        return teacherToCourseDao.deleteTTC(ttc);
+    }
+
+    @Override
+    public int insert(TeacherToCourse ttc) {
+        return teacherToCourseDao.insertTTC(ttc);
     }
 }

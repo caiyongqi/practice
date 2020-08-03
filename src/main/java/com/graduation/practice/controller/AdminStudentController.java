@@ -8,6 +8,7 @@ import com.graduation.practice.entity.User;
 import com.graduation.practice.service.ClassService;
 import com.graduation.practice.service.StudentService;
 import com.graduation.practice.service.UserService;
+import com.graduation.practice.utils.MD5Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,7 +58,9 @@ public class AdminStudentController {
         model.addAttribute("studentList",studentList);
         model.addAttribute("studentClassMap",map);
         model.addAttribute("pageInfo",studentPageInfo);
-        return "studentDataList";
+        model.addAttribute("studentName",studentName);
+        model.addAttribute("classId",classId);
+        return "/adminStudent/studentDataList";
     }
 
     //跳转到新增学生页面
@@ -67,7 +70,7 @@ public class AdminStudentController {
        List<Classes> classList = classService.findAllClass();
        System.out.println(classList.toString());
        model.addAttribute("classList",classList);
-       return "insertStudent";
+       return "/adminStudent/insertStudent";
     }
 
     //新增学生
@@ -75,7 +78,8 @@ public class AdminStudentController {
     public String insertStudent(Student student){
         System.out.println(student.toString());
         //先插入user再插入student（外键约束）
-        User user = new User(student.getStudentId(),student.getStudentId(),"学生",5);
+        //student的密码使用md5加密
+        User user = new User(student.getStudentId(), MD5Utils.code(student.getStudentId()),"学生",5);
         try{
             userService.insertUser(user);
             studentService.insertStudent(student);
@@ -124,7 +128,7 @@ public class AdminStudentController {
         List<Classes> classList = classService.findAllClass();
         model.addAttribute("classList",classList);
         model.addAttribute("student",student);
-        return "studentUpdate";
+        return "adminStudent/studentUpdate";
     }
     //更新学生
     @GetMapping("/updateStudent")

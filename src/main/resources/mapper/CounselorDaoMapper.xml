@@ -79,11 +79,7 @@
     </update>
     
     <select id="findCounselorProfileByCounselorId" parameterType="Counselor" resultMap="counselorMap">
-         SELECT counselor.id,counselor.counselorId,counselor.name,counselor.gender,counselor.address,counselor.disciplineId,counselor.phoneNumber,counselor.photoUrl,counselor.age,counselor.email,
-         discipline.id AS discipline_id,discipline.name AS discipline_name,
-         college.id AS college_id,college.name AS college_name
-         FROM counselor,discipline,college
-          WHERE counselor.counselorId = #{counselorId} AND counselor.disciplineId = discipline.id AND discipline.collegeId = college.id
+         SELECT counselor.id,counselor.counselorId,counselor.name,counselor.gender,counselor.address,counselor.disciplineId,counselor.phoneNumber,counselor.photoUrl,counselor.age,counselor.email,discipline.id AS discipline_id,discipline.name AS discipline_name FROM counselor,discipline WHERE counselor.counselorId = #{counselorId} AND counselor.disciplineId = discipline.id
     </select>
 
     <delete id="deleteCounselor" parameterType="String" >
@@ -123,10 +119,6 @@
         <association property="discipline" javaType="Discipline">
             <id column="discipline_id" property="id" />
             <result column="discipline_name" property="name" />
-        </association>
-        <association property="college" javaType="College">
-            <id column="college_id" property="id" />
-            <result column="college_name" property="name" />
         </association>
     </resultMap>
 

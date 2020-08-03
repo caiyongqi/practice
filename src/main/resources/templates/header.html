@@ -10,8 +10,8 @@
 <header th:fragment="head" class="main-header">
     <!-- Logo -->
     <a href="" class="logo">
-        <span class="logo-mini"><b>数据</b></span>
-        <span class="logo-lg"><b>数据</b>后台管理</span>
+        <span class="logo-mini"><b>教务</b></span>
+        <span class="logo-lg"><b>教务</b>后台管理</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" style="height: 50px;">
@@ -261,7 +261,7 @@
                         </li>
                         <li class="user-footer" style="color: #666666;">
                             <div class="pull-left">
-                                <a th:href="${session.user.type < 3 ? '/user/toUpdatePersonPassword' : '/user/profile?account=' +  session.user.account}" class="btn btn-default btn-flat" style="border-color: #ddd;font-size: 14px;" th:text="${session.user.type < 3 ? '修改密码' : '个人主页'}">修改密码</a>
+                                <a th:href="${session.user.type < 3 ? '#' : '/user/profile?account=' +  session.user.account}" class="btn btn-default btn-flat" style="border-color: #ddd;font-size: 14px;" th:text="${session.user.type < 3 ? '修改密码' : '个人主页'}">修改密码</a>
                             </div>
                             <div class="pull-right">
                                 <a href="/user/logout" class="btn btn-default btn-flat" style="border-color: #ddd;font-size: 14px;" onclick="function logout() {

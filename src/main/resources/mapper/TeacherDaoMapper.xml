@@ -39,7 +39,9 @@
         </if>
         ORDER BY teacher.id
     </select>
-
+    <select id="findTeacherByName" parameterType="String" resultType="Teacher">
+        SELECT * FROM teacher WHERE name like concat("%", #{name}, "%") limit 1
+    </select>
     <!-- 多对一关系 -->
     <resultMap type="Teacher" id="teacherMap">
         <id column="id" property="id" />
