@@ -8,6 +8,7 @@ import com.graduation.practice.entity.User;
 import com.graduation.practice.service.ClassService;
 import com.graduation.practice.service.StudentService;
 import com.graduation.practice.service.UserService;
+import com.graduation.practice.utils.MD5Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,7 +78,8 @@ public class AdminStudentController {
     public String insertStudent(Student student){
         System.out.println(student.toString());
         //先插入user再插入student（外键约束）
-        User user = new User(student.getStudentId(),student.getStudentId(),"学生",5);
+        //student的密码使用md5加密
+        User user = new User(student.getStudentId(), MD5Utils.code(student.getStudentId()),"学生",5);
         try{
             userService.insertUser(user);
             studentService.insertStudent(student);
