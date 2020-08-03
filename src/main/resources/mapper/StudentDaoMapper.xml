@@ -77,15 +77,21 @@
     </select>
 
     <select id="findStudentInfoByUser" parameterType="User" resultType="Student">
-        SELECT * FROM student where studentId = (SELECT account FROM user WHERE account=#{account})
+        SELECT* FROM student,user WHERE student.studentId=user.account AND user.account=#{account}
     </select>
 
 <!--    选课查询-->
     <select id="findCourseByAllTeacher" parameterType="User" resultType="courseTeacher">
         SELECT teacher.name as teacherName, course.name as courseName, student.id as studentId, teacher_to_course.courseId, teacher_to_course.startTime, teacher_to_course.endTime,teacher_to_course.time from teacher,teacher_to_course,course,student,user WHERE teacher_to_course.teacherId=teacher.teacherId and teacher_to_course.courseId=course.id and student.studentId = user.account and user.account=#{account} and teacher_to_course.courseId NOT IN (SELECT courseId FROM student_to_score)
     </select>
+
+
 <!--    选课逻辑实现-->
     <insert id="insertCourseToStudent" parameterType="StudentToScore">
         insert into student_to_score (studentId,courseId,startTime,endTime,address) values (#{studentId},#{courseId},#{startTime},#{endTime},"")
     </insert>
+<!--    修改密码-->
+    <update id="updateUserPassword" parameterType="User">
+        update user set password=#{repassword} where account=#{account}
+    </update>
 </mapper>

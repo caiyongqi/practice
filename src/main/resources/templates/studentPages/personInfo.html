@@ -84,6 +84,7 @@
     <!-- Bootstrap slider -->
     <!-- bootstrap-datetimepicker -->
     <!-- 页面meta /-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="../../static/plugins/bootstrap/css/bootstrap.min.css" th:href="@{/plugins/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" href="../../static/plugins/font-awesome/css/font-awesome.min.css" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}">
     <link rel="stylesheet" href="../../static/plugins/ionicons/css/ionicons.min.css" th:href="@{/plugins/ionicons/css/ionicons.min.css}">
@@ -126,13 +127,13 @@
         <!-- 内容头部 -->
         <section class="content-header">
             <h1>
-                游记点评管理
-                <small>游记点评表单</small>
+                个人主页
+                <small>个人信息</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="all-admin-index.html"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="all-travellog-review-list.html">游记点评管理</a></li>
-                <li class="active">游记点评表单</li>
+                <li><a href="all-travellog-review-list.html">个人主页</a></li>
+                <li class="active">个人信息</li>
             </ol>
         </section>
         <!-- 内容头部 /-->
@@ -143,72 +144,143 @@
             <div class="box-body">
 
                 <!--tab页-->
-                <div class="nav-tabs-custom">
+<!--                <div class="nav-tabs-custom">-->
 
-                    <!--tab头-->
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="#tab-form" data-toggle="tab">表单</a>
-                        </li>
-                    </ul>
-                    <!--tab头/-->
+<!--                    &lt;!&ndash;tab头&ndash;&gt;-->
+<!--                    <ul class="nav nav-tabs">-->
+<!--                        <li class="active">-->
+<!--                            <a href="#tab-form" data-toggle="tab">表单</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                    &lt;!&ndash;tab头/&ndash;&gt;-->
 
-                    <!--tab内容-->
-                    <div class="tab-content">
+<!--                    &lt;!&ndash;tab内容&ndash;&gt;-->
+<!--                    <div class="tab-content">-->
 
-                        <!--表单内容-->
-                        <div class="tab-pane active" id="tab-form">
-                            <div class="row data-type">
-                                <div class="col-md-2 title">ID</div>
-                                <div class="col-md-10 data text">
-                                    xxxxx
-                                </div>
+<!--                        &lt;!&ndash;表单内容&ndash;&gt;-->
+<!--                        <div class="tab-pane active" id="tab-form">-->
+<!--                            <div class="row data-type">-->
+<!--                                <div class="col-md-2 title">ID</div>-->
+<!--                                <div class="col-md-10 data text">-->
+<!--                                    xxxxx-->
+<!--                                </div>-->
 
-                                <div class="col-md-2 title">游记名称</div>
-                                <div class="col-md-10 data">
-                                    <input type="text" class="form-control" placeholder="游记名称" value="">
-                                </div>
+<!--                                <div class="col-md-2 title">游记名称</div>-->
+<!--                                <div class="col-md-10 data">-->
+<!--                                    <input type="text" class="form-control" placeholder="游记名称" value="">-->
+<!--                                </div>-->
 
-                                <div class="col-md-2 title">会员</div>
-                                <div class="col-md-10 data">
-                                    <input type="text" class="form-control" placeholder="会员" value="">
-                                </div>
+<!--                                <div class="col-md-2 title">会员</div>-->
+<!--                                <div class="col-md-10 data">-->
+<!--                                    <input type="text" class="form-control" placeholder="会员" value="">-->
+<!--                                </div>-->
 
-                                <div class="col-md-2 title rowHeight2x">点评内容</div>
-                                <div class="col-md-10 data rowHeight2x">
-                                    <textarea class="form-control" rows="3" placeholder="点评内容"></textarea>
-                                </div>
+<!--                                <div class="col-md-2 title rowHeight2x">点评内容</div>-->
+<!--                                <div class="col-md-10 data rowHeight2x">-->
+<!--                                    <textarea class="form-control" rows="3" placeholder="点评内容"></textarea>-->
+<!--                                </div>-->
 
-                                <div class="col-md-2 title">日期</div>
-                                <div class="col-md-10 data">
-                                    <div class="input-group date">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </div>
-                                        <input type="text" class="form-control pull-right" id="datepicker-a5">
-                                    </div>
-                                </div>
-                                <div class="col-md-2 title">审核</div>
-                                <div class="col-md-10 data">
-                                    <select class="form-control">
-                                        <option>开启</option>
-                                        <option>屏蔽</option>
-                                    </select>
-                                </div>
+<!--                                <div class="col-md-2 title">日期</div>-->
+<!--                                <div class="col-md-10 data">-->
+<!--                                    <div class="input-group date">-->
+<!--                                        <div class="input-group-addon">-->
+<!--                                            <i class="fa fa-calendar"></i>-->
+<!--                                        </div>-->
+<!--                                        <input type="text" class="form-control pull-right" id="datepicker-a5">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-2 title">审核</div>-->
+<!--                                <div class="col-md-10 data">-->
+<!--                                    <select class="form-control">-->
+<!--                                        <option>开启</option>-->
+<!--                                        <option>屏蔽</option>-->
+<!--                                    </select>-->
+<!--                                </div>-->
 
-                                <div class="col-md-2 title"></div>
-                                <div class="col-md-10 data text-center">
-                                    <button type="button" class="btn bg-maroon">保存</button>
-                                    <button type="button" class="btn bg-default" onclick="history.back(-1);">返回</button>
-                                </div>
-                            </div>
-                        </div>
-                        <!--表单内容/-->
+<!--                                <div class="col-md-2 title"></div>-->
+<!--                                <div class="col-md-10 data text-center">-->
+<!--                                    <button type="button" class="btn bg-maroon">保存</button>-->
+<!--                                    <button type="button" class="btn bg-default" onclick="history.back(-1);">返回</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;表单内容/&ndash;&gt;-->
 
-                    </div>
-                    <!--tab内容/-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;tab内容/&ndash;&gt;-->
 
+<!--                </div>-->
+                <div class="ui top attached tabular menu">
+                    <a class="active item" data-tab="first">个人信息</a>
+                    <a class="item" data-tab="second">密码修改</a>
+<!--&lt;!&ndash;                    <a class="item" data-tab="third">Third</a>&ndash;&gt;-->
                 </div>
+                <div class="ui bottom attached active tab segment" data-tab="first" style="width: 65%;margin-left: 184px">
+<!--                    <div style="height: 100px">-->
+                    <img class="ui small image circular" src="https://img95.699pic.com/photo/40100/6015.jpg_wh300.jpg" style="margin-left: 37%;">
+<!--                    <div style="text-align: center; width: 500px; border: green solid 1px;">-->
+<!--                        <img alt="" src="https://www.baidu.com/img/baidu_jgylogo3.gif" style="margin: 0 auto;" />-->
+<!--                    </div>-->
+<!--                    </div>-->
+                    <table class="ui red table">
+                        <thead>
+                        <tr>
+                            <th>
+                                属性
+                            </th>
+                            <th>
+                                信息
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                    <tr>
+                        <td>学号</td>
+                        <td th:text="${studentInfo.studentId}">苹果</td>
+                    </tr>
+                    <tr>
+                        <td>年龄</td>
+                        <td th:text="${studentInfo.age}">苹果</td>
+                    </tr>
+                    <tr>
+                        <td>性别</td>
+                        <td th:text="${studentInfo.gender==1 ? '男' : '女'}">苹果</td>
+                    </tr>
+                    <tr>
+                        <td>地址</td>
+                        <td th:text="${studentInfo.address==null ? '暂无' : studentInfo.address}">苹果</td>
+                    </tr>
+                    <tr>
+                        <td>邮箱</td>
+                        <td th:text="${studentInfo.email}">苹果</td>
+                    </tr>
+                    <tr>
+                        <td>电话</td>
+                        <td th:text="${studentInfo.phoneNumber}">苹果</td>
+                    </tr>
+                    <tr>
+                        <td>注册日期</td>
+                        <td th:text="${studentInfo.date}">苹果</td>
+                    </tr>
+                    </tbody>
+                    </table>
+                </div>
+                <div class="ui bottom attached tab segment" data-tab="second" style="width: 65%; margin-left: 184px">
+                    <div class="form-group has-feedback" style="margin-left: 29%">
+                        <input type="password" class="form-control" placeholder="密码" name="password" value="" id="password" style="width: 63%;">
+                        <span class="glyphicon glyphicon-lock form-control-feedback" style="right: 171px;"></span>
+                    </div>
+                    <div class="form-group has-feedback" style="margin-left: 29%">
+                        <input type="password" class="form-control" placeholder="确认密码" id="repassword" value="" style="width: 63%;">
+                        <span class="glyphicon glyphicon-lock form-control-feedback" style="right: 171px;"></span>
+                    </div>
+                    <div class="row" style="margin-left: 27%;width: 146%">
+                        <div class="col-xs-4">
+                            <button  class="btn btn-primary btn-block btn-flat" id="submit">确定</button>
+                        </div>
+                    </div>
+                </div>
+<!--                <div class="ui bottom attached tab segment" data-tab="third">Third </div>-->
                 <!--tab页/-->
 
 
@@ -274,7 +346,7 @@
 <script src="../../static/plugins/bootstrap-slider/bootstrap-slider.js" th:src="@{/plugins/bootstrap-slider/bootstrap-slider.js}"></script>
 <script src="../../static/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js" th:src="@{/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js}"></script>
 <script src="../../static/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js" th:src="@{/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script>
     $(document).ready(function () {
         // 选择框
@@ -296,6 +368,48 @@
         }
     }
 
+    $('#submit').bind('click', function (event) {
+        event.preventDefault()
+
+        let password = $('#password').val()
+        // if(password.length<6){
+        //     alert('密码长度最少6位')
+        //     return
+        // }else
+        if(password.length>20){
+            alert('密码长度最多20位')
+            return
+        }else if(password.indexOf(' ') >=0){
+            alert('密码不能包含空白符')
+            return
+        }
+        let repassword = $('#repassword').val()
+        if(repassword != password){
+            alert('密码不一致请重新输入')
+            $('#repassword').attr("value", "");
+            $('#password').attr("value", "");
+            return
+        }else if(repassword.length>20){
+            alert('密码长度最多20位')
+            return
+        }else if(repassword.indexOf(' ') >=0){
+            alert('密码不能包含空白符')
+            return
+        }
+
+        $.ajax({
+            type : 'post',
+            url: "/student/changePassword",
+            data:  {repassword, password},
+            success: function (res) {
+                alert(res.message)
+                $(location).attr('href', '/student/profile')
+            },
+            error: function (err) {
+                alert('更新用户失败')
+            }
+        })
+    })
 
     $(document).ready(function () {
         $('#datepicker-a5').datepicker({
@@ -309,6 +423,30 @@
         // 激活导航位置
         setSidebarActive("travellog-review");
     });
+
+    $('.menu .item')
+        .tab()
+    ;
+    // $('.dynamic.example .menu .item')
+    //     .tab({
+    //         cache: false,
+    //         // faking API request
+    //         apiSettings: {
+    //             loadingDuration : 300,
+    //             mockResponse    : function(settings) {
+    //                 var response = {
+    //                     first  : 'AJAX Tab One',
+    //                     second : 'AJAX Tab Two',
+    //                     third  : 'AJAX Tab Three'
+    //                 };
+    //                 return response[settings.urlData.tab];
+    //             }
+    //         },
+    //         context : 'parent',
+    //         auto    : true,
+    //         path    : '/'
+    //     })
+    // ;
 </script>
 </body>
 

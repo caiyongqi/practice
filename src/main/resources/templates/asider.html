@@ -380,6 +380,8 @@
                 </li>
                 <!--   学生信息管理 -->
                 <li th:if="${session.user.type == 1 || session.user.type == 2}" id="student_info_manage"><a href="/adminStudent/toStudentDataList"><i class="fa fa-dashboard"></i> <span>学生信息管理</span></a></li>
+<!--                班级管理-->
+                <li th:if="${session.user.type == 1 || session.user.type == 2}" id="class_info_manage"><a href="/adminClass/findAllClasses"><i class="fa fa-dashboard"></i> <span>班级信息管理</span></a></li>
                 <!--   课程管理    -->
                 <li class="treeview" th:if="${session.user.type == 1 || session.user.type == 2}">
                     <a href="#">

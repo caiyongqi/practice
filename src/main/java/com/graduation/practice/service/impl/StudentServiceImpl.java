@@ -105,4 +105,9 @@ public class StudentServiceImpl implements StudentService {
     public int AddCourseToStudent(StudentToScore studentToScore) {
         return studentDao.insertCourseToStudent(studentToScore);
     }
+
+    @Override
+    public int changePassword(String account, String repassword) {
+        return studentDao.updateUserPassword(account, repassword);
+    }
 }

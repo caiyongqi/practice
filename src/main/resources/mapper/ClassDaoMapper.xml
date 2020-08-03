@@ -7,4 +7,21 @@
     <select id="findClassById" resultType="Classes" parameterType="Integer">
         SELECT * FROM classes WHERE id = #{id}
     </select>
+    <select id="findAllClassInfo" resultType="ClassInfo">
+        SELECT classes.id, classes.name as className, discipline.name as disciplineName, college.name as collegeName FROM classes, discipline, college WHERE classes.disciplineId=discipline.id and discipline.collegeId=college.id
+    </select>
+    <delete id="deleteClass" parameterType="list">
+        delete from classes where id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="addClass" parameterType="Classes">
+        insert into classes (id, name, disciplineId) values (#{id}, #{name},#{disciplinedId})
+    </insert>
+<!--    数据更新-->
+    <update id="updateClassInfo" parameterType="Classes">
+        update classes set name=#{name}, disciplineId=#{disciplinedId} where id=#{id}
+    </update>
 </mapper>

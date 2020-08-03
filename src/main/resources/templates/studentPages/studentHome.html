@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 
-    <title>课表展示</title>
+    <title>首页</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
 
@@ -84,7 +84,7 @@
     <!-- Bootstrap slider -->
     <!-- bootstrap-datetimepicker -->
     <!-- 页面meta /-->
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="../../static/plugins/bootstrap/css/bootstrap.min.css" th:href="@{/plugins/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" href="../../static/plugins/font-awesome/css/font-awesome.min.css" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}">
     <link rel="stylesheet" href="../../static/plugins/ionicons/css/ionicons.min.css" th:href="@{/plugins/ionicons/css/ionicons.min.css}">
@@ -128,12 +128,12 @@
         <section class="content-header">
             <h1>
                 课表
-                <small>xll</small>
+                <small>本周课程</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#">课表</a></li>
-                <li class="active">第一周</li>
+                <li><a href="#">主页展示</a></li>
+                <li class="active">本周课程</li>
             </ol>
         </section>
 
@@ -143,215 +143,29 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">第一周</h3>
+                            <h3 class="box-title">快乐课程</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th>时间</th>
-                                    <th>周一</th>
-                                    <th>周二</th>
-                                    <th>周三</th>
-                                    <th>周四</th>
-                                    <th>周五</th>
-                                    <th>周六</th>
-                                    <th>周天</th>
+                                    <th>上课老师</th>
+                                    <th>课程名</th>
+                                    <th>开始时间</th>
+                                    <th>截止时间</th>
+                                    <th>上课周次</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
+                                <tr th:each="course:${course_list}">
+                                    <td th:text="${course.teacherName}">数学</td>
+                                    <td th:text="${course.courseName}">数学</td>
+                                    <td th:text="${course.startTime}">数学</td>
+                                    <td th:text="${course.endTime}">英语</td>
+                                    <td th:text="${course.time}">英语</td>
                                 </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>第一节课</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>数学</td>
-                                    <td>英语</td>
-                                    <td>数学</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <!--                                <tr>-->
-                                <!--                                    <td>Gecko</td>-->
-                                <!--                                    <td>Mozilla 1.0</td>-->
-                                <!--                                    <td>Win 95+ / OSX.1+</td>-->
-                                <!--                                    <td>1</td>-->
-                                <!--                                    <td>A</td>-->
-                                <!--                                </tr>-->
-                                <!--                                <tr>-->
-                                <!--                                    <td>Gecko</td>-->
-                                <!--                                    <td>Mozilla 1.1</td>-->
-                                <!--                                    <td>Win 95+ / OSX.1+</td>-->
-                                <!--                                    <td>1.1</td>-->
-                                <!--                                    <td>A</td>-->
-                                <!--                                </tr>-->
-                                <!--                                <tr>-->
-                                <!--                                    <td>Gecko</td>-->
-                                <!--                                    <td>Mozilla 1.2</td>-->
-                                <!--                                    <td>Win 95+ / OSX.1+</td>-->
-                                <!--                                    <td>1.2</td>-->
-                                <!--                                    <td>A</td>-->
-                                <!--                                </tr>-->
-
-                                <!--                                <tr>-->
-                                <!--                                    <td>Presto</td>-->
-                                <!--                                    <td>Nokia N800</td>-->
-                                <!--                                    <td>N800</td>-->
-                                <!--                                    <td>-</td>-->
-                                <!--                                    <td>A</td>-->
-                                <!--                                </tr>-->
-                                <!--                                <tr>-->
-                                <!--                                    <td>Presto</td>-->
-                                <!--                                    <td>Nintendo DS browser</td>-->
-                                <!--                                    <td>Nintendo DS</td>-->
-                                <!--                                    <td>8.5</td>-->
-                                <!--                                    <td>C/A<sup>1</sup></td>-->
-                                <!--                                </tr>-->
-
-                                <!--                                <tr>-->
-                                <!--                                    <td>Tasman</td>-->
-                                <!--                                    <td>Internet Explorer 5.1</td>-->
-                                <!--                                    <td>Mac OS 7.6-9</td>-->
-                                <!--                                    <td>1</td>-->
-                                <!--                                    <td>C</td>-->
-                                <!--                                </tr>-->
-                                <!--                                <tr>-->
-                                <!--                                    <td>Tasman</td>-->
-                                <!--                                    <td>Internet Explorer 5.2</td>-->
-                                <!--                                    <td>Mac OS 8-X</td>-->
-                                <!--                                    <td>1</td>-->
-                                <!--                                    <td>C</td>-->
-                                <!--                                </tr>-->
                                 </tbody>
-                                <!--                                <tfoot>-->
-                                <!--                                <tr>-->
-                                <!--                                    <th>Rendering engine</th>-->
-                                <!--                                    <th>Browser</th>-->
-                                <!--                                    <th>Platform(s)</th>-->
-                                <!--                                    <th>Engine version</th>-->
-                                <!--                                    <th>CSS grade</th>-->
-                                <!--                                </tr>-->
-                                <!--                                </tfoot>-->
                             </table>
                         </div>
                         <!-- /.box-body -->
@@ -360,6 +174,37 @@
                     <!-- /.box -->
                 </div>
                 <!-- /.col -->
+                <div class="col-xs-12">
+                    <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">友情链接</h3>
+                    </div>
+                        <div class="ui cards">
+                            <div class="card">
+                                <div class="content">
+                                    <a class="header" href="https://www.icourse163.org/">大学慕课</a>
+                                    <div class="meta">学习</div>
+                                    <div class="description">即大规模开放在线课程，是“互联网+教育”的产物。英文直译“大规模开放的在线课程（Massive Open Online Course）”，是新近涌现出来的一种在线课程开发模式</div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="content">
+                                    <a class="header" href="http://www.icourses.cn/home/">爱课程</a>
+                                    <div class="meta">学习</div>
+                                    <div class="description">爱课程是教育部、财政部“十二五”期间启动实施的“高等学校本科教学质量与教学改革工程”支持建设的一个高等教育课程资源共享平台，集中展示“中国大学视频公开课”和“中国大学资源共享课”，并对课程资源进行运行、更新、维护和管理。</div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="content">
+                                    <div class="header" href="https://yz.chsi.com.cn/">研招网</div>
+                                    <div class="meta">研究生</div>
+                                    <div class="description">中国研究生招生信息网是隶属于教育部的以考研为主题的官方网站，是全国硕士研究生招生报名和调剂指定网站，主要提供研究生网上报名及调剂、专业目录查询、 ... </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col2-->
             </div>
             <!-- /.row -->
         </section>
@@ -420,7 +265,7 @@
 <script src="../../static/plugins/bootstrap-slider/bootstrap-slider.js" th:src="@{/plugins/bootstrap-slider/bootstrap-slider.js}"></script>
 <script src="../../static/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js" th:src="@{/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js}"></script>
 <script src="../../static/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js" th:src="@{/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script>
     $(document).ready(function () {
         // 选择框
@@ -444,8 +289,17 @@
 
 
     $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
+        $("#example2").DataTable({"language": {"emptyTable": "无数据展示",
+                "sInfoEmpty":"查询到0条数据，0条数据被展示",
+                "paginate": {
+                    "next": "下一页",
+                    "previous": "上一页"
+                },
+                "info": "查找到_PAGE_个 共_PAGES_个"
+            }
+
+        });
+        $('#example1').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": false,

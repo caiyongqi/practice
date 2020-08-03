@@ -36,4 +36,6 @@ public interface StudentService {
     List<courseTeacher> findCourseByAllTeacher(User user);
 
     int AddCourseToStudent(StudentToScore studentToScore);
+
+    int changePassword(String account, String repassword);
 }

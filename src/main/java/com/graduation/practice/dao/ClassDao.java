@@ -1,5 +1,6 @@
 package com.graduation.practice.dao;
 
+import com.graduation.practice.entity.ClassInfo;
 import com.graduation.practice.entity.Classes;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,4 +13,12 @@ import java.util.List;
 public interface ClassDao {
     List<Classes> findAllClass();
     Classes findClassById(@Param("id") int id);
+
+    List<ClassInfo> findAllClassInfo();
+
+    int deleteClass(List list);
+
+    int addClass(Classes classes);
+
+    int updateClassInfo(Classes classes);
 }

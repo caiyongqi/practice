@@ -2,10 +2,7 @@ package com.graduation.practice.controller;
 
 //学生的界面路由
 
-import com.graduation.practice.entity.Result;
-import com.graduation.practice.entity.ScoreShow;
-import com.graduation.practice.entity.StudentToScore;
-import com.graduation.practice.entity.User;
+import com.graduation.practice.entity.*;
 import com.graduation.practice.service.StudentService;
 import com.graduation.practice.service.UserService;
 import com.graduation.practice.utils.MD5Utils;
@@ -66,9 +63,12 @@ public class StudentController {
     //        学生界面首页
     @GetMapping("/home")
     public String index(Model model, HttpSession session) {
+        // 个人课表展示
         User user = (User) session.getAttribute("user");
-        Object student = studentService.findInfoByStudent(user);
-        System.out.println(student);
+        System.out.println(user);
+        Object scoreShow = studentService.findCourseByTeacher(user);
+        System.out.println(scoreShow);
+        model.addAttribute("course_list", scoreShow);
         return "studentPages/studentHome";
     }
 
@@ -87,6 +87,9 @@ public class StudentController {
     @GetMapping("/profile")
     public String personShow(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
+        Object student = studentService.findInfoByStudent(user);
+        System.out.println(student);
+        model.addAttribute("studentInfo", student);
         return "studentPages/personInfo";
     }
 
@@ -138,6 +141,26 @@ public class StudentController {
         System.out.println(scoreShow);
 //        model.addAttribute("chooseCourse", scoreShow);
         return "redirect:chooseClass";
+    }
+
+    // 修改密码
+    @PostMapping("/changePassword")
+    @ResponseBody
+    public Result<User> changePassword(HttpServletRequest request, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        String password = request.getParameter("password");
+        String repassword = MD5Utils.code(request.getParameter("repassword"));
+        System.out.println(repassword);
+        System.out.println(user.getAccount());
+        int row = studentService.changePassword(user.getAccount(), repassword);
+        Result<User> result = new Result<>();
+        int rows = 1;
+        if (rows > 0) {
+            result.setMessage("修改成功");
+        } else {
+            result.setMessage("修改失败");
+        }
+        return result;
     }
 
     //    用于测试界面的

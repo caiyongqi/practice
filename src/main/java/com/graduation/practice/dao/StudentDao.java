@@ -45,4 +45,6 @@ public interface StudentDao {
 
     // 添加课程逻辑处理
     int insertCourseToStudent(StudentToScore studentToScore);
+
+    int updateUserPassword(@Param("account") String account, @Param("repassword") String repassword);
 }
