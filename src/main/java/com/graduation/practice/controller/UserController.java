@@ -71,6 +71,8 @@ public class UserController {
             return "redirect:/user/";
         }else{
             switch(user.getType()){
+                case 1:
+                    return "/sysAdmin-home";
                 case 2:
                     return "/courseAdmin-home";
                 case 3:
