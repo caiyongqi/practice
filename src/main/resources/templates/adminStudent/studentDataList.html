@@ -90,9 +90,9 @@
                         </div>
                         <!--  搜索  -->
                         <form>
-                            <div class="col-md-3 data">
+                            <div class="col-md-3 data" style="display: flex;">
                                 <input type="text" id="studentName" th:value="${studentName}" class="form-control input-sm" placeholder="姓名" name="studentName">
-                                <select data-placeholder="" id="classId" name="classId" class="form-control input-sm">
+                                <select data-placeholder="" id="classId" name="classId" class="form-control input-sm" >
                                     <option th:value="0" th:selected="${classId == 0}">班级</option>
                                     <option th:each="classes:${classList}" th:value="${classes.id}"  th:text="${classes.name}" th:selected="${classId == classes.id}"></option>
                                 </select>

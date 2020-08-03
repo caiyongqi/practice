@@ -404,5 +404,8 @@ public class TeacherController {
         return "/teacher/choose-course";
     }
 
-
+    @GetMapping("/home")
+    public String home(){
+        return "/teacher/teacher-home";
+    }
 }
