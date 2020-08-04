@@ -191,7 +191,7 @@
         let gender = parseInt($('#gender').find('option:selected').val())
         let name = $('#name').val()
         let age = $('#age').val()
-        if(!(!isNaN(age) && parseInt(age)>0)){
+        if(!(!isNaN(age) && parseInt(age)>=0)){
             alert('年龄格式错误')
             return
         }

@@ -170,10 +170,13 @@ public class UserController {
         Result<User> result = new Result<>();
         if (existedUser != null) {
             result.setMessage("该用户已存在");
+            result.setStatus(403);
         } else if (userService.saveUser(user) == 1) {
             result.setMessage("添加用户成功");
+            result.setStatus(200);
         } else {
             result.setMessage("添加用户失败");
+            result.setStatus(403);
         }
         result.setData(user);
         return result;

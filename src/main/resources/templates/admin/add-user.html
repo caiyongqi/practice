@@ -171,8 +171,10 @@
             url: "/user/addUser",
             data:  {account, password, type},
             success: function (res) {
+                if (res.status === 200){
+                    $(location).attr('href', '/user/findAllAdmin')
+                }
                 alert(res.message)
-                $(location).attr('href', '/user/findAllAdmin')
             },
             error: function (err) {
                 alert('添加用户失败')
