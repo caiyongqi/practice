@@ -107,6 +107,18 @@
     <link rel="stylesheet" href="../../static/plugins/ionslider/ion.rangeSlider.skinNice.css" th:href="@{/plugins/ionslider/ion.rangeSlider.skinNice.css}">
     <link rel="stylesheet" href="../../static/plugins/bootstrap-slider/slider.css" th:href="@{/plugins/bootstrap-slider/slider.css}">
     <link rel="stylesheet" href="../../static/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css" th:href="@{/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css}">
+    <style>
+        td {
+            width: 33%;
+        }
+        .label-normal {
+            text-align: right;
+        }
+        .ui.table{
+            width: 72%;
+            margin-left: 14%;
+        }
+    </style>
 </head>
 
 <body class="hold-transition skin-purple sidebar-mini">
@@ -217,7 +229,8 @@
                 </div>
                 <div class="ui bottom attached active tab segment" data-tab="first" style="width: 65%;margin-left: 184px">
 <!--                    <div style="height: 100px">-->
-                    <img class="ui small image circular" src="https://img95.699pic.com/photo/40100/6015.jpg_wh300.jpg" style="margin-left: 37%;">
+                    <img class="ui small image circular" id="previewImage" src="https://img95.699pic.com/photo/40100/6015.jpg_wh300.jpg" style="margin-left: 37%;" alt="头像">
+                    <input id="imgLocal" type="file" value="上传图片" accept=".jpg, .png" style="margin-left: 43%; margin-top: 1%">
 <!--                    <div style="text-align: center; width: 500px; border: green solid 1px;">-->
 <!--                        <img alt="" src="https://www.baidu.com/img/baidu_jgylogo3.gif" style="margin: 0 auto;" />-->
 <!--                    </div>-->
@@ -235,35 +248,36 @@
                         </thead>
                         <tbody>
                     <tr>
-                        <td>学号</td>
-                        <td th:text="${studentInfo.studentId}">苹果</td>
+                        <td class="label-normal">学号</td>
+                        <td ><input th:value="${studentInfo.studentId}" readonly="readonly"></td>
                     </tr>
                     <tr>
-                        <td>年龄</td>
-                        <td th:text="${studentInfo.age}">苹果</td>
+                        <td class="label-normal">年龄</td>
+                        <td><input  th:value="${studentInfo.age}" readonly="readonly"></td>
                     </tr>
                     <tr>
-                        <td>性别</td>
-                        <td th:text="${studentInfo.gender==1 ? '男' : '女'}">苹果</td>
+                        <td class="label-normal">性别</td>
+                        <td><input th:value="${studentInfo.gender==1 ? '男' : '女'}" readonly="readonly"></td>
                     </tr>
                     <tr>
-                        <td>地址</td>
-                        <td th:text="${studentInfo.address==null ? '暂无' : studentInfo.address}">苹果</td>
+                        <td class="label-normal">地址</td>
+                        <td><input th:value="${studentInfo.address==null ? '暂无' : studentInfo.address}" readonly="readonly"></td>
                     </tr>
                     <tr>
-                        <td>邮箱</td>
-                        <td th:text="${studentInfo.email}">苹果</td>
+                        <td class="label-normal">邮箱</td>
+                        <td><input th:value="${studentInfo.email}" id="userEmail"></td>
                     </tr>
                     <tr>
-                        <td>电话</td>
-                        <td th:text="${studentInfo.phoneNumber}">苹果</td>
+                        <td class="label-normal">电话</td>
+                        <td class="label-normal"><input th:value="${studentInfo.phoneNumber}" id="userTel"></td>
                     </tr>
                     <tr>
-                        <td>注册日期</td>
-                        <td th:text="${studentInfo.date}">苹果</td>
+                        <td class="label-normal">注册日期</td>
+                        <td><input th:value="${studentInfo.date}" readonly="readonly"></td>
                     </tr>
                     </tbody>
                     </table>
+                    <button id="saveInfo" class="save-button ui positive button" style="margin-left: 45%">保存</button>
                 </div>
                 <div class="ui bottom attached tab segment" data-tab="second" style="width: 65%; margin-left: 184px">
                     <div class="form-group has-feedback" style="margin-left: 29%">
@@ -447,6 +461,57 @@
     //         path    : '/'
     //     })
     // ;
+    // 图片
+    // let inp = document.querySelector('#imgLocal')
+    // let preV = document.querySelector("#previewImage");
+    // inp.onchange = function(e) {
+    //     let fileList = document.querySelector('#imgLocal').files
+    //     console.log(fileList) //files
+    //     if (fileList) {
+    //         preV.setAttribute("src", fileList);
+    //     }
+    // }
+    // 修改个人信息
+    $('#saveInfo').bind('click', function (event) {
+        event.preventDefault()
+
+        let uEmail = $('#userEmail').val()
+        // if(password.length<6){
+        //     alert('密码长度最少6位')
+        //     return
+        // }else
+        if(uEmail.length == 0){
+            alert('邮箱不能为空')
+            return
+        }else if(uEmail.indexOf(' ') >=0){
+            alert('邮箱不能包含空白符')
+            return
+        }
+        let uTel = $('#userTel').val()
+        if(uTel.length == 0){
+            alert('电话不能为空')
+            return
+        } else if(uTel.indexOf(' ') >=0){
+            alert('电话不能包含空白符')
+            return
+        }
+        // else if (uTel.length!=11) {
+        //     alert("电话位数不正确！")
+        // }
+
+        $.ajax({
+            type : 'post',
+            url: "/student/personChange",
+            data:  {uEmail, uTel},
+            success: function (res) {
+                alert(res.message);
+                $(location).attr('href', '/student/profile')
+            },
+            error: function (err) {
+                alert('更新用户失败')
+            }
+        })
+    })
 </script>
 </body>
 

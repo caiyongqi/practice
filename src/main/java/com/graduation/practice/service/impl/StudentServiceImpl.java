@@ -113,4 +113,10 @@ public class StudentServiceImpl implements StudentService {
     public int changePassword(String account, String repassword) {
         return studentDao.updateUserPassword(account, repassword);
     }
+
+    // 修改个人信息
+    @Override
+    public int updatePerInfo(String account, String uTel, String uEmail) {
+        return studentDao.updatePerInfo(account, uTel, uEmail);
+    }
 }

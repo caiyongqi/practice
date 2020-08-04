@@ -142,7 +142,7 @@
                 </div>
             </div>
             <script>
-                setTimeout(function () {
+                setTimeout(function changePage() {
                     $('#current_page').change(function () {
                         let page = parseInt($('#current_page').find('option:selected').val())
                         let pageNum = parseInt($('#pageNum').val())
@@ -157,6 +157,31 @@
                             })
                         }
                     })
+
+                    function search() {
+                        var counselorStudentKeyword = $('#search_input').val();
+                        $.ajax({
+                            type : 'post',
+                            url: "/counselor/searchStudent#content",
+                            data:  {"counselorStudentKeyword":counselorStudentKeyword},
+                            success: function (res) {
+                                // console.log($(res).find('div[id="content"]').html())
+                                $("#content").html($(res).find('div[id="content"]').html());
+                            }
+                        })
+                    }
+                    $('#search_input').bind('keypress', function (event) {
+                        if(13 === event.keyCode){
+                            event.preventDefault();
+                            search();
+                        }
+                    })
+                    $('#search').bind('click', function (event) {
+                        search();
+                    })
+
+
+
                 }, 1000)
             </script>
         </section>
@@ -307,28 +332,6 @@
     //     })
     // })
 
-
-    function search() {
-        var counselorStudentKeyword = $('#search_input').val();
-        $.ajax({
-            type : 'post',
-            url: "/counselor/searchStudent#content",
-            data:  {"counselorStudentKeyword":counselorStudentKeyword},
-            success: function (res) {
-                // console.log($(res).find('div[id="content"]').html())
-                $("#content").html($(res).find('div[id="content"]').html());
-            }
-        })
-    }
-    $('#search_input').bind('keypress', function (event) {
-        if(13 === event.keyCode){
-            event.preventDefault();
-            search();
-        }
-    })
-    $('#search').bind('click', function (event) {
-        search();
-    })
 
     function enableEdit(type) {
         type = parseInt(type)

@@ -35,4 +35,5 @@ public interface CounselorService {
     //===辅导员查询学生成绩
     List<ScoreShow> findScoreByStudent04(Student student);
 
+    int getStudentNum(User user);
 }

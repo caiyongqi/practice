@@ -95,6 +95,11 @@
         SELECT course.id as courseId, course.`name`, course.`desc`, course.credit, student_to_score.score, student_to_score.startTime, student_to_score.endTime FROM student_to_score, course, student, user WHERE user.account=student.studentId and student.id=student_to_score.studentId and student_to_score.courseId = course.id and user.account=#{studentId} ORDER BY course.id
     </select>
 
+    <select id="studentNum" parameterType="User" resultType="Integer">
+        SELECT COUNT(*) FROM student WHERE student.classId in (SELECT id FROM classes WHERE disciplineId = (SELECT disciplineId FROM counselor WHERE counselorId = #{account}))
+    </select>
+
+
     <!-- 多对一关系 -->
     <resultMap type="Student" id="studentMap">
         <id column="id" property="id" />

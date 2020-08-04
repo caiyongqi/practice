@@ -17,6 +17,8 @@ import java.sql.Date;
 public class courseTeacher {
     private String teacherName;
     private String courseName;
+    private String studentId;
+    private String courseId;
     private Date startTime;
     private Date endTime;
     private String time;

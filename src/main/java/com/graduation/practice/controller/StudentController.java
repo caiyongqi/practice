@@ -75,7 +75,7 @@ public class StudentController {
     @GetMapping("/datalist")
     public String dataShow(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        Object scoreShow = studentService.findCourseByTeacher();
+        Object scoreShow = studentService.findCourseByTeacher(user);
         model.addAttribute("course_list", scoreShow);
         return "studentPages/studentDataShow";
     }
@@ -120,7 +120,7 @@ public class StudentController {
     @GetMapping("/chooseClass")
     public String chooseClass(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        Object scoreShow = studentService.findCourseByTeacher();
+        Object scoreShow = studentService.findCourseByAllTeacher(user);
         System.out.println(scoreShow);
         model.addAttribute("chooseCourse", scoreShow);
         return "studentPages/chooseClass";
@@ -150,6 +150,29 @@ public class StudentController {
         System.out.println(repassword);
         System.out.println(user.getAccount());
         int rows = studentService.changePassword(user.getAccount(), repassword);
+        Result<User> result = new Result<>();
+        if (rows > 0) {
+            result.setMessage("修改成功");
+        } else {
+            result.setMessage("修改失败");
+        }
+        return result;
+    }
+
+    // 个人信息修改
+    @PostMapping("/personChange")
+    @ResponseBody
+    public Result<User> personChange(Model model, HttpSession session, HttpServletRequest request) {
+        String number = request.getParameter("uTel");
+        String email = request.getParameter("uEmail");
+        User user = (User) session.getAttribute("user");
+        int rows = studentService.updatePerInfo(user.getAccount(), number, email);
+//        Object student = studentService.findInfoByStudent(user);
+//        System.out.println(student);
+//        model.addAttribute("studentInfo", student);
+        System.out.println(number);
+        System.out.println(email);
+        System.out.println(user);
         Result<User> result = new Result<>();
         if (rows > 0) {
             result.setMessage("修改成功");

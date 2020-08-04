@@ -162,6 +162,7 @@
                                     <th>开始时间</th>
                                     <th>截止时间</th>
                                     <th>上课周次</th>
+                                    <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -171,6 +172,13 @@
                                         <td th:text="${course.startTime}">Embedded devices</td>
                                         <td th:text="${course.endTime}">-</td>
                                         <td th:text="${course.time == null ? '暂无' : course.time}">X</td>
+                                        <td>
+                                            <div class="ui buttons">
+                                                <!--                                                <button class="ui button">Cancel</button>-->
+                                                <!--                                                <div class="or"></div>-->
+                                                <a href="#" th:href="@{/student/chooseClassLogic(studentId=${course.studentId},courseId=${course.courseId},startTime=${course.startTime},endTime=${course.endTime})}" class="ui positive button">添加</a>
+                                            </div>
+                                        </td>
                                     </tr>
 <!--                                    <td >英语</td>-->
 <!--                                    <td >英语</td>-->

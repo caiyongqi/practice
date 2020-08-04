@@ -14,13 +14,17 @@ public interface StudentService {
     //    ==========================================================================
     //    学生界面
     User findUserByAccount(User user);
+
     // 成绩查询
     List<ScoreShow> findScoreByStudent(User user);
     // 课表查询
 
     List<Student> findAllStudent(String studentName, int classId);
+
     int insertStudent(Student student);
+
     int updateStudent(Student student);
+
     Student adminFindStudentByStudentId(String studentID);
 
     int deleteSelectedStudent(List<String> studentIdList);
@@ -42,4 +46,6 @@ public interface StudentService {
 
     List<courseTeacher> findCourseByTeacher();
 
+    // 更新个人信息
+    int updatePerInfo(String account, String uTel, String uEmail);
 }

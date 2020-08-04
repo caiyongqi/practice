@@ -30,4 +30,5 @@ public interface CounselorDao {
     int deleteCounselor(String counselorId);
     //======辅导员查询学生成绩
     List<ScoreShow> findStudentScore04(Student student);
+    int studentNum(User user);
 }

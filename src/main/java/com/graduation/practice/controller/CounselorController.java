@@ -4,15 +4,13 @@ package com.graduation.practice.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.graduation.practice.entity.*;
-import com.graduation.practice.service.ClassService;
-import com.graduation.practice.service.CounselorService;
-import com.graduation.practice.service.StudentService;
-import com.graduation.practice.service.UserService;
+import com.graduation.practice.service.*;
 import com.graduation.practice.utils.MD5Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -34,11 +32,13 @@ public class CounselorController {
     private final UserService userService;
     private final StudentService studentService;
     private final ClassService classService;
-    public CounselorController(CounselorService counselorService,UserService userService,StudentService studentService,ClassService classService) {
+    private final DisciplineService disciplineService;
+    public CounselorController(CounselorService counselorService,UserService userService,StudentService studentService,ClassService classService,DisciplineService disciplineService) {
         this.counselorService = counselorService;
         this.userService = userService;
         this.studentService = studentService;
         this.classService = classService;
+        this.disciplineService = disciplineService;
     }
 
     //辅导员所带学生信息展示
@@ -248,8 +248,90 @@ public class CounselorController {
     }
 
     @GetMapping("/home")
-    public String home(){
+    public String home(Model model, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return "redirect:/user/";
+        }else if(user.getType() != 4){
+            return "/error/404";
+        }else{
+            int studentNum = counselorService.getStudentNum(new User(user.getAccount()));
+//            int courseTaughtNum = teacherToCourseService.getCourseNum(new TeacherToCourse(user.getAccount(), 0));
+
+            model.addAttribute("studentNum", studentNum);
+            System.out.println(studentNum);
+        }
         return "counselor/counselor-home";
+    }
+
+
+    // toUpdatecounselor
+    // 如果使用路径参数就不能返回模板，静态资源无法加载
+    @GetMapping("/toUpdateCounselor")
+    public String toUpdateCounselor(Model model, HttpSession session, HttpServletRequest request) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/user/";
+        } else {
+            if (user.getType() == 4) {
+                Counselor counselor = counselorService.findCounselorByCounselorId(new Counselor(user.getAccount()));
+                model.addAttribute("counselor", counselor);
+                List<Discipline> disciplines = disciplineService.findAllDiscipline();
+                model.addAttribute("disciplines", disciplines);
+                return "/counselor/update-self";
+            } else {
+                return "/error/404";
+            }
+        }
+    }
+
+    // 更新用户
+    @PostMapping("/updateCounselor")
+    @ResponseBody
+    public Result<Counselor> updateCounselor(HttpServletRequest request){
+        Result<Counselor> result = new Result<>();
+        String photoUrl = null;
+        MultipartFile file = ((MultipartRequest) request).getFile("photo");
+        if (file != null) {
+            String fileName = file.getOriginalFilename();  // 文件名
+            assert fileName != null;
+            String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
+            String filePath = "F:/IDEA_projects/practice/src/main/resources/static/photo/"; // 上传后的路径
+            fileName = UUID.randomUUID() + suffixName; // 新文件名
+            File dest = new File(filePath + fileName);
+            if (!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdirs();
+            }
+            try {
+                file.transferTo(dest);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            photoUrl = "/photo/" + fileName;
+        }
+        // 参数
+        String name = request.getParameter("name");
+        String counselorId = request.getParameter("counselorId");
+        int age = Integer.parseInt(request.getParameter("age"));
+        int gender = Integer.parseInt(request.getParameter("gender"));
+        String address = request.getParameter("address");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        int disciplineId = Integer.parseInt(request.getParameter("disciplineId"));
+        //int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+
+        Counselor counselor = new Counselor(counselorId, name, age, gender, address, email, phoneNumber, disciplineId, photoUrl);
+
+        if (photoUrl == null){
+            photoUrl = counselorService.findCounselorByCounselorId(counselor).getPhotoUrl();
+        }
+        if(counselorService.updateCounselor(counselor) == 1){
+            result.setMessage("更新用户成功");
+        }else{
+            result.setMessage("更新用户失败");
+        }
+        result.setData(counselor);
+        return result;
     }
 
 

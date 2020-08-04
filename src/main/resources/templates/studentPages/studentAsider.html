@@ -142,7 +142,8 @@
                                 <ul class="treeview-menu">
 
                                     <li id="elements-general">
-                                        <a href="/student/chooseClass">
+<!--                                        th:href="@{/student/chooseClass}" th:value="${session.user.account}-->
+                                        <a th:href="@{/student/chooseClass}" th:value="${session.user.account}">
                                             <i class="fa fa-circle-o"></i>专业选课
                                         </a>
                                     </li>

@@ -11,7 +11,7 @@
         <section class="sidebar">
             <div class="user-panel">
                 <div class="pull-left image" th:object="${session}">
-                    <img th:src="*{photoUrl} == null ? 'https://i.niupic.com/images/2020/07/29/8sZX.png' : *{photoUrl}" class="img-circle" alt="User Image">
+                    <img th:src="*{photoUrl} == null ? '/photo/996d81cc-9ed8-44fc-b542-365c13a8a51e.PNG' : *{photoUrl}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p th:text="${session.user.role}"></p>
@@ -472,7 +472,7 @@
 
                 <li class="treeview" th:if="${session.user.type == 1}">
                     <a href="#">
-                        <i class="fa fa-folder"></i> <span>辅导员信息管理</span>
+                        <i class="fa fa-folder"></i> <span>辅导员管理</span>
                         <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>

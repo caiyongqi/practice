@@ -79,7 +79,7 @@ public class UserController {
                 case 3:
                     return "redirect:/teacher/home";
                 case 4:
-                    return "/counselor/counselor-home";
+                    return "redirect:/counselor/home";
                 case 5:
                     return "/studentPages/studentHome";
             }

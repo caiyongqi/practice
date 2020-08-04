@@ -106,5 +106,10 @@ public class CounselorServiceImpl implements CounselorService {
 //        System.out.println(course);
         return scoreShows;
     }
+
+    @Override
+    public int getStudentNum(User user) {
+        return counselorDao.studentNum(user);
+    }
 }
 
