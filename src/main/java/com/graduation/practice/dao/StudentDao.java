@@ -35,6 +35,7 @@ public interface StudentDao {
 
     Student findStudentById(Student student);
 
+
     // 课表查询
     List<courseTeacher> findCourseByTeacher(User user);
 
@@ -47,4 +48,6 @@ public interface StudentDao {
     int insertCourseToStudent(StudentToScore studentToScore);
 
     int updateUserPassword(@Param("account") String account, @Param("repassword") String repassword);
+
+    List<courseTeacher> findCourseByTeacher();
 }

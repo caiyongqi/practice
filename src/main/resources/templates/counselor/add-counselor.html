@@ -77,7 +77,7 @@
                             <div class="form-group has-feedback">
                                 <label>
                                     <select class="form-control" name="disciplineId" id="discipline">
-                                        <option value="0">选择所属专业</option>
+                                        <option value="0">所带专业</option>
                                         <option th:each="discipline,state:${disciplines}" th:value="${discipline.id}" th:text="${discipline.name}"></option>
                                     </select>
                                 </label>

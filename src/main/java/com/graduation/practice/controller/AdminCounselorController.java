@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -130,14 +131,15 @@ public class AdminCounselorController {
     // 更新用户
     @PostMapping("/updateCounselor")
     @ResponseBody
-    public Result<Counselor> updateCounselor(@RequestParam("photo") MultipartFile file, HttpServletRequest request){
+    public Result<Counselor> updateCounselor(HttpServletRequest request){
         Result<Counselor> result = new Result<>();
         String photoUrl = null;
-        if (!file.isEmpty()) {
+        MultipartFile file = ((MultipartRequest) request).getFile("photo");
+        if (file != null) {
             String fileName = file.getOriginalFilename();  // 文件名
             assert fileName != null;
             String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
-            String filePath = "C:/Users/samsung/ideaProjects/practice/src/main/resources/static/photo/"; // 上传后的路径
+            String filePath = "F:/IDEA_projects/practice/src/main/resources/static/photo/"; // 上传后的路径
             fileName = UUID.randomUUID() + suffixName; // 新文件名
             File dest = new File(filePath + fileName);
             if (!dest.getParentFile().exists()) {
@@ -150,7 +152,6 @@ public class AdminCounselorController {
             }
             photoUrl = "/photo/" + fileName;
         }
-
         // 参数
         String name = request.getParameter("name");
         String counselorId = request.getParameter("counselorId");

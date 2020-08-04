@@ -328,7 +328,7 @@
                 <!-- 菜单 /-->
 
                 <!--            <li id="admin-documentation"><a href="documentation.html" target="_blank"><i class="fa fa-book"></i> <span>AdminLTE汉化文档</span></a></li>-->
-                <li class="treeview" th:if="${session.user.type == 1 || session.user.type == 2}">
+                <li class="treeview" th:if="${session.user.type == 1}">
                     <a href="#">
                         <i class="fa fa-folder"></i> <span>用户管理</span>
                         <span class="pull-right-container">
@@ -345,7 +345,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="treeview" th:if="${session.user.type == 1 || session.user.type == 2}">
+                <li class="treeview" th:if="${session.user.type == 1}">
                     <a href="#">
                         <i class="fa fa-folder"></i> <span>教师管理</span>
                         <span class="pull-right-container">
@@ -404,7 +404,7 @@
                         </li>
                     </ul>
                 </li>
-                              </a>
+
                 <ul class="treeview-menu">
                     <li >
                         <a href="/counselor/findAllStudent04">
@@ -413,7 +413,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+
 
             <li class="treeview" th:if="${session.user.type == 3}">
 
@@ -453,6 +453,39 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="treeview" th:if="${session.user.type == 1 || session.user.type == 2}">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>学院管理</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu" style="display: none;">
+                        <li>
+                            <a href="/college/listColleges">
+                                <i class="fa fa-dashboard"></i> 学院列表
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview" th:if="${session.user.type == 1 || session.user.type == 2}">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>专业管理</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu" style="display: none;">
+                        <li>
+                            <a href="/discipline/listDisciplines">
+                                <i class="fa fa-dashboard"></i> 专业列表
+                            </a>
+                        </li>
+                    </ul>
+
                 </li>
             </ul>
         </section>

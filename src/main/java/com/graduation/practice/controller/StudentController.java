@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
 import java.lang.reflect.Parameter;
 import java.sql.Date;
 
@@ -76,9 +75,7 @@ public class StudentController {
     @GetMapping("/datalist")
     public String dataShow(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        System.out.println(user);
-        Object scoreShow = studentService.findCourseByTeacher(user);
-        System.out.println(scoreShow);
+        Object scoreShow = studentService.findCourseByTeacher();
         model.addAttribute("course_list", scoreShow);
         return "studentPages/studentDataShow";
     }
@@ -119,11 +116,11 @@ public class StudentController {
         return "redirect:/login";
     }
 
-    // 选课查询
+    // 选课
     @GetMapping("/chooseClass")
     public String chooseClass(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        Object scoreShow = studentService.findCourseByAllTeacher(user);
+        Object scoreShow = studentService.findCourseByTeacher();
         System.out.println(scoreShow);
         model.addAttribute("chooseCourse", scoreShow);
         return "studentPages/chooseClass";
@@ -152,9 +149,8 @@ public class StudentController {
         String repassword = MD5Utils.code(request.getParameter("repassword"));
         System.out.println(repassword);
         System.out.println(user.getAccount());
-        int row = studentService.changePassword(user.getAccount(), repassword);
+        int rows = studentService.changePassword(user.getAccount(), repassword);
         Result<User> result = new Result<>();
-        int rows = 1;
         if (rows > 0) {
             result.setMessage("修改成功");
         } else {

@@ -27,6 +27,7 @@ public interface StudentService {
 
     Student findStudentById(Student student);
 
+
     // 课表查询
     List<courseTeacher> findCourseByTeacher(User user);
 
@@ -38,4 +39,7 @@ public interface StudentService {
     int AddCourseToStudent(StudentToScore studentToScore);
 
     int changePassword(String account, String repassword);
+
+    List<courseTeacher> findCourseByTeacher();
+
 }

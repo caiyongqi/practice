@@ -28,6 +28,14 @@ public class TeacherToCourse {
         this.endTime = endTime;
     }
 
+    public TeacherToCourse(String teacherId, int courseId, Date startTime, Date endTime, String time) {
+        this.teacherId = teacherId;
+        this.courseId = courseId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.time = time;
+    }
+
     public TeacherToCourse(String teacherId, int haveScore) {
         this.teacherId = teacherId;
         this.haveScore = haveScore;

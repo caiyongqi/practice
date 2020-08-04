@@ -73,12 +73,19 @@
 
                             <h3 class="profile-username text-center" th:text="${student.name}"></h3>
 
-<!--                            <p class="text-muted text-center" th:text="${student.classes.name + '  ·  教师'}"></p>-->
+                            <p class="text-muted text-center" th:text="${'班级 : ' + student.classes.name}"></p>
 
                             <ul class="list-group list-group-unbordered">
-<!--                                <li class="list-group-item">-->
-<!--                                    <b>课程</b> <a class="pull-right" th:text="${courseNum}"></a>-->
-<!--                                </li>-->
+                                <li class="list-group-item">
+                                    <b>学工号</b> <a class="pull-right" th:text="${student.studentId}"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>性别</b> <a class="pull-right" th:text="${student.gender == 1 ? '男' : '女'}"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>年龄</b> <a class="pull-right" th:text="${student.age}"></a>
+                                </li>
+
                                 <!--                                    <li class="list-group-item">-->
                                 <!--                                        <b>Following</b> <a class="pull-right">543</a>-->
                                 <!--                                    </li>-->
@@ -96,7 +103,7 @@
                     <!-- About Me Box -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">其他信息</h3>
+                            <h3 class="box-title">联系方式</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -124,15 +131,15 @@
 
                             <p class="text-muted" th:text="${student.phoneNumber}"></p>
 
-                            <strong><i class="fa fa-pencil margin-r-5"></i> 技能</strong>
+<!--                            <strong><i class="fa fa-pencil margin-r-5"></i> 技能</strong>-->
 
-                            <p>
-                                <span class="label label-danger">UI Design</span>
-                                <span class="label label-success">Coding</span>
-                                <span class="label label-info">Javascript</span>
-                                <span class="label label-warning">PHP</span>
-                                <span class="label label-primary">Node.js</span>
-                            </p>
+<!--                            <p>-->
+<!--                                <span class="label label-danger">UI Design</span>-->
+<!--                                <span class="label label-success">Coding</span>-->
+<!--                                <span class="label label-info">Javascript</span>-->
+<!--                                <span class="label label-warning">PHP</span>-->
+<!--                                <span class="label label-primary">Node.js</span>-->
+<!--                            </p>-->
 
                             <hr>
 
@@ -141,6 +148,78 @@
 <!--                            <p th:text="${student.desc}"></p>-->
                         </div>
                         <!-- /.box-body -->
+                    </div>
+
+                    <!-- 学籍信息 -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">学籍信息</h3>
+                        </div>
+                        <div class="box-body box-profile">
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>学工号</b> <a class="pull-right" th:text="${student.studentId}"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>姓名</b> <a class="pull-right" th:text="${student.name}"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>学院</b> <a class="pull-right" th:text="${student.college.name}"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>专业</b> <a class="pull-right" th:text="${student.discipline.name}"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>班级</b> <a class="pull-right" th:text="${student.classes.name}"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>入学日期</b> <a class="pull-right" th:text="${student.date}"></a>
+                                </li>
+                                <!--                                    <li class="list-group-item">-->
+                                <!--                                        <b>Following</b> <a class="pull-right">543</a>-->
+                                <!--                                    </li>-->
+                                <!--                                    <li class="list-group-item">-->
+                                <!--                                        <b>Friends</b> <a class="pull-right">13,287</a>-->
+                                <!--                                    </li>-->
+                            </ul>
+
+                            <!--                                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>-->
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+                    <!-- /.box -->
+                    <div class="box box-primary">
+                        <div class="box-body ">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">课程信息</h3>
+                            </div>
+                            <div class="box-body box-profile">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <!--                                    <th>Rendering engine</th>-->
+                                        <th>课程编号</th>
+                                        <th>课程名称</th>
+                                        <th>分数</th>
+                                        <th>开始时间</th>
+                                        <th>结束时间</th>
+                                        <th>学分</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr  th:each="score:${score_list}">
+                                        <td th:text="${score.courseId}">Misc</td>
+                                        <td th:text="${score.name}">Dillo 0.7</td>
+                                        <td th:text="${score.score}">Embedded devices</td>
+                                        <td th:text="${score.startTime}">-</td>
+                                        <td th:text="${score.endTime}">X</td>
+                                        <td th:text="${score.credit}">X</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.box -->
                 </div>

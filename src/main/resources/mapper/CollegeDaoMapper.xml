@@ -4,4 +4,22 @@
     <select id="findAllCollege" resultType="College">
         SELECT * FROM college
     </select>
+    <select id="searchAllCollegeWithName" resultType="College">
+        SELECT * FROM college WHERE `name` like concat("%", #{collegeKeyword}, "%")
+    </select>
+    <select id="findCollegeByName" resultType="College" parameterType="College">
+        SELECT * FROM college WHERE `name` = #{name}
+    </select>
+    <insert id="saveCollege" parameterType="College">
+        INSERT INTO college(`name`,`desc`,address) VALUES (#{name}, #{desc}, #{address})
+    </insert>
+    <delete id="deleteCollegeById" parameterType="College">
+        DELETE FROM college WHERE id = #{id}
+    </delete>
+    <select id="findCollegeById" parameterType="College" resultType="College">
+        SELECT * FROM college WHERE id = #{id}
+    </select>
+    <update id="updateCollege" parameterType="College">
+        UPDATE college SET `name` = #{name},address = #{address}, `desc` = #{desc} WHERE id = #{id}
+    </update>
 </mapper>

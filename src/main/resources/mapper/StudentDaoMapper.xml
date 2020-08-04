@@ -7,10 +7,14 @@
 <!--    </select>-->
 
 <mapper namespace="com.graduation.practice.dao.StudentDao">
-    <select id="findStudentByStudentId" parameterType="Student" resultType="Student">
-        SELECT * FROM student WHERE studentId = #{studentId}
+<!--   辅导员查询所带学生-->
+    <select id="findStudentByStudentId" parameterType="Student" resultMap="studentMap">
+        SELECT student.*,classes.id AS classes_id,classes.name AS classes_name ,
+            discipline.id AS discipline_id,discipline.name AS discipline_name,
+            college.id AS college_id,college.name AS college_name
+        FROM student,classes,discipline,college
+         WHERE studentId = #{studentId} AND student.classId = classes.id AND classes.disciplineId = discipline.id AND discipline.collegeId = college.id
     </select>
-
     <!--=========================== 学生界面 =====================================================-->
     <select id="findUserByAccount" parameterType="User" resultType="User">
         SELECT * FROM user WHERE account = #{account} and type=5
@@ -94,4 +98,37 @@
     <update id="updateUserPassword" parameterType="User">
         update user set password=#{repassword} where account=#{account}
     </update>
+
+    <!--    查询所有的教师课程信息 -->
+<!--    <select id="findCourseByTeacher" resultType="courseTeacher">-->
+<!--        SELECT teacher.name as teacherName,course.name as courseName,teacher_to_course.startTime, teacher_to_course.endTime,teacher_to_course.time from teacher,teacher_to_course,course WHERE teacher_to_course.teacherId=teacher.teacherId and teacher_to_course.courseId=course.id-->
+<!--    </select>-->
+
+    <!-- 多对一关系 -->
+    <resultMap type="Student" id="studentMap">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="studentId" property="studentId" />
+        <result column="gender" property="gender" />
+        <result column="age" property="age" />
+        <result column="address" property="address" />
+        <result column="email" property="email" />
+        <result column="phoneNumber" property="phoneNumber" />
+        <result column="classId" property="classId" />
+        <result column="photoUrl" property="photoUrl" />
+        <result column="date" property="date"/>
+        <association property="classes" javaType="Classes">
+            <id column="classes_id" property="id" />
+            <result column="classes_name" property="name" />
+        </association>
+        <association property="discipline" javaType="Discipline">
+            <id column="discipline_id" property="id" />
+            <result column="discipline_name" property="name" />
+        </association>
+        <association property="college" javaType="College">
+            <id column="college_id" property="id" />
+            <result column="college_name" property="name" />
+        </association>
+    </resultMap>
+
 </mapper>

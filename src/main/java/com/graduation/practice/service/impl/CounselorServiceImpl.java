@@ -3,10 +3,7 @@ package com.graduation.practice.service.impl;
 import com.github.pagehelper.PageInfo;
 import com.graduation.practice.dao.CounselorDao;
 import com.graduation.practice.dao.UserDao;
-import com.graduation.practice.entity.Classes;
-import com.graduation.practice.entity.Counselor;
-import com.graduation.practice.entity.Student;
-import com.graduation.practice.entity.User;
+import com.graduation.practice.entity.*;
 import com.graduation.practice.service.CounselorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,5 +96,15 @@ public class CounselorServiceImpl implements CounselorService {
     }
 
 
+    //======辅导员查询学生成绩
+
+    @Override
+    public List<ScoreShow> findScoreByStudent04(Student student) {
+        // 获取学生分数信息
+        List<ScoreShow> scoreShows = counselorDao.findStudentScore04(student);
+        System.out.println(scoreShows);
+//        System.out.println(course);
+        return scoreShows;
+    }
 }
 

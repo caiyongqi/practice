@@ -35,9 +35,9 @@
         UPDATE user SET password = #{password} WHERE account = #{account}
     </update>
 
-<!--    <select id="findClassByCounselorId" parameterType="User" resultType="Classes">-->
-<!--        SELECT * FROM classes WHERE classes.disciplineId = (SELECT counselor.disciplineId FROM counselor WHERE counselor.counselorId = #{account})-->
-<!--    </select>-->
+    <!--    <select id="findClassByCounselorId" parameterType="User" resultType="Classes">-->
+    <!--        SELECT * FROM classes WHERE classes.disciplineId = (SELECT counselor.disciplineId FROM counselor WHERE counselor.counselorId = #{account})-->
+    <!--    </select>-->
 
     <select id="findClassByCounselorId" parameterType="User" resultType="Classes">
         SELECT * FROM classes
@@ -65,7 +65,7 @@
             #{counselorId}
         </foreach>
     </delete>
-    
+
     <select id="searchAllCounselorByCounselorName" parameterType="String" resultMap="counselorMap">
         SELECT counselor.id,counselor.counselorId,counselor.name,counselor.gender,discipline.id AS discipline_id,discipline.name AS discipline_name FROM counselor,discipline WHERE counselor.disciplineId = discipline.id
         <if test="Keyword != null and Keyword != ''">
@@ -77,14 +77,23 @@
     <update id="updateCounselor" parameterType="Counselor">
         UPDATE counselor SET `name` = #{name}, age = #{age}, gender = #{gender}, address = #{address}, email = #{email}, phoneNumber = #{phoneNumber}, disciplineId = #{disciplineId}, photoUrl = #{photoUrl} WHERE counselorId = #{counselorId}
     </update>
-    
+
     <select id="findCounselorProfileByCounselorId" parameterType="Counselor" resultMap="counselorMap">
-         SELECT counselor.id,counselor.counselorId,counselor.name,counselor.gender,counselor.address,counselor.disciplineId,counselor.phoneNumber,counselor.photoUrl,counselor.age,counselor.email,discipline.id AS discipline_id,discipline.name AS discipline_name FROM counselor,discipline WHERE counselor.counselorId = #{counselorId} AND counselor.disciplineId = discipline.id
+         SELECT counselor.id,counselor.counselorId,counselor.name,counselor.gender,counselor.address,counselor.disciplineId,counselor.phoneNumber,counselor.photoUrl,counselor.age,counselor.email,
+         discipline.id AS discipline_id,discipline.name AS discipline_name,
+         college.id AS college_id,college.name AS college_name
+         FROM counselor,discipline,college
+          WHERE counselor.counselorId = #{counselorId} AND counselor.disciplineId = discipline.id AND discipline.collegeId = college.id
     </select>
 
     <delete id="deleteCounselor" parameterType="String" >
         DELETE FROM counselor where counselor.counselorId = #{counselorId}
     </delete>
+
+    <!--    辅导员查询学生成绩-->
+    <select id="findStudentScore04" parameterType="Student" resultType="ScoreShow">
+        SELECT course.id as courseId, course.`name`, course.`desc`, course.credit, student_to_score.score, student_to_score.startTime, student_to_score.endTime FROM student_to_score, course, student, user WHERE user.account=student.studentId and student.id=student_to_score.studentId and student_to_score.courseId = course.id and user.account=#{studentId} ORDER BY course.id
+    </select>
 
     <!-- 多对一关系 -->
     <resultMap type="Student" id="studentMap">
@@ -119,6 +128,10 @@
         <association property="discipline" javaType="Discipline">
             <id column="discipline_id" property="id" />
             <result column="discipline_name" property="name" />
+        </association>
+        <association property="college" javaType="College">
+            <id column="college_id" property="id" />
+            <result column="college_name" property="name" />
         </association>
     </resultMap>
 

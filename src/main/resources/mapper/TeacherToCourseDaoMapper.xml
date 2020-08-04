@@ -7,7 +7,29 @@
     <select id="findAllCourseByTeacher" parameterType="Teacher" resultMap="teacherAndCourse">
         SELECT teacher_to_course.haveScore,teacher_to_course.teacherId,teacher_to_course.courseId,teacher_to_course.startTime,teacher_to_course.endTime,teacher_to_course.time,course.id AS course_id,course.credit AS course_credit,course.desc AS course_desc,course.name AS course_name FROM teacher_to_course,course WHERE teacher_to_course.teacherId = #{teacherId} AND teacher_to_course.courseId = course.id
     </select>
-    
+
+    <delete id="deleteTTC" parameterType="TeacherToCourse">
+        DELETE FROM teacher_to_course WHERE teacherId = #{teacherId} AND courseId = #{courseId} AND startTime = #{startTime} AND endTime = #{endTime}
+    </delete>
+    <insert id="insertTTC" parameterType="TeacherToCourse">
+        INSERT INTO teacher_to_course (teacherId,courseId,startTime,endTime,time) VALUES (#{teacherId},#{courseId},#{startTime},#{endTime},#{time})
+    </insert>
+    <select id="getAllTTC" resultType="TeacherToCourse">
+        SELECT * FROM teacher_to_course
+        <if test="(teacherId != null and teacherId != '') or (courseId != null and courseId != 0)" >
+            where
+        </if>
+        <if test="teacherId != null and teacherId != ''">
+            teacherId like concat("%", #{teacherId}, "%")
+        </if>
+        <if test="courseId != null and courseId != 0 and teacherId!= null and teacherId != ''">
+            and
+        </if>
+        <if test="courseId != null and courseId != 0">
+            courseId = #{courseId}
+        </if>
+    </select>
+
     <resultMap id="teacherAndCourse" type="TeacherToCourse">
         <result column="courseId" property="courseId" />
         <result column="teacherId" property="teacherId" />

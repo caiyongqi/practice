@@ -67,15 +67,24 @@ public class UserController {
     @GetMapping("/home")
     public String home(HttpSession session) {
         User user = (User) session.getAttribute("user");
+        System.out.println(user);
         if(user == null){
             return "redirect:/user/";
         }else{
             switch(user.getType()){
+                case 1:
+                    return "/sysAdmin-home";
+                case 2:
+                    return "/courseAdmin-home";
                 case 3:
                     return "redirect:/teacher/home";
+                case 4:
+                    return "/counselor/counselor-home";
+                case 5:
+                    return "/studentPages/studentHome";
             }
         }
-        return "home";
+        return "/error/500";
     }
 
     @PostMapping("/login")
