@@ -24,4 +24,13 @@
     <update id="updateClassInfo" parameterType="Classes">
         update classes set name=#{name}, disciplineId=#{disciplinedId} where id=#{id}
     </update>
+    <select id="searchClassByName" resultType="ClassInfo">
+        SELECT classes.id, classes.name as className, discipline.name as disciplineName, college.name as collegeName FROM classes, discipline, college WHERE classes.disciplineId=discipline.id and discipline.collegeId=college.id
+        <if test="classKeyword != null and classKeyword != ''">
+            and classes.name like concat("%", #{classKeyword}, "%")
+        </if>
+    </select>
+    <select id="findAllClassInfoByDiscipline" resultType="ClassInfo" parameterType="Discipline">
+        SELECT classes.id, classes.name as className, discipline.name as disciplineName, college.name as collegeName FROM classes, discipline, college WHERE classes.disciplineId=discipline.id and discipline.collegeId=college.id and classes.disciplineId = #{id}
+    </select>
 </mapper>

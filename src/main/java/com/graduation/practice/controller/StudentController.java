@@ -158,11 +158,4 @@ public class StudentController {
         }
         return result;
     }
-
-    //    用于测试界面的
-    @GetMapping("/test")
-    public String testShow(Model model) {
-        return "studentPages/textTest";
-    }
-
 }
