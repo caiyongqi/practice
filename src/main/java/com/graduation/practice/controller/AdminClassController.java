@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,18 +39,33 @@ public class AdminClassController {
     }
 
     @GetMapping("/findAllClasses")
-    public String findAllClasses(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, HttpSession session, Model model) {
+    public String findAllClasses(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, HttpSession session, Model model,HttpServletRequest request) {
 
-        PageHelper.startPage(pageNum, pageSize);
-        // 查询
-        List<ClassInfo> classes = classService.findAllClassInfo();
-        PageInfo<ClassInfo> pageInfo = new PageInfo<>(classes);
-        System.out.println(pageInfo);
-        // 视图
+//        PageHelper.startPage(pageNum, pageSize);
+//        // 查询
+//        List<ClassInfo> classes = classService.findAllClassInfo();
+//        PageInfo<ClassInfo> pageInfo = new PageInfo<>(classes);
 //
-//        ModelAndView mv = new ModelAndView();
-//        mv.setViewName("/classesPages/classDatalist");
-//        mv.addObject("pageInfo", pageInfo);
+//        model.addAttribute("pageInfo", pageInfo);
+        PageHelper.startPage(pageNum, pageSize);
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return "redirect:/user/";
+        }else if (user.getType() > 2){
+            return "/error/404";
+        }
+        List<ClassInfo> classes;
+        if(request.getParameter("id") == null || request.getParameter("id").equals("0")){
+            classes = classService.findAllClassInfo();
+            model.addAttribute("disciplineId", 0);
+        }else{
+            int id = Integer.parseInt(request.getParameter("id"));
+            classes = classService.findAllClassInfoByDiscipline(new Discipline(id));
+            model.addAttribute("disciplineId", id);
+        }
+        List<Discipline> disciplines = disciplineService.findAllDiscipline();
+        model.addAttribute("disciplines", disciplines);
+        PageInfo<ClassInfo> pageInfo = new PageInfo<>(classes);
         model.addAttribute("pageInfo", pageInfo);
         return "classesPages/classesDatalist";
     }
@@ -173,5 +189,20 @@ public class AdminClassController {
         }
 //        result.setData();
         return result;
+    }
+
+    // 搜索用户
+    @RequestMapping("/searchClass")
+    public ModelAndView searchClass(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "") String classKeyword, HttpSession session){
+        session.setAttribute("classKeyword", classKeyword);
+        PageHelper.startPage(pageNum, pageSize);
+        // 查询
+        List<ClassInfo> classes = classService.searchClassByName(classKeyword);
+        PageInfo<ClassInfo> pageInfo = new PageInfo<>(classes);
+        // 视图
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/classesPages/classesDatalist");
+        mv.addObject("pageInfo", pageInfo);
+        return mv;
     }
 }
