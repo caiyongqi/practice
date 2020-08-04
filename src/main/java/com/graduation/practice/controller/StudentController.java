@@ -75,7 +75,7 @@ public class StudentController {
     @GetMapping("/datalist")
     public String dataShow(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        Object scoreShow = studentService.findCourseByTeacher();
+        Object scoreShow = studentService.findCourseByTeacher(user);
         model.addAttribute("course_list", scoreShow);
         return "studentPages/studentDataShow";
     }
@@ -120,7 +120,7 @@ public class StudentController {
     @GetMapping("/chooseClass")
     public String chooseClass(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        Object scoreShow = studentService.findCourseByTeacher();
+        Object scoreShow = studentService.findCourseByAllTeacher(user);
         System.out.println(scoreShow);
         model.addAttribute("chooseCourse", scoreShow);
         return "studentPages/chooseClass";
