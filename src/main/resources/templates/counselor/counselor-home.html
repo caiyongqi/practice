@@ -52,7 +52,7 @@
         <!-- 内容头部 -->
         <section class="content-header">
             <h1>
-                常用链接
+                控制面板
                 <small>首页</small>
             </h1>
             <ol class="breadcrumb">
@@ -71,7 +71,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                            <h3>150</h3>
+                            <h3 th:text="${studentNum}"></h3>
 
                             <p>学生统计</p>
                         </div>
@@ -82,120 +82,120 @@
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-3 col-xs-6">
-                    <!-- small box -->
-                    <div class="small-box bg-green">
-                        <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
+<!--                <div class="col-lg-3 col-xs-6">-->
+<!--                    &lt;!&ndash; small box &ndash;&gt;-->
+<!--                    <div class="small-box bg-green">-->
+<!--                        <div class="inner">-->
+<!--                            <h3>53<sup style="font-size: 20px">%</sup></h3>-->
 
-                            <p>最新信息</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-email"></i>
-                        </div>
-                        <a href="all-ad-statistics-list.html" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
+<!--                            <p>最新信息</p>-->
+<!--                        </div>-->
+<!--                        <div class="icon">-->
+<!--                            <i class="ion ion-email"></i>-->
+<!--                        </div>-->
+<!--                        <a href="all-ad-statistics-list.html" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; ./col &ndash;&gt;-->
             </div>
             <!-- /.row -->
 
-            <!-- 教务通知 -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <i class="fa fa-cube"></i>
-                    <h3 class="box-title">教务通知公告</h3>
-                </div>
+<!--            &lt;!&ndash; 教务通知 &ndash;&gt;-->
+<!--            <div class="box box-primary">-->
+<!--                <div class="box-header with-border">-->
+<!--                    <i class="fa fa-cube"></i>-->
+<!--                    <h3 class="box-title">教务通知公告</h3>-->
+<!--                </div>-->
 
-                <div class="box-body">
+<!--                <div class="box-body">-->
 
-                    <!-- 数据表格 -->
-                    <div class="table-box">
+<!--                    &lt;!&ndash; 数据表格 &ndash;&gt;-->
+<!--                    <div class="table-box">-->
 
-                        <!--数据列表-->
-                        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
-                            <thead>
-                            <tr>
-                                <th class="">消息类型</th>
-                                <th class="">标题</th>
-                                <th class="">发布时间</th>
-                                <th class="">状态</th>
-                                <th class="text-center">查看详细信息</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+<!--                        &lt;!&ndash;数据列表&ndash;&gt;-->
+<!--                        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th class="">消息类型</th>-->
+<!--                                <th class="">标题</th>-->
+<!--                                <th class="">发布时间</th>-->
+<!--                                <th class="">状态</th>-->
+<!--                                <th class="text-center">查看详细信息</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
 
-                            <tr>
-                                <td>学生教务</td>
-                                <td>选课</td>
-                                <td>2020-09-01 17:45</td>
-                                <td>已读</td>
-                                <td class="text-center">
-                                    <button type="button" class="btn bg-olive btn-xs" onclick='location.href="all-product-line-edit.html"'>查看</button>
-                                </td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <td>学生教务</td>-->
+<!--                                <td>选课</td>-->
+<!--                                <td>2020-09-01 17:45</td>-->
+<!--                                <td>已读</td>-->
+<!--                                <td class="text-center">-->
+<!--                                    <button type="button" class="btn bg-olive btn-xs" onclick='location.href="all-product-line-edit.html"'>查看</button>-->
+<!--                                </td>-->
+<!--                            </tr>-->
 
 
-                            </tbody>
-                        </table>
-                        <!--数据列表/-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                        &lt;!&ndash;数据列表/&ndash;&gt;-->
 
-                    </div>
-                    <!-- 数据表格 /-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; 数据表格 /&ndash;&gt;-->
 
-                </div>
-                <!-- /.box-body -->
+<!--                </div>-->
+<!--                &lt;!&ndash; /.box-body &ndash;&gt;-->
 
-            </div>
-            <!-- 教务通知 /-->
+<!--            </div>-->
+<!--            &lt;!&ndash; 教务通知 /&ndash;&gt;-->
 
-            <!-- 教务系统通知 -->
-            <div class="box box-success">
-                <div class="box-header with-border">
-                    <i class="fa fa-book"></i>
-                    <h3 class="box-title">教务系统通知</h3>
-                </div>
+<!--            &lt;!&ndash; 教务系统通知 &ndash;&gt;-->
+<!--            <div class="box box-success">-->
+<!--                <div class="box-header with-border">-->
+<!--                    <i class="fa fa-book"></i>-->
+<!--                    <h3 class="box-title">教务系统通知</h3>-->
+<!--                </div>-->
 
-                <div class="box-body">
+<!--                <div class="box-body">-->
 
-                    <!-- 数据表格 -->
-                    <div class="table-box">
+<!--                    &lt;!&ndash; 数据表格 &ndash;&gt;-->
+<!--                    <div class="table-box">-->
 
-                        <!--数据列表-->
-                        <table id="dataList1" class="table table-bordered table-striped table-hover dataTable">
-                            <thead>
-                            <tr>
-                                <th class="">消息类型</th>
-                                <th class="">标题</th>
-                                <th class="">发布时间</th>
-                                <th class="">状态</th>
-                                <th class="text-center">查看详细信息</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+<!--                        &lt;!&ndash;数据列表&ndash;&gt;-->
+<!--                        <table id="dataList1" class="table table-bordered table-striped table-hover dataTable">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th class="">消息类型</th>-->
+<!--                                <th class="">标题</th>-->
+<!--                                <th class="">发布时间</th>-->
+<!--                                <th class="">状态</th>-->
+<!--                                <th class="text-center">查看详细信息</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
 
-                            <tr>
-                                <td>新增功能</td>
-                                <td>新增课表课程链接</td>
-                                <td>2017-03-07 17:45</td>
-                                <td>未读</td>
-                                <td class="text-center">
-                                    <button type="button" class="btn bg-olive btn-xs" onclick='location.href="all-travellog-manage-edit.html"'>查看</button>
-                                </td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <td>新增功能</td>-->
+<!--                                <td>新增课表课程链接</td>-->
+<!--                                <td>2017-03-07 17:45</td>-->
+<!--                                <td>未读</td>-->
+<!--                                <td class="text-center">-->
+<!--                                    <button type="button" class="btn bg-olive btn-xs" onclick='location.href="all-travellog-manage-edit.html"'>查看</button>-->
+<!--                                </td>-->
+<!--                            </tr>-->
 
-                            </tbody>
-                        </table>
-                        <!--数据列表/-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                        &lt;!&ndash;数据列表/&ndash;&gt;-->
 
-                    </div>
-                    <!-- 数据表格 /-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; 数据表格 /&ndash;&gt;-->
 
-                </div>
-                <!-- /.box-body -->
+<!--                </div>-->
+<!--                &lt;!&ndash; /.box-body &ndash;&gt;-->
 
-            </div>
-            <!-- 教务系统通知 /-->
+<!--            </div>-->
+<!--            &lt;!&ndash; 教务系统通知 /&ndash;&gt;-->
 
             <div class="container mt-4">
                 <div class="row">
