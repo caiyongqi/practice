@@ -50,4 +50,6 @@ public interface StudentDao {
     int updateUserPassword(@Param("account") String account, @Param("repassword") String repassword);
 
     List<courseTeacher> findCourseByTeacher();
+
+    int updatePerInfo(@Param("account") String account, @Param("uTel") String uTel, @Param("uEmail") String uEmail);
 }

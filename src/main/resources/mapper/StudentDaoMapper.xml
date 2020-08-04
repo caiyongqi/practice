@@ -131,4 +131,9 @@
         </association>
     </resultMap>
 
+<!--    修改个人信息-->
+    <update id="updatePerInfo" parameterType="String">
+        update student set email=#{uEmail},phoneNumber=#{uTel} where student.studentId = (select account from user where account=#{account})
+    </update>
+
 </mapper>
