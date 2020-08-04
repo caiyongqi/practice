@@ -73,6 +73,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">填写课程信息</div>
                     <div class="row data-type">
+                        <div class="col-md-2 title">ID</div>
+                        <div class="col-md-4 data">
+                            <input class="form-control" name="id"
+                                   readonly="true" th:value="${course.id}">
+                        </div>
                         <div class="col-md-2 title">学分</div>
                         <div class="col-md-4 data">
                             <input type="number" class="form-control" name="credit"
@@ -170,7 +175,7 @@
         }
         $.ajax({
             type: "GET",//方法类型
-            url: "/course/toCourseDataList" ,//url
+            url: "/course/updateCourse" ,//url
             data: $('#form1').serialize(),
             success: function (result) {
                 console.log(result);//打印服务端返回的数据(调试用)

@@ -14,7 +14,7 @@
         SELECT * FROM course WHERE id = #{id};
     </select>
     <update id="updateCourse" parameterType="course">
-        UPDATE course SET credit=#{credit},name=#{name},desc=#{desc} WHERE id=#{id}
+        UPDATE course SET credit=#{credit},`name`=#{name},`desc`=#{desc} WHERE id=#{id}
     </update>
     <delete id="deleteSelectedCourse" parameterType="list">
         DELETE FROM course WHERE id IN
