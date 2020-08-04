@@ -62,12 +62,22 @@
                                     <a th:href="@{/adminClass/getCreateClasses}" type="button" class="btn btn-default" title="新建" id="addUser"><i class="fa fa-file-o"></i> 新建</a>
                                     <button type="button" class="btn btn-default" title="删除" onclick="deleteAll()"><i class="fa fa-trash-o"></i> 删除</button>
                                     <button type="button" class="btn btn-default" title="刷新" onclick="refresh()"><i class="fa fa-refresh"></i> 刷新</button>
+                                    <input type="hidden" th:value="${disciplineId}" id="currentDisciplineId">
+                                    <select class="btn btn-default" id="discipline">
+                                        <option value="0">
+                                            所有专业
+                                        </option>
+                                        <th:block th:each="item:${disciplines}">
+                                            <option th:value="${item.id}" th:text="${item.name}" th:if="${item.id == disciplineId}" selected></option>
+                                            <option th:value="${item.id}" th:text="${item.name}" th:if="${item.id != disciplineId}"></option>
+                                        </th:block>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="box-tools pull-right">
                             <div class="has-feedback">
-                                <input type="text" class="form-control input-sm" placeholder="搜索" id="search_input" th:value="${session.counselorStudentKeyword == null ? '' : session.counselorStudentKeyword}">
+                                <input type="text" class="form-control input-sm" placeholder="搜索" id="search_input" th:value="${session.classKeyword == null ? '' : session.classKeyword}">
                                 <span class="glyphicon glyphicon-search form-control-feedback" id="search"></span>
                             </div>
                         </div>
@@ -133,12 +143,12 @@
                     <div class="box-tools pull-right">
                         <ul class="pagination">
                             <li>
-                                <a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=1' : '/counselor/searchStudent?pageNum=1' + '&counselorStudentKeyword=' + session.counselorStudentKeyword}" aria-label="Previous">首页</a>
+                                <a th:href="${session.classKeyword == null ? '/adminClass/findAllClasses?pageNum=1' : '/adminClass/searchClass?pageNum=1' + '&classKeyword=' + session.classKeyword}" aria-label="Previous">首页</a>
                             </li>
-                            <li><a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=' + (pageInfo.pageNum - 1) : '/counselor/searchStudent?pageNum=' + (pageInfo.pageNum - 1) + '&counselorStudentKeyword=' + session.counselorStudentKeyword}">上一页</a></li>
-                            <li><a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=' + (pageInfo.pageNum + 1) : '/counselor/searchStudent?pageNum=' + (pageInfo.pageNum + 1) + '&counselorStudentKeyword=' + session.counselorStudentKeyword}">下一页</a></li>
+                            <li><a th:href="${session.classKeyword == null ? '/adminClass/findAllClasses?pageNum=' + (pageInfo.pageNum - 1) : '/adminClass/findAllClasses?pageNum=' + (pageInfo.pageNum - 1) + '&classKeyword=' + session.classKeyword}">上一页</a></li>
+                            <li><a th:href="${session.classKeyword == null ? '/adminClass/findAllClasses?pageNum=' + (pageInfo.pageNum + 1) : '/adminClass/findAllClasses?pageNum=' + (pageInfo.pageNum + 1) + '&classKeyword=' + session.classKeyword}">下一页</a></li>
                             <li>
-                                <a th:href="${session.counselorStudentKeyword == null ? '/counselor/findAllStudent04?pageNum=' + pageInfo.pages : '/counselor/searchStudent?pageNum=' + pageInfo.pages + '&counselorStudentKeyword=' + session.counselorStudentKeyword}" aria-label="Next">尾页</a>
+                                <a th:href="${session.classKeyword == null ? '/adminClass/findAllClasses?pageNum=' + pageInfo.pages : '/adminClass/findAllClasses?pageNum=' + pageInfo.pages + '&classKeyword=' + session.classKeyword}" aria-label="Next">尾页</a>
                             </li>
                         </ul>
                     </div>
@@ -153,8 +163,45 @@
                         if (page !== pageNum){
                             $.ajax({
                                 type: "get",
-                                url: "/counselor/findAllStudent04",
+                                url: "/adminClass/findAllClasses",
                                 data: {pageNum:page},
+                                success: function (res) {
+                                    $("#content").html($(res).find('div[id="content"]').html());
+                                }
+                            })
+                        }
+                    })
+
+                    function search() {
+                        var classKeyword = $('#search_input').val();
+                        $.ajax({
+                            type : 'post',
+                            url: "/adminClass/searchClass#content",
+                            data:  {"classKeyword":classKeyword},
+                            success: function (res) {
+                                // console.log($(res).find('div[id="content"]').html())
+                                $("#content").html($(res).find('div[id="content"]').html());
+                            }
+                        })
+                    }
+                    $('#search_input').bind('keypress', function (event) {
+                        if(13 === event.keyCode){
+                            event.preventDefault();
+                            search();
+                        }
+                    })
+                    $('#search').bind('click', function (event) {
+                        search();
+                    })
+
+                    $('#discipline').change(function () {
+                        let disciplineId = parseInt($('#discipline').find('option:selected').val())
+                        let currentDisciplineId = parseInt($('#currentDisciplineId').val())
+                        if (disciplineId !== currentDisciplineId){
+                            $.ajax({
+                                type: "get",
+                                url: "/adminClass/findAllClasses",
+                                data: {id:disciplineId},
                                 success: function (res) {
                                     $("#content").html($(res).find('div[id="content"]').html());
                                 }
@@ -318,27 +365,27 @@
     // })
 
 
-    function search() {
-        var counselorStudentKeyword = $('#search_input').val();
-        $.ajax({
-            type : 'post',
-            url: "/counselor/searchStudent#content",
-            data:  {"counselorStudentKeyword":counselorStudentKeyword},
-            success: function (res) {
-                // console.log($(res).find('div[id="content"]').html())
-                $("#content").html($(res).find('div[id="content"]').html());
-            }
-        })
-    }
-    $('#search_input').bind('keypress', function (event) {
-        if(13 === event.keyCode){
-            event.preventDefault();
-            search();
-        }
-    })
-    $('#search').bind('click', function (event) {
-        search();
-    })
+    // function search() {
+    //     var classKeyword = $('#search_input').val();
+    //     $.ajax({
+    //         type : 'post',
+    //         url: "/adminClass/searchClass#content",
+    //         data:  {"classKeyword":classKeyword},
+    //         success: function (res) {
+    //             // console.log($(res).find('div[id="content"]').html())
+    //             $("#content").html($(res).find('div[id="content"]').html());
+    //         }
+    //     })
+    // }
+    // $('#search_input').bind('keypress', function (event) {
+    //     if(13 === event.keyCode){
+    //         event.preventDefault();
+    //         search();
+    //     }
+    // })
+    // $('#search').bind('click', function (event) {
+    //     search();
+    // })
 
     function enableEdit(type) {
         type = parseInt(type)

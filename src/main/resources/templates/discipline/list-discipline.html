@@ -94,7 +94,7 @@
                                 <td th:text="${item.college.name}" class="text-center"></td>
                                 <td th:text="${item.desc}" class="text-center"></td>
                                 <td class="text-center">
-                                    <a class="btn bg-olive btn-xs" th:href="${'/classes/listClasses?id=' + item.id}">班级</a>
+                                    <a class="btn bg-olive btn-xs" th:href="${'/adminClass/findAllClasses?id=' + item.id}">班级</a>
                                     <a th:href="${'/discipline/toUpdateDiscipline?id=' + item.id}"  class="btn bg-olive btn-xs">编辑</a>
                                     <a th:href="${'/discipline/deleteDiscipline?id=' + item.id + '&collegeId=' + collegeId}" class="btn bg-olive btn-xs">删除</a>
                                 </td>
