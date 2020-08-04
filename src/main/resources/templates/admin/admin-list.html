@@ -92,6 +92,7 @@
                                     <td th:text="${item.account}" class="text-center"></td>
 <!--                                    <td th:text="${user.password}"></td>-->
                                     <td th:text="${item.role}" class="text-center"></td>
+                                <input type="hidden" id="types" th:value="${item.type}">
                                     <td class="text-center">
                                         <a th:href="${item.type != 1 ? '/user/toUpdateUser?pageNum=' + pageInfo.pageNum + '&account=' + item.account : '#'}" class="btn bg-olive btn-xs" th:onclick="|enableEdit('${item.type}');|">编辑</a>
 <!--                                        <a class="btn bg-olive btn-xs">详情</a>-->
@@ -278,6 +279,16 @@
                     userList.push($(this).val());
                 }
             );
+            let typeList = []
+            $('#types').each(function () {
+                typeList.push(parseInt($(this).val()))
+            })
+            for (let i=0;i<typeList.length;i++){
+                if(typeList[i] === 1){
+                    alert("你无权删除系统管理员")
+                    return
+                }
+            }
 
             $.ajax({
                 type: "post",
